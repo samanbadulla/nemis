@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Workplaces extends Model
+{
+    use HasFactory;
+
+    protected $table = 'workplaces';
+
+    protected $fillable = ['workplace_id', 'office_level_id', 'parent_workplace_id'];
+
+    // Relationships to each possible office table
+    public function ministry()
+    {
+        return $this->hasOne(MinistryOfEducationOffice::class, 'workplace_id', 'workplace_id');
+    }
+
+    public function provincialMinistry()
+    {
+        return $this->hasOne(ProvincialMinistryOfEducationOffice::class, 'workplace_id', 'workplace_id');
+    }
+
+    public function provincial()
+    {
+        return $this->hasOne(ProvincialEducationOffice::class, 'workplace_id', 'workplace_id');
+    }
+
+    public function zonal()
+    {
+        return $this->hasOne(ZonalEducationOffice::class, 'workplace_id', 'workplace_id');
+    }
+
+    public function divisional()
+    {
+        return $this->hasOne(DivisionalEducationOffice::class, 'workplace_id', 'workplace_id');
+    }
+
+    public function institution()
+    {
+        return $this->hasOne(Institution::class, 'workplace_id', 'workplace_id');
+    }
+
+    /**
+     * Dynamic accessor to return the actual office model
+     */
+    public function office()
+    {
+        return match ($this->office_level_id) {
+            'OLID001' => $this->ministry,
+            'OLID002' => $this->provincialMinistry,
+            'OLID003' => $this->provincial,
+            'OLID004' => $this->zonal,
+            'OLID005' => $this->divisional,
+            'OLID006' => $this->institution,
+            default   => null,
+        };
+    }
+}

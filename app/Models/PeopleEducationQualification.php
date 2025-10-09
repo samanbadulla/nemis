@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PeopleEducationQualification extends Model
+{
+    use HasFactory;
+
+    protected $table = 'people_education_qualifications';
+
+    protected $fillable = [
+        'people_id',
+        'qualifications_id',
+        'institution',
+        'effective_date',
+        'description',
+        'active_status',
+    ];
+
+    /**
+     * Relationships
+     */
+
+    // A qualification belongs to one person
+    public function person()
+    {
+        return $this->belongsTo(People::class, 'people_id', 'people_id');
+    }
+
+    // A qualification references one education qualification type
+    public function qualification()
+    {
+        return $this->belongsTo(EducationQualification::class, 'qualifications_id', 'qualifications_id');
+    }
+}
