@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nic_hash', 64)->unique(); // unique + searchable
             $table->char('title_id', 3)->comment('Foreign key referencing titles table');
             $table->text('full_name'); // encrypted value
-            $table->string('name_with_initials'); // plain text value for searching
+            $table->text('name_with_initials'); // plain text value for searching
             $table->char('gender_id', 3)->comment('Foreign key referencing gender list table');
             $table->date('date_of_birth');
             $table->char('religion_id', 3)->comment('Foreign key referencing religions table');
