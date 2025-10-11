@@ -9,6 +9,8 @@ class InstitutionsIndex extends Component
 {
     public $query = '';
     public $results = [];
+    public $zoneId = null;
+    public $divisionId = null;
 
     public function updatedQuery()
     {

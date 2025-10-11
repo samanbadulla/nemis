@@ -50,7 +50,7 @@
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
                                         
-                                         <flux:link href="#" variant="ghost">{{ $data->name }}</flux:link>
+                                         <flux:link href="{{route('offices.deo.by-zone', $data->id)}}" variant="ghost">{{ $data->name }}</flux:link>
                                     </div>
                                     <div class="text-sm text-slate-500 dark:text-slate-400">
                                         Work Place Id: {{ $data->workplace_id }}

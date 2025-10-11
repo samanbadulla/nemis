@@ -43,6 +43,7 @@ use App\Livewire\Offices\Pmoe\PmoeOfficesCreate;
 use App\Livewire\Institutions\InstitutionsCreate;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
 use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
 use App\Livewire\Teacher\Profile\TeacherQualification;
@@ -74,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('offices/deo/list', DeoOfficesList::class)->name('offices.deo.list');
     Route::get('offices/deo/create', DeoOfficesCreate::class)->name('offices.deo.create');
+    Route::get('offices/deo/{id}/zone', DivisionalOfficeByZone::class)->name('offices.deo.by-zone');
     Route::get('offices/deo/{id}/profile', DeoOfficesProfile::class)->name('offices.deo.profile');
 
     Route::get('offices/zeo/list', ZeoOfficesList::class)->name('offices.zeo.list');

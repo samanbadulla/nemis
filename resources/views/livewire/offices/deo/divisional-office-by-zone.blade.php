@@ -1,14 +1,14 @@
 <div>
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Zonal Education Office') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Manage Zonal Education Office profile and account') }}
+        <flux:heading size="xl" level="1">{{ __('Divisional Education Office by') }} {{$zone->short_name}}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Manage Divisional Education Office profile and account') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
 
         <div class="my-4 gap-2 justify-end flex">
 
-            <a href="{{ route('offices.zeo.create') }}">
-                <flux:button>Create Zonal Office</flux:button>
+            <a href="{{ route('offices.deo.create') }}">
+                <flux:button>Create Divisional Office</flux:button>
             </a>
 
         </div>
@@ -26,7 +26,7 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-                        Province
+                        Zone
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
@@ -39,7 +39,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-700">
-                @forelse ($zonalEducationOffices as $data)
+                @forelse ($divisionalEducationOffices as $data)
                     <tr class="hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                         <flux:link href="{{route('offices.deo.by-zone', $data->id)}}" variant="ghost">{{ $data->name }}</flux:link>
+                                        {{ $data->name }}
                                     </div>
                                     <div class="text-sm text-slate-500 dark:text-slate-400">
                                         Work Place Id: {{ $data->workplace_id }}
@@ -65,7 +65,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-slate-900 dark:text-slate-100">
-                                PEO: {{ $data->provincialEducationOffice->short_name }}
+                                ZEO: {{ $data->zonalEducationOffice->short_name }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -76,20 +76,19 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                            <a href="{{ route('offices.zeo.profile', $data->id) }}">
+                            <a href="{{ route('offices.deo.profile', $data->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
                             <a href="">
                                 <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                             </a>
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
-
                         </td>
                     </tr>
                 @empty
                     <tr colspan="5">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-900 dark:text-slate-100">No Zonal Education Office Found!</div>
+                            <div class="text-sm text-slate-900 dark:text-slate-100">No Divisional Education Office Found!</div>
                         </td>
                     </tr>
                 @endforelse
@@ -99,7 +98,7 @@
 
 
         <div class="mt-4 mx-10">
-            {{ $zonalEducationOffices->links() }}
+            {{ $divisionalEducationOffices->links() }}
         </div>
     </div>
 </div>
