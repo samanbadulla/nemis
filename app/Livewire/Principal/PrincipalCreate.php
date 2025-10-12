@@ -71,7 +71,8 @@ class PrincipalCreate extends Component
     protected function rules()
     {
         return [
-            'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
+            'nic' => ['required', 'string', 'regex:/^(\d{9}[vVxX]|\d{12})$/', new UniqueHashedNic()],
+            //'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
             'title' => 'required|string',
             'fullName' => 'required|string|max:255',
             'gender' => 'required|string',

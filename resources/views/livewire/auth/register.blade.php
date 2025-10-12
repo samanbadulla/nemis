@@ -16,6 +16,17 @@
             :placeholder="__('Full name')"
         />
 
+        <!-- Name -->
+        <flux:input
+            wire:model="nic"
+            :label="__('NIC')"
+            type="text"
+            required
+            autofocus
+            autocomplete="nic"
+            :placeholder="__('INC number')"
+        />
+
         <!-- Email Address -->
         <flux:input
             wire:model="email"
@@ -24,6 +35,17 @@
             required
             autocomplete="email"
             placeholder="email@example.com"
+        />
+
+        <!-- Name -->
+        <flux:input
+            wire:model="contact"
+            :label="__('Contact number')"
+            type="text"
+            required
+            autofocus
+            autocomplete="contact"
+            :placeholder="__('07xxxxxxxxxx')"
         />
 
         <!-- Password -->

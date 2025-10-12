@@ -50,8 +50,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(InstitutionTableSeederPart1::class);
         $this->call(InstitutionTableSeederPart2::class);
-        //$this->call(InstitutionTableSeederPartA::class);
-        //$this->call(InstitutionTableSeederPartB::class);
         $this->call(WorkplacesFromMinistrySeeder::class);
 
         $this->call(ServiceSeeder::class);
@@ -63,8 +61,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SuperAdminSeeder::class);
         $this->call(PeopleSeeder::class);
         $this->call(UserSeeder::class);
-
-        //$this->call(PeopleSeederPart1::class);
 
         $this->call(RolePermissionSeeder::class);
         

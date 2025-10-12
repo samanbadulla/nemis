@@ -217,7 +217,8 @@ class TeacherCreate extends Component
     {
         $this->validate([
             'title' => 'required|string',
-            'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
+            'nic' => ['required', 'string', 'regex:/^(\d{9}[vVxX]|\d{12})$/', new UniqueHashedNic()],
+            //'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
             'fullName' => 'required|string|max:255',
             'gender' => 'required|string',
             'birthday' => 'required|date',
