@@ -16,7 +16,7 @@ return new class extends Migration
             $table->char('service_id', 10)->unique()->comment('e.g., POS001, POS002');
             $table->string('service_name')->unique()->comment('e.g., Teacher, Principal, Admin Officer');
             $table->string('description')->nullable();
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

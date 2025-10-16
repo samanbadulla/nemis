@@ -5,9 +5,13 @@
         </flux:subheading>
         <flux:separator variant="subtle" />
 
-        <div class="my-4 gap-2 justify-end flex">
+        <div class="my-6 flex items-center justify-end gap-3">
+            {{-- Create Teacher Button (Permission Based) --}}
             <a href="{{ route('roles.create') }}">
-                Create Role
+                <flux:button icon="plus" color="primary"
+                    class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
+                    Create new role
+                </flux:button>
             </a>
         </div>
 
@@ -35,7 +39,7 @@
                         Permissions
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                     </th>
                 </tr>
@@ -65,12 +69,15 @@
                             @endif
                         </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-                            <a href="{{ route('roles.edit', $role->id) }}"
-                                class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <button wire:click="delete({{ $role->id }})"
-                                wire:confirm="Are you sure you want to delete this role?"
-                                class="ml-2 text-red-600 hover:text-red-900">Delete</button>
+                        <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
+                            <a href="{{ route('roles.edit', $role->id) }}">
+                                <flux:button size="sm" icon="pencil-square">Edit</flux:button>
+                            </a>
+                            <flux:button wire:click="delete({{ $role->id }})"
+                                wire:confirm="Are you sure you want to delete this role?" 
+                                size="sm" icon="trash" variant="danger">
+                                Delete
+                            </flux:button>
                         </td>
                     </tr>
                 @endforeach

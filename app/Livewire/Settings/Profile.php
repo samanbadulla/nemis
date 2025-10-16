@@ -11,7 +11,7 @@ use Livewire\Component;
 class Profile extends Component
 {
     public string $name = '';
-
+    public string $contact = '';
     public string $email = '';
 
     /**
@@ -19,8 +19,11 @@ class Profile extends Component
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $user = Auth::user();
+
+        $this->name = $user->name;
+        $this->contact = $user->contact;
+        $this->email = $user->email;
     }
 
     /**
@@ -32,7 +35,12 @@ class Profile extends Component
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-
+            'contact' => [
+                'required',
+                'string',
+                'max:10',
+                Rule::unique(User::class)->ignore($user->id),
+            ],
             'email' => [
                 'required',
                 'string',
@@ -63,12 +71,10 @@ class Profile extends Component
 
         if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false));
-
             return;
         }
 
         $user->sendEmailVerificationNotification();
-
         Session::flash('status', 'verification-link-sent');
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('occ_name_en',50)->unique();
             $table->string('occ_name_si',50)->nullable();
             $table->string('occ_name_ta',50)->nullable();
-            $table->enum('status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

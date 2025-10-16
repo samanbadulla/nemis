@@ -3,32 +3,22 @@
 namespace App\Livewire\Users;
 
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Validate;
-use Livewire\Component;
+use App\Rules\UniqueHashedNicUser;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class UserCreate extends Component
 {
-    #[Validate('required|string|max:255')]
     public $name = '';
-
-    #[Validate('required|string|lowercase|email|max:255|unique:users,email')]
     public $email = '';
-
-    #[Validate('required|string|min:10|max:12|unique:users,nic')]
     public $nic = '';
-
-    #[Validate('required|string|max:10|unique:users,contact')]
     public $contact = '';
-
-    #[Validate('required')]
     public $roles = [];
-
     public $password = '';
-
     public string $password_confirmation = '';
 
     public $allRole;
@@ -38,12 +28,20 @@ class UserCreate extends Component
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:users,email',
-            'nic' => 'required|string|max:12|unique:users,nic',
+            'nic' => ['required', 'string', 'regex:/^(\d{9}[vVxX]|\d{12})$/', new UniqueHashedNicUser()],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
+            'contact' => ['required', 'regex:/^[0-9]{10}$/', 'unique:users'],
             'roles' => 'required',
-            'contact' => 'required|string|max:10|unique:users,contact',
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ];
+    }
+
+    // -------------------------
+    // Live Validation on Field Update
+    // -------------------------
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
     }
 
     public function mount(){

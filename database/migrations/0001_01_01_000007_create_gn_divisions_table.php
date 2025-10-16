@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('dso_id',10);
             $table->string('gn_division_name',100);
             $table->string('gn_division_code',10);
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             // Foreign key constraint

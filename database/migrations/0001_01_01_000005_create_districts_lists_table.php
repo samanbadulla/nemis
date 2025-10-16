@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('district_id',10)->unique();
             $table->string('province_id',10);
             $table->string('district_name',50)->unique();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             // Foreign key constraint

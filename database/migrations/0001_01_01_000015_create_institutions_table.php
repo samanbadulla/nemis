@@ -39,7 +39,7 @@ return new class extends Migration
             $table->text('mission', 255)->nullable();
             $table->text('vision', 255)->nullable();
             $table->string('logo')->nullable();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             //$table->foreign('workplace_id')->references('workplace_id')->on('workplaces')->onDelete('cascade')->onUpdate('cascade');

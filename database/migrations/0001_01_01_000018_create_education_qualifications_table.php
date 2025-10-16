@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slql', 10)->nullable()->comment('Sri Lanka Qualifications Framework Leve');
             $table->string('nvql', 10)->nullable()->comment('National Vocational Qualification Level');
             $table->string('qualification');
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

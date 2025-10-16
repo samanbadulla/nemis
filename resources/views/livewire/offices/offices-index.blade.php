@@ -1,5 +1,5 @@
 <div class="container mx-auto px-4 py-6 antialiased">
-    <div class="bg-white rounded-xl p-6 dark:bg-gray-800 shadow-lg">
+    <div class="bg-white rounded-xl p-6 dark:bg-gray-800">
         
         {{-- Header --}}
         <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">

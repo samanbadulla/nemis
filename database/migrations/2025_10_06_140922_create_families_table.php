@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('married_cf', 12)->nullable()->comment('marriage certificate');
             $table->date('divorce_date', 12)->nullable()->comment('Divorce date');
             $table->string('family_name')->nullable()->comment('Optional family label or household name');
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('member_m_id')->references('people_id')->on('people')->onDelete('restrict')->onUpdate('cascade');

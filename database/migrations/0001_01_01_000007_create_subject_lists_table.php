@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name_en');
             $table->string('name_si')->nullable();
             $table->string('name_ta')->nullable();
-            $table->enum('status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

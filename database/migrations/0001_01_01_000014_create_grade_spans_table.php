@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('grade_span_id', 10)->unique()->comment('example. 1-5 , 1-8, 6-9, 10-13');
             $table->string('grade_span_name', 150)->unique()->comment('Grade Span Name');
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

@@ -61,6 +61,8 @@
 
                                     <flux:input label="Name" placeholder="Your name" />
 
+                                    <flux:input label="Name" placeholder="Your name" />
+
                                     <flux:input label="Date of birth" type="date" />
 
                                     <div class="flex">

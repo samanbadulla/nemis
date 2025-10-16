@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('ethnicity_id', 3)->unique();
             $table->string('ethnicity_name');
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('service_id', 10);
             $table->string('rank_name')->comment('e.g., III(a), III(b), II, I, etc.');
             $table->string('description')->nullable();
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('service_id')->references('service_id')->on('services')->onDelete('cascade')->onUpdate('cascade');

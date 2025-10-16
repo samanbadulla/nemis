@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('postal_code', 10)->nullable();
             $table->string('phone', 20)->unique();
             $table->string('email')->unique();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

@@ -5,9 +5,13 @@
         </flux:subheading>
         <flux:separator variant="subtle" />
 
-        <div class="my-4 gap-2 justify-end flex">
-            <a href="{{route('users.create')}}">
-                Create User
+        <div class="my-6 flex items-center justify-end gap-3">
+            {{-- Create User Button (Permission Based) --}}
+            <a href="{{ route('users.create') }}">
+                <flux:button icon="plus" color="primary"
+                    class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
+                    Create new user
+                </flux:button>
             </a>
         </div>
 
@@ -35,7 +39,7 @@
                         Status
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
                     </th>
                 </tr>
@@ -46,7 +50,8 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/user_profile.png') }}" alt="profile picture">
+                                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/user_profile.png') }}"
+                                        alt="profile picture">
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
@@ -69,14 +74,32 @@
                             {{ $user->roles->pluck('name')->join(', ') }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                 {{ $user->active_status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ $user->active_status ? 'Active' : 'Inactive' }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-                            <a href="{{ route('users.edit', $user->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <a href="#" class="ml-2 text-red-600 hover:text-red-900">Delete</a>
+                        <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
+                            <a href="{{ route('users.edit', $user->id) }}">
+                                <flux:button size="sm" icon="pencil-square"></flux:button>
+                            </a>
+                            <flux:button wire:click="resetPassword({{ $user->id }})"
+                                wire:confirm="Are you sure you want to reset this user's password?" size="sm"
+                                icon="key">
+                            </flux:button>
+                            <flux:button wire:click="toggleStatus({{ $user->id }})"
+                                wire:confirm="Are you sure you want to {{ $user->active_status == '1' ? 'deactivate' : 'activate' }} this user?"
+                                size="sm" icon="{{ $user->active_status == '1' ? 'no-symbol' : 'check' }}"
+                                variant="{{ $user->active_status == '1' ? 'danger' : 'primary' }}">
+                            </flux:button>
+
+
+                            <flux:button wire:click="deleteUser({{ $user->id }})"
+                                wire:confirm="Are you sure you want to delete this user?" size="sm" icon="trash"
+                                variant="danger">
+                            </flux:button>
+
                         </td>
                     </tr>
                 @endforeach
@@ -90,4 +113,3 @@
 
     </div>
 </div>
-

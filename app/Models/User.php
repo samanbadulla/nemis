@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
         'profile_picture',
         'remember_token',
+        'active_status',
     ];
 
     /**
@@ -71,8 +72,42 @@ class User extends Authenticatable
             ->implode('');
     }
 
+       /**
+     * Relationship: A user belongs to a person
+     */
     public function people()
     {
         return $this->belongsTo(People::class, 'people_id', 'people_id');
+    }
+
+    /**
+     * Relationship: A user has one current appointment (through their person)
+     */
+    public function currentAppointment()
+    {
+        return $this->hasOne(EmployerCurrentAppointment::class, 'employee_id', 'people_id');
+    }
+
+    /**
+     * Relationship: A user’s workplace (through their current appointment)
+     */
+    public function workplace()
+    {
+        return $this->hasOneThrough(
+            Workplaces::class,
+            EmployerCurrentAppointment::class,
+            'employee_id',   // FK on EmployerCurrentAppointment table
+            'workplace_id',  // FK on Workplaces table
+            'people_id',     // local key on Users table
+            'workplace_id'   // local key on EmployerCurrentAppointment table
+        );
+    }
+
+    /**
+     * Quick accessor to get full workplace details dynamically
+     */
+    public function getFullWorkplaceAttribute()
+    {
+        return $this->workplace?->office();
     }
 }

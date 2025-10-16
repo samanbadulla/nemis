@@ -16,7 +16,7 @@ return new class extends Migration
             $table->char('institution_types_id', 10)->unique()->comment('example. STID01, STID02');
             $table->string('institution_types_name', 50)->unique()->comment('Type Name');
             $table->string('description')->nullable();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

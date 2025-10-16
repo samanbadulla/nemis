@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('province_id',10)->unique();
             $table->string('province_name',50)->unique();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

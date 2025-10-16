@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('blood_group_id', 3)->unique();
             $table->enum('blood_group', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->unique();
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

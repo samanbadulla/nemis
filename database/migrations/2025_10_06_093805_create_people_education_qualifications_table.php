@@ -18,7 +18,7 @@ return new class extends Migration
             $table->char('institution');
             $table->date('effective_date');
             $table->char('description')->nullable();
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('people_id')->references('people_id')->on('people')->onDelete('restrict')->onUpdate('cascade');

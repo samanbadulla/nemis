@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('gender_id', 10)->unique()->comment('GEN001, GEN002, GEN003');
             $table->string('gender_name');
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

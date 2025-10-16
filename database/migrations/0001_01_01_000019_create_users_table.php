@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->rememberToken();
-            $table->char('active_status', 1)->default('1')->comment('1=Active, 0=Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('nic_hash')->references('nic_hash')->on('people')->onDelete('restrict')->onUpdate('cascade');

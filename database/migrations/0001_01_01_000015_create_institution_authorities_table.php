@@ -16,7 +16,7 @@ return new class extends Migration
             $table->char('authority_id', 10)->unique()->comment('example. AUID01, AUID02');
             $table->string('authority_name', 150)->unique()->comment('Ministry of Education, Department of Education, etc.');
             $table->string('description')->nullable();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

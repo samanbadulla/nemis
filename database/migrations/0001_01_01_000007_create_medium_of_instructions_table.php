@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('medium_id', 10)->unique();
             $table->string('name', 100);
-            $table->char('active_status', 1)->default('1')->comment('1=Active, 0=Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

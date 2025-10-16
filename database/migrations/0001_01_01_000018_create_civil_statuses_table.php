@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('civil_status_id', 3)->unique();
             $table->string('civil_status_name', 50);
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

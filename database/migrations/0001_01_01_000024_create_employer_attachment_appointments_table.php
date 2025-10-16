@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('position_id', 10)->comment('e.g., POS001, POS002, get from position table');
             $table->char('office_level_id', 10)->comment('e.g., OFF001, OFF002');
             $table->char('workplace_id', 20)->comment('ID of the primary office');
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('people_id')->on('people')->onDelete('cascade')->onUpdate('cascade');

@@ -17,7 +17,7 @@ class UserEdit extends Component
 
     public $allRole;
     public $user;
-    
+
     protected function rules()
     {
         return [
@@ -35,8 +35,17 @@ class UserEdit extends Component
             'nic' => [
                 'required',
                 'string',
-                'max:12',
-                Rule::unique('users', 'nic')->ignore($this->user->id),
+                'regex:/^(\d{9}[vVxX]|\d{12})$/',
+                function ($attribute, $value, $fail) {
+                    $hashedNic = hash('sha256', strtoupper($value));
+                    $exists = User::where('nic_hash', $hashedNic)
+                        ->when($this->user, fn($q) => $q->where('id', '!=', $this->user->id))
+                        ->exists();
+
+                    if ($exists) {
+                        $fail('This NIC is already registered.');
+                    }
+                },
             ],
 
             'contact' => [

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('appointment_letter_no')->nullable()->comment('Appointment letter number');
             $table->string('appointment_letter')->nullable()->comment('Path to the appointment letter document');
             $table->char('w_op_no', 10)->nullable()->comment('W&OP number'); // fixed
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             // Composite unique constraint

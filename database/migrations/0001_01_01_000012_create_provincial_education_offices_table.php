@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('postal_code', 10)->nullable();
             $table->decimal('latitude', 10, 7)->nullable();  // total 10 digits, 7 after decimal
             $table->decimal('longitude', 10, 7)->nullable();
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('pmoe_wp_id')->references('workplace_id')->on('provincial_ministry_of_education_offices')->onDelete('cascade')->onUpdate('cascade');

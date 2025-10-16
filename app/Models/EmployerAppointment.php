@@ -99,4 +99,9 @@ class EmployerAppointment extends Model
         return $this->belongsTo(OfficeLevel::class, 'office_level_id', 'office_level_id');
     }
 
+    public function workplace()
+    {
+        return $this->belongsTo(Workplaces::class, 'workplace_id', 'workplace_id');
+    }
+
 }

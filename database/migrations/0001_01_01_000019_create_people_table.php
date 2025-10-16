@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('latitude', 10)->nullable();
             $table->string('longitude', 10)->nullable();
             $table->string('profile_picture')->nullable();
-            $table->enum('active_status', ['0', '1'])->default('1')->comment('1: Active, 0: Inactive');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('district_id')->references('district_id')->on('districts_lists')->onDelete('restrict')->onUpdate('cascade');

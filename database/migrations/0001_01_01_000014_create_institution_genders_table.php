@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('gender_id',10)->unique();
             $table->string('name',100);
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }

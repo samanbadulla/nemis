@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('postcode',10);
             $table->string('latitude',10);
             $table->string('longitude',10);
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             // Foreign key constraint

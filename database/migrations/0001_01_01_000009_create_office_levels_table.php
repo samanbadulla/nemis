@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('office_level_id', 10)->unique()->comment('e.g., OLID01, OLID02, etc.');
             $table->integer('office_level_rank')->nullable()->comment('1 for the highest level, increasing with lower levels');
             $table->string('office_level_name', 100)->comment('e.g., school, divisional education office, zonal education office, provincial education office, ministry');
-            $table->enum('active_status', ['1','0'])->default('1');
+            $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
         });
     }
