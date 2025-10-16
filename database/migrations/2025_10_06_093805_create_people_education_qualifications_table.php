@@ -17,6 +17,7 @@ return new class extends Migration
             $table->char('qualifications_id', 10);
             $table->char('institution');
             $table->date('effective_date');
+            $table->enum('grade', ['1','2', '3', '4', '5'])->default('5');
             $table->char('description')->nullable();
             $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();

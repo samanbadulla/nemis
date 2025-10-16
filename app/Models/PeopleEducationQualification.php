@@ -16,6 +16,7 @@ class PeopleEducationQualification extends Model
         'qualifications_id',
         'institution',
         'effective_date',
+        'grade',
         'description',
         'active_status',
     ];

@@ -52,26 +52,55 @@
                                 <flux:separator variant="subtle" />
                             </div>
 
-                            <flux:modal name="add-qualification" class="md:w-96">
+                            <flux:modal wire:model="showModal" name="add-qualification" class="md:w-96">
                                 <div class="space-y-6">
                                     <div>
                                         <flux:heading size="lg">Update qualification</flux:heading>
-                                        <flux:text class="mt-2">Make changes to your qualification details.</flux:text>
+                                        <flux:text class="mt-2">Make changes to your qualification details.
+                                        </flux:text>
                                     </div>
 
-                                    <flux:input label="Name" placeholder="Your name" />
+                                    <form wire:submit.prevent="save" class="space-y-4">
+                                        <flux:select wire:model.live="qualification" label="Qualification">
+                                            <flux:select.option value="">Select</flux:select.option>
+                                            @foreach ($educationQualificationList as $data)
+                                                <flux:select.option value="{{ $data->qualifications_id }}">
+                                                    {{ $data->qualification }}
+                                                </flux:select.option>
+                                            @endforeach
+                                        </flux:select>
 
-                                    <flux:input label="Name" placeholder="Your name" />
+                                        <flux:input label="Institution" wire:model.live="institution"
+                                            placeholder="University or Institution name" />
 
-                                    <flux:input label="Date of birth" type="date" />
+                                        <flux:input label="Effective date" wire:model.live="effectiveDate"
+                                            type="date" />
 
-                                    <div class="flex">
-                                        <flux:spacer />
+                                        <flux:select wire:model.live="grade" label="Grade">
+                                            <flux:select.option value="">Select</flux:select.option>
+                                            @foreach ($gradeOption as $key => $value)
+                                                <flux:select.option value="{{ $key }}">{{ $value }}
+                                                </flux:select.option>
+                                            @endforeach
+                                        </flux:select>
 
-                                        <flux:button type="submit" variant="primary">Save changes</flux:button>
-                                    </div>
+                                        <flux:textarea rows="2" wire:model.live="description" label="Description"
+                                            placeholder="Main Subjects and other details" />
+
+                                        <div class="flex">
+                                            <flux:spacer />
+                                            <flux:button type="submit" variant="primary">Save changes</flux:button>
+                                        </div>
+                                    </form>
                                 </div>
                             </flux:modal>
+
+                            @if (session()->has('message'))
+                                <div class="mt-3 text-green-600">
+                                    {{ session('message') }}
+                                </div>
+                            @endif
+
 
 
                             <div class="bg-white">
@@ -98,7 +127,7 @@
                                                 </th>
                                                 <th scope="col"
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                    Grade / Result
+                                                    Grade
                                                 </th>
                                                 <th scope="col"
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -111,87 +140,42 @@
                                         <tbody
                                             class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
 
-                                            {{-- Row 1 --}}
-                                            <tr class="hover:bg-indigo-50 dark:hover:bg-indigo-900/40">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                    Master of Science (M.S.) in Computer Science
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                                    Global Tech University
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                                    2022
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 dark:text-green-400 font-semibold">
-                                                    4.0 GPA
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                    <div class="flex gap-2">
-                                                        <flux:button icon="pencil-square" variant="subtle"
-                                                            size="sm" />
-                                                        <flux:button icon="trash" variant="subtle" size="sm" />
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @forelse ($qualificationList as $data)
+                                                <tr class="hover:bg-indigo-50 dark:hover:bg-indigo-900/40">
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                        {{ $data->qualification->qualification }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                                                        {{ $data->institution }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                                                        {{ $data->effective_date }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 dark:text-green-400 font-semibold">
+                                                        {{ $data->grade }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                        <div class="flex gap-2">
+                                                            <flux:button icon="trash" variant="subtle" size="sm"
+                                                                wire:click="delete({{ $data->id }})"
+                                                                onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
 
-                                            {{-- Row 2 --}}
-                                            <tr
-                                                class="bg-gray-50 dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/40">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                    Bachelor of Technology (B.Tech) in IT
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                                    Regional Engineering College
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                                    2020
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 dark:text-green-400 font-semibold">
-                                                    85%
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                    <div class="flex gap-2">
-                                                        <flux:button icon="pencil-square" variant="subtle"
-                                                            size="sm" />
-                                                        <flux:button icon="trash" variant="subtle" size="sm" />
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr class="hover:bg-indigo-50 dark:hover:bg-indigo-900/40">
+                                                    <td colspan="5"
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                        No data
+                                                    </td>
+                                                </tr>
+                                            @endforelse
 
-                                            {{-- Row 3 --}}
-                                            <tr class="hover:bg-indigo-50 dark:hover:bg-indigo-900/40">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                    High School Diploma / HSC
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                                    City Public School
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                                    2016
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 dark:text-green-400 font-semibold">
-                                                    92%
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                    <div class="flex gap-2">
-                                                        <flux:button icon="pencil-square" variant="subtle"
-                                                            size="sm" />
-                                                        <flux:button icon="trash" variant="subtle" size="sm" />
-                                                    </div>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
