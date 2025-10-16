@@ -23,6 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Generate a unique NIC
         $nic = $this->faker->unique()->numerify('#########V');
 
         return [
@@ -31,8 +32,12 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+
             'nic' => $nic,
-            'nic_hash'       => hash('sha256', $nic), // hash the NIC
+            'nic_hash' => hash('sha256', $nic), // deterministic hash of NIC
+
+            // Unique Sri Lankan-style contact number
+            'contact' => $this->faker->unique()->numerify('07########'),
         ];
     }
 
