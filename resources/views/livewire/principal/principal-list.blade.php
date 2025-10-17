@@ -153,7 +153,7 @@
                             {{ $employee->email }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
-                            <a href="#">
+                            <a href="{{ route('principal.profile.index', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
                             <a href="">

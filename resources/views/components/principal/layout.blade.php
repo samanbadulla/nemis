@@ -2,9 +2,9 @@
     <div class="me-10 w-full pb-4 md:w-[220px]">
         <flux:navlist>
             <flux:navlist.item :href="route('principal.profile.index', $principalid)" wire:navigate>{{ __('General') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('teacher.profile.qualification', $principalid)" wire:navigate>{{ __('Qualification') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('teacher.profile.employment', $principalid)" wire:navigate>{{ __('Employment') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('teacher.profile.family', $principalid)" wire:navigate>{{ __('Family') }}</flux:navlist.item>
+            <flux:navlist.item :href="route('principal.profile.qualification', $principalid)" wire:navigate>{{ __('Qualification') }}</flux:navlist.item>
+            <flux:navlist.item :href="route('principal.profile.employment', $principalid)" wire:navigate>{{ __('Employment') }}</flux:navlist.item>
+            <flux:navlist.item :href="route('principal.profile.family', $principalid)" wire:navigate>{{ __('Family') }}</flux:navlist.item>
         </flux:navlist>
     </div>
 
