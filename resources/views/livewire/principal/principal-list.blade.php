@@ -9,7 +9,7 @@
 
             {{-- Search Button (Modal Trigger) --}}
             <flux:modal.trigger name="search-profile">
-                <flux:input as="button" placeholder="Search Teacher..." icon="magnifying-glass" kbd="⌘K"
+                <flux:input as="button" placeholder="Search principals..." icon="magnifying-glass" kbd="⌘K"
                     class="w-48 md:w-60 cursor-pointer transition-all hover:shadow-sm focus:ring-2 focus:ring-blue-500" />
             </flux:modal.trigger>
 
@@ -18,7 +18,7 @@
                 <a href="{{ route('principal.create') }}">
                     <flux:button icon="plus" color="primary"
                         class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
-                        Create Teacher
+                        Create Principal
                     </flux:button>
                 </a>
             @endcan
@@ -29,10 +29,10 @@
                     {{-- Header --}}
                     <div class="text-center">
                         <flux:heading size="lg" class="text-gray-800 dark:text-gray-100">
-                            Search Teacher Profile
+                            Search principal Profile
                         </flux:heading>
                         <flux:text class="mt-2 text-gray-500 dark:text-gray-400 text-sm">
-                            Search for a teacher by
+                            Search for a principal by
                             <span class="font-semibold text-gray-700 dark:text-gray-300">NIC</span>.
                         </flux:text>
                     </div>
@@ -46,16 +46,16 @@
                     {{-- Results --}}
                     @if (!empty($results) && count($results) > 0)
                         <ul class="divide-y divide-gray-200 dark:divide-gray-700 mt-2">
-                            @foreach ($results as $teacher)
+                            @foreach ($results as $principal)
                                 <li
                                     class="py-2 px-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md cursor-pointer transition">
-                                    <a href="{{route('teacher.profile.index', $teacher->id)}}">
+                                    <a href="{{route('principal.profile.index', $principal->id)}}">
                                         <div class="flex justify-between items-center">
                                             <span class="font-semibold text-gray-800 dark:text-gray-100">
-                                                {{ $teacher['name_with_initials'] }}
+                                                {{ $principal['name_with_initials'] }}
                                             </span>
                                             <span class="text-sm text-gray-500 dark:text-gray-400">
-                                                {{ $teacher['nic'] }}
+                                                {{ $principal['nic'] }}
                                             </span>
                                         </div>
                                     </a>
@@ -64,7 +64,7 @@
                         </ul>
                     @elseif(strlen($query) >= 10)
                         <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-2">
-                            No teachers found.
+                            No principals found.
                         </p>
                     @endif
 

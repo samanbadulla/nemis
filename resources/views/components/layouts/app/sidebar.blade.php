@@ -6,7 +6,32 @@
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
-    <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <flux:sidebar sticky
+        stashable
+        class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
+            x-data="{
+            openGroup: null,
+            toggleGroup(name) {
+                this.openGroup = this.openGroup === name ? null : name;
+                localStorage.setItem('openGroup', this.openGroup);
+            },
+            init() {
+                const saved = localStorage.getItem('openGroup');
+
+                // detect if it's the user's first ever visit
+                if (!localStorage.getItem('hasVisitedBefore')) {
+                    // first visit → collapse all
+                    this.openGroup = null;
+                    localStorage.setItem('hasVisitedBefore', 'true');
+                    localStorage.removeItem('openGroup');
+                } else if (saved) {
+                    // not first visit → restore previously open group
+                    this.openGroup = saved;
+                }
+            }
+        }"
+        x-init="init()"
+    >
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
@@ -25,21 +50,49 @@
                 <flux:navlist.item icon="home-modern" :href="route('institutions.index')" :current="request()->routeIs('institutions.index')" wire:navigate>{{ __('Institutions') }}</flux:navlist.item>
             </flux:navlist.group>
 
-            <flux:navlist.group expandable heading="Offices" class="grid">
-                <flux:navlist.item icon="squares-2x2" :href="route('offices.index')" :current="request()->routeIs('offices.index')" wire:navigate>{{ __('Overview') }}</flux:navlist.item>
-                <flux:navlist.item icon="building-office-2" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>{{ __('Education Ministries') }}</flux:navlist.item>
-                <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')" :current="request()->routeIs('offices.pmoe.list')" wire:navigate>{{ __('Provincial Ministries') }}</flux:navlist.item>
-                <flux:navlist.item icon="building-office" :href="route('offices.peo.list', $id = '0')" :current="request()->routeIs('offices.peo.list', 0)" wire:navigate>{{ __('Provincial Offices') }}</flux:navlist.item>
-                <flux:navlist.item icon="building-office" :href="route('offices.zeo.list')" :current="request()->routeIs('offices.zeo.list')" wire:navigate>{{ __('Zonal Offices') }}</flux:navlist.item>
-                <flux:navlist.item icon="building-office" :href="route('offices.deo.list')" :current="request()->routeIs('offices.deo.list')" wire:navigate>{{ __('Divisional Offices') }}</flux:navlist.item>
+            <flux:navlist.group
+                expandable
+                heading="Offices"
+                class="grid"
+                x-bind:open="openGroup === 'offices'"
+                x-on:click.stop="toggleGroup('offices')"
+            >
+                <flux:navlist.item icon="squares-2x2" :href="route('offices.index')" :current="request()->routeIs('offices.index')" wire:navigate>
+                    {{ __('Overview') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="building-office-2" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>
+                    {{ __('Education Ministries') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')" :current="request()->routeIs('offices.pmoe.list')" wire:navigate>
+                    {{ __('Provincial Ministries') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="building-office" :href="route('offices.peo.list', 0)" :current="request()->routeIs('offices.peo.list')" wire:navigate>
+                    {{ __('Provincial Offices') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="building-office" :href="route('offices.zeo.list')" :current="request()->routeIs('offices.zeo.list')" wire:navigate>
+                    {{ __('Zonal Offices') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="building-office" :href="route('offices.deo.list')" :current="request()->routeIs('offices.deo.list')" wire:navigate>
+                    {{ __('Divisional Offices') }}
+                </flux:navlist.item>
             </flux:navlist.group>
 
-            <flux:navlist.group expandable heading="Employers" class="grid">
-                <flux:navlist.item icon="academic-cap" :href="route('teacher.list')" :current="request()->routeIs('teacher.list')"
-                    wire:navigate>{{ __('Teacher') }}</flux:navlist.item>
-                <flux:navlist.item  icon="users" :href="route('principal.list')" :current="request()->routeIs('principal.list')"
-                    wire:navigate>{{ __('Principal') }}</flux:navlist.item>
+
+            <flux:navlist.group
+                expandable
+                heading="Employers"
+                class="grid"
+                x-bind:open="openGroup === 'employers'"
+                x-on:click.stop="toggleGroup('employers')"
+            >
+                <flux:navlist.item icon="academic-cap" :href="route('teacher.list')" :current="request()->routeIs('teacher.list')" wire:navigate>
+                    {{ __('Teacher') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="users" :href="route('principal.list')" :current="request()->routeIs('principal.list')" wire:navigate>
+                    {{ __('Principal') }}
+                </flux:navlist.item>
             </flux:navlist.group>
+
 
         </flux:navlist>
 
