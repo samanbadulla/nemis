@@ -52,6 +52,80 @@
                             </div>
 
                             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+
+                                {{-- Religion --}}
+                                <div
+                                    class="p-2 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Service
+                                    </p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->appointment->service->service_name }}</p>
+                                </div>
+
+                                {{-- Ethnicity --}}
+                                <div
+                                    class="p-2 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                                        First Service Rank</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->appointment->rank->rank_name }}</p>
+                                </div>
+
+                                {{-- Civil Status --}}
+                                <div
+                                    class="p-2 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Types of
+                                        teachers</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->teacherType->type_name }}</p>
+                                </div>
+
+                                {{-- Civil Status --}}
+                                <div
+                                    class="p-2 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                                        Appointment medium</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->medium->name }}</p>
+                                </div>
+
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+                                {{-- Name with Initials --}}
+                                <div
+                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                                        Secondary teaching subject (optional)</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->secondarySubject->name_en }}</p>
+                                </div>
+                                {{-- Name with Initials --}}
+                                <div
+                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Current
+                                        teaching subject (optional)</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->currentTeachingSubject->name_en }}</p>
+                                </div>
+                            </div>
+
+                        </section>
+
+                        {{-- 1. Personal & Socio-Cultural Details --}}
+                        <section>
+                            <div class="mb-3">
+                                <div class="flex items-baseline justify-between py-2">
+                                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
+                                        First Employment
+                                    </h2>
+                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit
+                                    </flux:button>
+                                </div>
+                                <flux:separator variant="subtle" />
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
                                 {{-- DOB --}}
                                 <div
                                     class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
@@ -68,7 +142,8 @@
                                         appointment date
                                     </p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacherAppointment->appointment->first_appointment_date->format('d-m-Y') }}</p>
+                                        {{ $teacherAppointment->appointment->first_appointment_date->format('d-m-Y') }}
+                                    </p>
                                 </div>
 
                                 {{-- DOB --}}
@@ -143,26 +218,9 @@
                                 {{-- Name with Initials --}}
                                 <div
                                     class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Main
-                                        teaching subject</p>
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">subject</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                         {{ $teacherAppointment->mainSubject->name_en }}</p>
-                                </div>
-                                {{-- Name with Initials --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                                        Secondary teaching subject (optional)</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacherAppointment->secondarySubject->name_en }}</p>
-                                </div>
-                                {{-- Name with Initials --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Current
-                                        teaching subject (optional)</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacherAppointment->currentTeachingSubject->name_en }}</p>
                                 </div>
                             </div>
 
@@ -187,7 +245,8 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                                         Institution name</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        [{{ $teacherAppointment->currentAppointment->workplace->office()->census_no }}] {{$teacherAppointment->currentAppointment->workplace->office()->name }}</p>
+                                        [{{ $teacherAppointment->currentAppointment->workplace->office()->census_no }}]
+                                        {{ $teacherAppointment->currentAppointment->workplace->office()->name }}</p>
                                 </div>
                                 {{-- Name with Initials --}}
                                 <div
@@ -204,7 +263,7 @@
                                 class="mt-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
                                 <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Address</p>
                                 <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                    {{ $teacherAppointment->currentAppointment->workplace->office()->address  }}<br>
+                                    {{ $teacherAppointment->currentAppointment->workplace->office()->address }}<br>
                                 </p>
                             </div>
 
@@ -215,10 +274,45 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
-                                        Previous Rank
+                                        Servise Recode
                                     </h2>
+                                    <flux:modal.trigger name="add-service-record">
+                                        <flux:button icon="pencil-square" size="sm" variant="primary">Service
+                                            Recode Add</flux:button>
+                                    </flux:modal.trigger>
                                 </div>
-                                <flux:separator variant="subtle" />
+
+                                <flux:modal name="add-service-record" class="md:w-100" wire:model="showModal">
+                                    <div class="space-y-6">
+                                        <div>
+                                            <flux:heading size="lg">Add Service Record</flux:heading>
+                                            <flux:text class="mt-2">Enter the details of the new service record.
+                                            </flux:text>
+                                        </div>
+
+                                        <form wire:submit.prevent="save" class="space-y-4">
+                                            <flux:input label="Appointment Date" type="date"
+                                                wire:model="appoint_date" />
+                                            <flux:input label="Service ID" wire:model="service_id"
+                                                placeholder="Enter service ID" />
+                                            <flux:input label="Rank ID" wire:model="rank_id"
+                                                placeholder="Enter rank ID" />
+                                            <flux:input label="Office Level ID" wire:model="office_level_id"
+                                                placeholder="Enter office level ID" />
+                                            <flux:input label="Position ID" wire:model="position_id"
+                                                placeholder="Enter position ID" />
+                                            <flux:input label="Workplace ID" wire:model="workplace_id"
+                                                placeholder="Enter workplace ID" />
+
+                                            <div class="flex">
+                                                <flux:spacer />
+                                                <flux:button type="submit" variant="primary">Save changes
+                                                </flux:button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </flux:modal>
+
                             </div>
                             <div class="bg-white">
 
@@ -258,84 +352,32 @@
                                             {{-- Example static data for demonstration. In Blade, you'd use @foreach ($qualifications as $qualification) --}}
 
                                             {{-- Row 1: Master's Degree --}}
-                                            <tr class="hover:bg-indigo-50/50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    Master of Science (M.S.) in Computer Science
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    Global Tech University
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    2022
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    4.0 GPA
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    <flux:button icon="pencil-square" variant="subtle"
-                                                        size="sm" />
-                                                    <flux:button icon="trash" variant="subtle" size="sm" />
-                                                </td>
-                                            </tr>
-
-                                            {{-- Row 2: Bachelor's Degree --}}
-                                            <tr class="bg-gray-50 hover:bg-indigo-50/50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    Bachelor of Technology (B.Tech) in IT
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    Regional Engineering College
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    2020
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    85%
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    <flux:button icon="pencil-square" variant="subtle"
-                                                        size="sm" />
-                                                    <flux:button icon="trash" variant="subtle" size="sm" />
-                                                </td>
-                                            </tr>
-
-                                            {{-- Row 3: High School --}}
-                                            <tr class="hover:bg-indigo-50/50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    High School Diploma / HSC
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    City Public School
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    2016
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    92%
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    <flux:button icon="pencil-square" variant="subtle"
-                                                        size="sm" />
-                                                    <flux:button icon="trash" variant="subtle" size="sm" />
-                                                </td>
-                                            </tr>
-
-                                            {{-- @empty
-                                                <tr class="bg-white">
-                                                    <td colspan="4" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                                                        No educational qualifications have been added yet.
+                                            @forelse ($serviceUpdate as $item)
+                                                <tr class="hover:bg-indigo-50/50">
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                        Master of Science (M.S.) in Computer Science
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                                        Global Tech University
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                                        2022
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
+                                                        4.0 GPA
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
+                                                        <flux:button icon="pencil-square" variant="subtle"
+                                                            size="sm" />
+                                                        <flux:button icon="trash" variant="subtle"
+                                                            size="sm" />
                                                     </td>
                                                 </tr>
-                                            @endforelse --}}
+                                            @empty
+                                            @endforelse
 
                                         </tbody>
                                     </table>
@@ -349,7 +391,7 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
-                                        Previous School
+                                        Previous working place
                                     </h2>
                                     {{-- <flux:button icon="plus" size="sm" variant="primary">Add</flux:button> --}}
                                 </div>

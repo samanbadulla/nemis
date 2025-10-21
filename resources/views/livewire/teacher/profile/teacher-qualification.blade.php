@@ -101,8 +101,6 @@
                                 </div>
                             @endif
 
-
-
                             <div class="bg-white">
 
                                 {{-- Responsive Table Container --}}

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teacher\Profile;
 
+use App\Models\EmployerAppointmentHistory;
 use App\Models\People;
 use App\Models\Teacher;
 use Livewire\Component;
@@ -27,6 +28,7 @@ class TeacherEmployment extends Component
 
     public function render()
     {
-        return view('livewire.teacher.profile.teacher-employment');
+        $serviceUpdate = EmployerAppointmentHistory::where('employee_id', $this->people->currentAppointment->employee_id)->get();
+        return view('livewire.teacher.profile.teacher-employment', compact('serviceUpdate'));
     }
 }
