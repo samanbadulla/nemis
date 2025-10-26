@@ -18,4 +18,12 @@ class CivilStatus extends Model
         'civil_status_name',
         'active_status',
     ];
+
+    /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
 }

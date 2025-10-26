@@ -21,6 +21,14 @@ class DivisionalSecretariatOffice extends Model
     ];
 
     /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
+    /**
      * Relationship: DSO belongs to a District
      */
     public function district()

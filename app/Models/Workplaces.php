@@ -59,4 +59,21 @@ class Workplaces extends Model
             default   => null,
         };
     }
+
+    /**
+     * Get the actual name of the workplace based on its office level.
+     */
+    public function getOfficeNameAttribute()
+    {
+        $office = $this->office();
+
+        if (!$office) {
+            return 'Unknown Office';
+        }
+
+        // Return the name field that exists in your related office models
+        return $office->name
+            ?? $office->short_name
+            ?? 'Unnamed Office';
+    }
 }

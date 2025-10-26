@@ -18,6 +18,12 @@ class SubjectList extends Model
         'name_en',
         'name_si',
         'name_ta',
-        'status',
+        'active_status',
     ];
+
+    // If you want to filter active institutions by default
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', 1);
+    }
 }

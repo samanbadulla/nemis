@@ -22,6 +22,75 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <style>
+        @keyframes gradient-x {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 10s ease infinite;
+        }
+
+        @keyframes pulse-slow {
+
+            0%,
+            100% {
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes fade-in-left {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-left {
+            animation: fade-in-left 0.8s ease-out forwards;
+        }
+
+        @keyframes fade-in-right {
+            0% {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-right {
+            animation: fade-in-right 0.8s ease-out forwards;
+        }
+    </style>
+
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
@@ -30,59 +99,141 @@
     </div>
 
     <main>
+
         <section
-            class="relative flex h-screen items-center bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-950 dark:to-blue-950">
+            class="relative overflow-hidden min-h-dvh bg-gray-950 text-white pt-32 pb-32 lg:pt-40 lg:pb-40 flex items-center">
+            <div aria-hidden="true"
+                class="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 to-indigo-950 opacity-90"></div>
+            <div aria-hidden="true"
+                class="absolute top-0 right-0 w-full h-full lg:w-2/3 transform skew-y-3 origin-top-right bg-gradient-to-bl from-blue-900/50 to-indigo-900/50">
+            </div>
+            <div aria-hidden="true"
+                class="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500 rounded-full opacity-10 blur-3xl animate-pulse-slow z-0 hidden lg:block">
+            </div>
             <div
-                class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-600 via-cyan-400 to-indigo-600 animate-gradient-x">
+                class="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-blue-400 via-indigo-500 to-blue-400 animate-gradient-x z-30">
             </div>
 
-            <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28 flex flex-col lg:flex-row items-center gap-10">
-                <div class="flex-1 text-center lg:text-left">
-                    <h1
-                        class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-blue-900 dark:text-white leading-tight">
-                        Empowering the Future of Education
-                    </h1>
-                    <p class="mt-5 text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0">
-                        Welcome to the <span class="font-semibold text-blue-700 dark:text-cyan-400">National Education
-                            System</span> — a digital hub for teachers, students, and institutions to collaborate,
-                        innovate, and grow through technology and knowledge.
-                    </p>
 
-                    <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
-                        <a href="#learn-more"
-                            class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-md transition-all duration-300">
-                            Learn More
+            <div
+                class="max-w-7xl mx-auto px-6 lg:px-8 w-full relative z-20 flex flex-col lg:flex-row items-center gap-16">
+
+                <div class="flex-1 text-center lg:text-left pt-10 lg:pt-0 animate-fade-in-left">
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tighter mb-4"
+                        style="text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);">
+                        <span
+                            class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">National
+                            Data</span>
+                        for Public Education
+                    </h1>
+                    <p
+                        class="mt-6 text-lg sm:text-xl text-indigo-200 max-w-2xl mx-auto lg:mx-0 opacity-90 border-l-4 border-blue-500 pl-4">
+                        The **Government Education Management System** ensures transparent, secure, and unified data
+                        collection, empowering administrators and policy-makers to drive national educational success.
+                    </p>
+                    <div class="mt-10 lg:mt-12 flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-5">
+                        <a href="#demo"
+                            class="group relative overflow-hidden px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-base sm:text-lg font-extrabold shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
+                            <span class="relative z-10">Access Portal →</span>
+                            <span
+                                class="absolute inset-0 w-full h-full border-4 border-blue-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                         </a>
-                        <a href="#get-app"
-                            class="px-6 py-3 rounded-lg border border-blue-600 text-blue-700 hover:bg-blue-50 dark:text-cyan-300 dark:border-cyan-400 dark:hover:bg-gray-800 font-semibold transition-all duration-300">
-                            Get the App
+                        <a href="#features"
+                            class="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/10 text-blue-300 border border-blue-500/50 hover:bg-white/20 text-base sm:text-lg font-semibold backdrop-blur-sm transition-colors duration-300">
+                            View Policy Brief
                         </a>
+                    </div>
+                    <div
+                        class="mt-10 lg:mt-16 text-xs text-indigo-300 flex justify-center lg:justify-start items-center space-x-3">
+                        <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="uppercase tracking-widest font-medium">An initiative of the Ministry of
+                            Education</span>
                     </div>
                 </div>
 
-                <div class="flex-1 flex flex-col justify-center items-center lg:justify-end">
-                    <img src="{{ asset('images/hero.png') }}" alt="Education Illustration"
-                        class="w-72 sm:w-96 lg:w-[420px] drop-shadow-xl transition-transform duration-500 hover:scale-105" />
+                <div
+                    class="flex-1 flex flex-col justify-center items-center relative lg:pl-16 mt-16 lg:mt-10 animate-fade-in-right">
 
                     <div
-                        class="w-full max-w-md mt-10 p-4 lg:p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl ring-1 ring-gray-200 dark:ring-gray-700">
-                        <div class="grid grid-cols-3 divide-x divide-gray-300 dark:divide-gray-700">
-                            <div class="flex flex-col items-center justify-center px-2 py-1">
-                                <span class="block text-3xl font-extrabold text-blue-700 dark:text-cyan-400">10K+</span>
-                                <span
-                                    class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Schools</span>
+                        class="relative w-full max-w-sm sm:max-w-md lg:max-w-[600px] h-64 sm:h-72 lg:h-96 transform rotate-2">
+
+                        <div
+                            class="absolute inset-0 border border-indigo-600/50 bg-gray-900/60 rounded-xl shadow-2xl shadow-indigo-500/20">
+
+                            <div class="absolute inset-x-0 top-0 h-1 bg-blue-400/50 blur-sm"></div>
+
+                            <div class="absolute inset-y-0 left-4 w-1 bg-gray-800/50"></div>
+                            <div class="absolute inset-y-0 right-4 w-1 bg-gray-800/50"></div>
+
+                            <div
+                                class="absolute left-6 right-6 top-6 h-8 bg-blue-800/40 border border-blue-400/50 flex items-center justify-between px-3 text-xs">
+                                <span class="text-blue-300 font-mono">// HRMS-MODULE-01</span>
+                                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse-slow"></div>
                             </div>
-                            <div class="flex flex-col items-center justify-center px-2 py-1">
-                                <span
-                                    class="block text-3xl font-extrabold text-blue-700 dark:text-cyan-400">250K+</span>
-                                <span
-                                    class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Teachers</span>
+
+                            <div
+                                class="absolute left-6 right-6 top-[4.5rem] h-8 bg-blue-800/40 border border-blue-400/50 flex items-center justify-between px-3 text-xs">
+                                <span class="text-blue-300 font-mono">// SCHOOLS-MODULE-02</span>
+                                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse-slow"></div>
                             </div>
-                            <div class="flex flex-col items-center justify-center px-2 py-1">
-                                <span class="block text-3xl font-extrabold text-blue-700 dark:text-cyan-400">4M+</span>
-                                <span
-                                    class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Students</span>
+
+                            <div
+                                class="absolute left-6 right-6 top-[8rem] h-8 bg-indigo-800/40 border border-indigo-400/50 flex items-center justify-between px-3 text-xs">
+                                <span class="text-indigo-300 font-mono">// ASSESMENT-MODULE-03</span>
+                                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
                             </div>
+
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-blue-900/10 to-indigo-900/10 opacity-70">
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="absolute top-5 left-1/2 transform -translate-x-1/2 p-2 bg-gray-800/80 backdrop-blur-sm rounded-lg border border-blue-400/50 shadow-lg transition-transform duration-300 hover:scale-105">
+                            <p class="text-xs font-semibold text-blue-400">NATIONAL DMS CORE</p>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="w-full max-w-xs sm:max-w-md p-6 bg-gray-800/60 backdrop-blur-xl rounded-2xl shadow-3xl shadow-blue-500/10 border border-blue-400/30 transform -rotate-1 transition-all duration-500 hover:rotate-0 group 
+                       relative mt-10 lg:absolute lg:-bottom-16 sm:left-4 lg:left-0 z-30">
+
+                        <p class="text-sm font-semibold text-blue-400 mb-4 uppercase tracking-widest">Key Performance
+                            Metrics</p>
+                        <div class="grid grid-cols-2 gap-4">
+
+                            <div
+                                class="flex flex-col p-3 bg-gray-900/50 rounded-lg group-hover:bg-gray-700/50 transition-colors">
+                                <span class="text-xs text-gray-400">Student Retention</span>
+                                <span class="text-3xl font-extrabold text-blue-400">92.5%</span>
+                            </div>
+
+                            <div
+                                class="flex flex-col p-3 bg-gray-900/50 rounded-lg group-hover:bg-gray-700/50 transition-colors">
+                                <span class="text-xs text-gray-400">Annual Growth</span>
+                                <span class="text-3xl font-extrabold text-blue-400">+12%</span>
+                            </div>
+
+                            <div
+                                class="col-span-2 mt-2 flex items-center justify-between p-3 bg-gray-900/50 rounded-lg group-hover:bg-gray-700/50 transition-colors">
+                                <div class="flex flex-col">
+                                    <span class="text-sm text-gray-400">Total System Users</span>
+                                    <span class="text-2xl font-extrabold text-blue-400">4.3M+</span>
+                                </div>
+
+                                <div
+                                    class="w-16 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full opacity-70">
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -323,8 +474,8 @@
 
                             <!-- Message -->
                             <div class="sm:col-span-2">
-                                <flux:textarea id="message" rows="4" wire:model.defer="message" label="Message"
-                                    placeholder="Write your message here..." />
+                                <flux:textarea id="message" rows="4" wire:model.defer="message"
+                                    label="Message" placeholder="Write your message here..." />
                                 <flux:error name="message" />
                             </div>
 

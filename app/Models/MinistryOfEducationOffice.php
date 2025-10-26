@@ -28,6 +28,12 @@ class MinistryOfEducationOffice extends Model
         'active_status',
     ];
 
+    // If you want to filter active institutions by default
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', 1);
+    }
+
     public function provincialOffices()
     {
         return $this->hasMany(ProvincialMinistryOfEducationOffice::class, 'moe_wp_id', 'workplace_id');

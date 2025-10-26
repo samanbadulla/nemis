@@ -21,6 +21,14 @@ class DistrictsList extends Model
     ];
 
     /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
+    /**
      * Relationship: District belongs to a Province
      */
     public function province()

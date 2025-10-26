@@ -18,6 +18,12 @@ class OccupationsList extends Model
         'occ_name_en',
         'occ_name_si',
         'occ_name_ta',
-        'status',
+        'active_status',
     ];
+
+    // If you want to filter active institutions by default
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', 1);
+    }
 }

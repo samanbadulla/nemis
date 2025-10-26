@@ -1,14 +1,14 @@
 <div>
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Provincial Ministry of Education Office') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Manage Provincial Ministry of Education Office profile and account') }}
+        <flux:heading size="xl" level="1">{{ __('Provincial Education Office by') }} {{$pmoe->short_name}}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Manage Provincial Education Office profile and account') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
 
         <div class="my-4 gap-2 justify-end flex">
 
-            <a href="{{ route('offices.pmoe.create') }}">
-                <flux:button>Create Provincial Ministry Office</flux:button>
+            <a href="{{ route('offices.peo.create') }}">
+                <flux:button>Create Provincial Office</flux:button>
             </a>
 
         </div>
@@ -35,7 +35,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-700">
-                @forelse ($provincialEducationMinistries as $data)
+                @forelse ($provincialEducationOffices as $data)
                     <tr class="hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
@@ -45,7 +45,8 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                        <flux:link href="{{route('offices.peo.by-pmoe', $data->id)}}" variant="ghost">{{ $data->name }}</flux:link>
+                                        <flux:link href="{{route('offices.zeo.by-province', $data->id)}}" variant="ghost" >{{ $data->name }}</flux:link>
+                                        
                                     </div>
                                     <div class="text-sm text-slate-500 dark:text-slate-400">
                                         Work Place Id: {{ $data->workplace_id }}
@@ -67,20 +68,19 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                            <a href="{{route('offices.pmoe.profile', $data->id)}}">
+                            <a href="{{ route('offices.peo.profile', $data->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
                             <a href="">
                                 <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                             </a>
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
-
                         </td>
                     </tr>
                 @empty
                     <tr colspan="4">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-900 dark:text-slate-100">No Zonal Education Office Found!</div>
+                            <div class="text-sm text-slate-900 dark:text-slate-100">No Provincial Education Office Found!</div>
                         </td>
                     </tr>
                 @endforelse
@@ -90,7 +90,7 @@
 
 
         <div class="mt-4 mx-10">
-            {{ $provincialEducationMinistries->links() }}
+            {{ $provincialEducationOffices->links() }}
         </div>
     </div>
 </div>

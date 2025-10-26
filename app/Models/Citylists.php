@@ -23,4 +23,12 @@ class Citylists extends Model
         'longitude',
         'active_status'
     ];
+
+    /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
 }

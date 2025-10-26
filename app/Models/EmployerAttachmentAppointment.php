@@ -25,6 +25,14 @@ class EmployerAttachmentAppointment extends Model
         'active_status',
     ];
 
+    /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
     // Relationships
 
     public function employee()
@@ -40,5 +48,10 @@ class EmployerAttachmentAppointment extends Model
     public function officeLevel()
     {
         return $this->belongsTo(OfficeLevel::class, 'office_level_id', 'office_level_id');
+    }
+
+    public function workplace()
+    {
+        return $this->belongsTo(Workplaces::class, 'workplace_id', 'workplace_id');
     }
 }

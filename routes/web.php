@@ -48,6 +48,7 @@ use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
 use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
+use App\Livewire\Offices\Peo\ProvincialOfficeByPmoe;
 use App\Livewire\Teacher\Profile\TeacherQualification;
 use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Principal\Profile\PrincipalQualification;
@@ -89,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('offices/peo/list/', PeoOfficesList::class)->name('offices.peo.list');
     Route::get('offices/peo/create', PeoOfficesCreate::class)->name('offices.peo.create');
+    Route::get('offices/peo/{id}/pmoe', ProvincialOfficeByPmoe::class)->name('offices.peo.by-pmoe');
     Route::get('offices/peo/{id}/profile', PeoOfficesProfile::class)->name('offices.peo.profile');
 
     Route::get('offices/pmoe/list', PmoeOfficesList::class)->name('offices.pmoe.list');

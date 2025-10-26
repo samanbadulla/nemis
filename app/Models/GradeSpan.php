@@ -18,4 +18,12 @@ class GradeSpan extends Model
         'grade_span_name',
         'active_status',
     ];
+
+    /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
 }

@@ -22,6 +22,14 @@ class GnDivision extends Model
     ];
 
     /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
+    /**
      * Relationship: GN Division belongs to a Divisional Secretariat Office
      */
     public function divisionalSecretariatOffice()

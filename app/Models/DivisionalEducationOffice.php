@@ -31,6 +31,14 @@ class DivisionalEducationOffice extends Model
     ];
 
     /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
+    /**
      * Relationship: Divisional Education Office belongs to Zonal Education Office
      */
     public function zonalEducationOffice()

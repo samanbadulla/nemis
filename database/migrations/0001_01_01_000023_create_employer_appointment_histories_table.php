@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('position_id', 10)->comment('e.g., POS001, POS002, get from position table');
             $table->char('office_level_id', 10)->comment('e.g., OFF001, OFF002');
             $table->char('workplace_id', 20)->comment('ID of the primary office');
-            $table->enum('updated_type', ['0', '1'])->default('0')->comment('0: Promotion, 1: Transfer, 2:Rank Change, 3: Retirement, 4: Other');
+            $table->enum('updated_type', ['0', '1'])->default('0')->comment('0: Position, 1:Rank Change, 2: Transfer, 3: Retirement, 4: Other');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('people_id')->on('people')->onDelete('cascade')->onUpdate('cascade');

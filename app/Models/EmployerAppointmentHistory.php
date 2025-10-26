@@ -53,4 +53,9 @@ class EmployerAppointmentHistory extends Model
     {
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
     }
+
+    public function workplace()
+    {
+        return $this->belongsTo(Workplaces::class, 'workplace_id', 'workplace_id');
+    }
 }

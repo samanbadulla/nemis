@@ -49,6 +49,14 @@ class EmployerAppointment extends Model
     }
 
     /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
+    /**
      * Generate unique appointment ID
      * Format: AP + Year (4) + Sequence (5)
      */

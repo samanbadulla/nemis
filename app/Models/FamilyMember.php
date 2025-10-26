@@ -37,6 +37,14 @@ class FamilyMember extends Model
     ];
 
     /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
+
+    /**
      * Relationship: A FamilyMember belongs to a Family.
      */
     public function family()

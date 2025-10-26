@@ -13,6 +13,14 @@ class DivisionOffice extends Model
         'zone_id',
         'deo_name',
         'deo_short_name',
-        'status'
+        'active_status'
     ];
+
+    /**
+     * Scope for active institution types
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', '1');
+    }
 }

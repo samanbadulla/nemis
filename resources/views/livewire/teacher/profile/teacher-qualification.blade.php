@@ -141,9 +141,12 @@
                                             @forelse ($qualificationList as $data)
                                                 <tr class="hover:bg-indigo-50 dark:hover:bg-indigo-900/40">
                                                     <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                        {{ $data->qualification->qualification }}
+                                                        class="px-6 py-4 whitespace-normal break-words text-sm text-gray-700 dark:text-gray-300">
+                                                        <p class="whitespace-normal break-words">
+                                                            {{ $data->qualification->qualification }}
+                                                        </p>
                                                     </td>
+
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
                                                         {{ $data->institution }}

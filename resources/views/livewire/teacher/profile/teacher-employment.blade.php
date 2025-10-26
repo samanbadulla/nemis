@@ -218,7 +218,8 @@
                                 {{-- Name with Initials --}}
                                 <div
                                     class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">subject</p>
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">subject
+                                    </p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                         {{ $teacherAppointment->mainSubject->name_en }}</p>
                                 </div>
@@ -274,45 +275,13 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
-                                        Servise Recode
+                                        Previous Service-related information
                                     </h2>
                                     <flux:modal.trigger name="add-service-record">
-                                        <flux:button icon="pencil-square" size="sm" variant="primary">Service
-                                            Recode Add</flux:button>
+                                        <flux:button icon="plus" size="sm" variant="primary">Previous Record
+                                        </flux:button>
                                     </flux:modal.trigger>
                                 </div>
-
-                                <flux:modal name="add-service-record" class="md:w-100" wire:model="showModal">
-                                    <div class="space-y-6">
-                                        <div>
-                                            <flux:heading size="lg">Add Service Record</flux:heading>
-                                            <flux:text class="mt-2">Enter the details of the new service record.
-                                            </flux:text>
-                                        </div>
-
-                                        <form wire:submit.prevent="save" class="space-y-4">
-                                            <flux:input label="Appointment Date" type="date"
-                                                wire:model="appoint_date" />
-                                            <flux:input label="Service ID" wire:model="service_id"
-                                                placeholder="Enter service ID" />
-                                            <flux:input label="Rank ID" wire:model="rank_id"
-                                                placeholder="Enter rank ID" />
-                                            <flux:input label="Office Level ID" wire:model="office_level_id"
-                                                placeholder="Enter office level ID" />
-                                            <flux:input label="Position ID" wire:model="position_id"
-                                                placeholder="Enter position ID" />
-                                            <flux:input label="Workplace ID" wire:model="workplace_id"
-                                                placeholder="Enter workplace ID" />
-
-                                            <div class="flex">
-                                                <flux:spacer />
-                                                <flux:button type="submit" variant="primary">Save changes
-                                                </flux:button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </flux:modal>
-
                             </div>
                             <div class="bg-white">
 
@@ -326,11 +295,15 @@
                                             <tr>
                                                 <th scope="col"
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Position
+                                                </th>
+                                                <th scope="col"
+                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Service
                                                 </th>
                                                 <th scope="col"
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Rank
+                                                    Grade/Rank
                                                 </th>
                                                 <th scope="col"
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -341,7 +314,7 @@
                                                     End date
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Action
                                                 </th>
                                             </tr>
@@ -352,31 +325,41 @@
                                             {{-- Example static data for demonstration. In Blade, you'd use @foreach ($qualifications as $qualification) --}}
 
                                             {{-- Row 1: Master's Degree --}}
-                                            @forelse ($serviceUpdate as $item)
+                                            @forelse ($serviceUpdate->where('updated_type', '!=', '1') as $item)
                                                 <tr class="hover:bg-indigo-50/50">
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                        Master of Science (M.S.) in Computer Science
+                                                        {{ $item->position->position_name }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                        {{ $item->service->service_name }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                        Global Tech University
+                                                        {{ $item->rank->rank_name }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                        2022
+                                                        {{ $item->appoint_date }}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                        4.0 GPA
+                                                        {{ $item->end_date }}
                                                     </td>
                                                     <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                        <flux:button icon="pencil-square" variant="subtle"
-                                                            size="sm" />
-                                                        <flux:button icon="trash" variant="subtle"
-                                                            size="sm" />
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold justify-end flex gap-1">
+                                                        {{-- Delete button triggers Livewire method --}}
+                                                        <flux:button icon="trash" variant="subtle" size="sm"
+                                                            wire:click="deleteServiceRecord({{ $item->id }})"
+                                                            onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
                                                     </td>
                                                 </tr>
                                             @empty
+                                                <tr>
+                                                    <td colspan="6"
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
+                                                        No previous service records found.
+                                                    </td>
+                                                </tr>
                                             @endforelse
 
                                         </tbody>
@@ -393,9 +376,7 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Previous working place
                                     </h2>
-                                    {{-- <flux:button icon="plus" size="sm" variant="primary">Add</flux:button> --}}
                                 </div>
-                                <flux:separator variant="subtle" />
                             </div>
                             <div class="bg-white">
 
@@ -424,7 +405,7 @@
                                                     Release date
                                                 </th>
                                                 <th scope="col"
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Action
                                                 </th>
                                             </tr>
@@ -432,88 +413,39 @@
 
                                         {{-- Table Body (Using Blade for dynamic data) --}}
                                         <tbody class="bg-white divide-y divide-gray-200">
-                                            {{-- Example static data for demonstration. In Blade, you'd use @foreach ($qualifications as $qualification) --}}
-
-                                            {{-- Row 1: Master's Degree --}}
-                                            <tr class="hover:bg-indigo-50/50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    Master of Science (M.S.) in Computer Science
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    Global Tech University
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    2022
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    4.0 GPA
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    <flux:button icon="pencil-square" variant="subtle"
-                                                        size="sm" />
-                                                    <flux:button icon="trash" variant="subtle" size="sm" />
-                                                </td>
-                                            </tr>
-
-                                            {{-- Row 2: Bachelor's Degree --}}
-                                            <tr class="bg-gray-50 hover:bg-indigo-50/50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    Bachelor of Technology (B.Tech) in IT
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    Regional Engineering College
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    2020
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    85%
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    <flux:button icon="pencil-square" variant="subtle"
-                                                        size="sm" />
-                                                    <flux:button icon="trash" variant="subtle" size="sm" />
-                                                </td>
-                                            </tr>
-
-                                            {{-- Row 3: High School --}}
-                                            <tr class="hover:bg-indigo-50/50">
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                    High School Diploma / HSC
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    City Public School
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                    2016
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    92%
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                                    <flux:button icon="pencil-square" variant="subtle"
-                                                        size="sm" />
-                                                    <flux:button icon="trash" variant="subtle" size="sm" />
-                                                </td>
-                                            </tr>
-
-                                            {{-- @empty
-                <tr class="bg-white">
-                    <td colspan="4" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                        No educational qualifications have been added yet.
-                    </td>
-                </tr>
-                @endforelse --}}
-
+                                            @forelse ($serviceUpdate->where('updated_type', '==', 1) as $item)
+                                                <tr class="hover:bg-indigo-50/50">
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                        {{ $item->workplace->office_name ?? 'N/A' }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                        {{ $item->position->position_name }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                                        {{ $item->appoint_date }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
+                                                        {{ $item->end_date }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold justify-end flex gap-1">
+                                                        {{-- Delete button triggers Livewire method --}}
+                                                        <flux:button icon="trash" variant="subtle" size="sm"
+                                                            wire:click="deleteServiceRecord({{ $item->id }})"
+                                                            onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="5"
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">
+                                                        No previous working place records found.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -533,5 +465,100 @@
                 </div>
             </div>
         </div>
+
+        {{-- Modal Section --}}
+        {{-- Add Service Record --}}
+        <flux:modal name="add-service-record" class="md:w-100" wire:model="showModal" dismissible="false">
+            <div class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Add Previous Record</flux:heading>
+                    <flux:text class="mt-2">Enter the details of the previous service record.
+                    </flux:text>
+                </div>
+
+                <form wire:submit.prevent="saveServiceRecord" class="space-y-4">
+
+                    <flux:select label="What is update type" wire:model.live="recordType" class="w-full">
+                        <flux:select.option value="">Select type</flux:select.option>
+                        <flux:select.option value="0">Position</flux:select.option>
+                        <flux:select.option value="1">Grade update</flux:select.option>
+                        <flux:select.option value="2">Transfer</flux:select.option>
+                        <flux:select.option value="3">Retirement</flux:select.option>
+                    </flux:select>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <flux:select label="Service" wire:model.live="service" class="w-full">
+                            <flux:select.option value="">Select Service</flux:select.option>
+                            @foreach ($userServicesOptions as $service)
+                                <flux:select.option value="{{ $service->service_id }}">
+                                    {{ $service->service->service_name }}
+                                </flux:select.option>
+                            @endforeach
+                        </flux:select>
+
+                        <flux:select label="Grade" wire:model.live="rank" class="w-full">
+                            <flux:select.option value="">Select Rank</flux:select.option>
+                            @foreach ($ranksOptions as $rank)
+                                <flux:select.option value="{{ $rank->rank_id }}">
+                                    {{ $rank->rank_name }}
+                                </flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+
+                    <flux:select label="Position" wire:model.live="position" class="w-full">
+                        <flux:select.option value="">Select Rank</flux:select.option>
+                        @foreach ($positionOption as $position)
+                            <flux:select.option value="{{ $position->position_id }}">
+                                {{ $position->position_name }}
+                            </flux:select.option>
+                        @endforeach
+                    </flux:select>
+
+                    <flux:select label="Working Place Level" wire:model.live="officeLevel">
+                        <option value="">Select</option>
+                        @foreach ($officeLevelOption as $level)
+                            <option value="{{ $level->office_level_id }}">{{ $level->office_level_name }}</option>
+                        @endforeach
+                    </flux:select>
+
+                    @if ($officeLevel == 'OLID006')
+                        <flux:select label="Zonal Education Office" wire:model.live="zonalEducationOffice">
+                            <option value="">Select</option>
+                            @foreach ($zonalEducationOfficeOption as $zone)
+                                <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}
+                                </option>
+                            @endforeach
+                        </flux:select>
+
+                        <flux:select label="Institution Category" wire:model.live="institutionCategory">
+                            <option value="">Select</option>
+                            @foreach ($institutionCategoryOption as $data)
+                                <option value="{{ $data->institution_category_id }}">
+                                    {{ $data->institution_category_name }}</option>
+                            @endforeach
+                        </flux:select>
+                    @endif
+
+                    <flux:select label="Working Place" wire:model.live="workingPlace">
+                        <option value="">Select</option>
+                        @foreach ($workingPlaceOption as $office)
+                            <option value="{{ $office->workplace_id }}">{{ $office->office_name }}</option>
+                        @endforeach
+                    </flux:select>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <flux:input label="Appointed Date" type="date" wire:model.live="appointDate" />
+                        <flux:input label="Ended Date" type="date" wire:model.live="endedDate" />
+                    </div>
+
+                    <div class="flex">
+                        <flux:spacer />
+                        <flux:button type="submit" variant="primary">Save changes
+                        </flux:button>
+                    </div>
+                </form>
+            </div>
+        </flux:modal>
     </x-teachers.layout>
 </section>

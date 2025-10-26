@@ -237,7 +237,7 @@
 
             <!-- Appointment Details -->
             <div class="mt-6 max-w-xl space-y-6">
-                <flux:heading size="lg" level="2" class="mt-8 mb-4">Appointment Details</flux:heading>
+                <flux:heading size="lg" level="2" class="mt-8 mb-4">First Appointment Details</flux:heading>
                 <flux:separator variant="subtle" />
 
                 <flux:field>
