@@ -60,7 +60,7 @@
                 <flux:navlist.item icon="squares-2x2" :href="route('offices.index')" :current="request()->routeIs('offices.index')" wire:navigate>
                     {{ __('Overview') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="building-office-2" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>
+                <flux:navlist.item icon="building-library" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>
                     {{ __('Education Ministries') }}
                 </flux:navlist.item>
                 <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')" :current="request()->routeIs('offices.pmoe.list')" wire:navigate>
