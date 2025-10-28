@@ -112,13 +112,13 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     {{ $institution->active_status ? 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-100' }}">
                                     {{ $institution->active_status ? 'Active' : 'Inactive' }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                                <a href="{{ route('institutions.profile', $institution->id) }}">
+                                <a href="{{ route('institutions.profile.overview', $institution->id) }}">
                                     <flux:button size="sm" icon="eye">View</flux:button>
                                 </a>
                                 <a href="#">
