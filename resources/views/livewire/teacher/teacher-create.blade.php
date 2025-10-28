@@ -125,7 +125,7 @@
                 <!-- Health Condition -->
                 <div class="w-full">
                     <flux:field>
-                        <flux:select label="Health Condition" wire:model.live="healthCondition">
+                        <flux:select label="Healthy?" wire:model.live="healthCondition">
                             <option value="">Select Health Condition</option>
                             @foreach ($healthConditionOptions as $value => $label)
                                 <option value="{{ $value }}">{{ $label }}</option>
@@ -136,7 +136,7 @@
 
 
                 <!-- Health Problem -->
-                @if ($healthCondition == '1')
+               @if ($healthCondition == false)
                     <div class="w-full">
                         <flux:field>
                             <flux:textarea label="Please provide details of the health problem."
@@ -237,7 +237,8 @@
 
             <!-- Appointment Details -->
             <div class="mt-6 max-w-xl space-y-6">
-                <flux:heading size="lg" level="2" class="mt-8 mb-4">First Appointment Details</flux:heading>
+                <flux:heading size="lg" level="2" class="mt-8 mb-4">First Appointment Details
+                </flux:heading>
                 <flux:separator variant="subtle" />
 
                 <flux:field>

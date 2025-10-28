@@ -41,12 +41,8 @@ class People extends Model
         'active_status',
     ];
 
-    // If you want to filter active institutions by default
-    public function scopeActive($query)
-    {
-        return $query->where('active_status', 1);
-    }
-    
+
+
     /**
      * Get the attributes that should be cast.
      *
@@ -74,7 +70,16 @@ class People extends Model
             }
         });
     }
+    public function getHealthStatusAttribute()
+    {
+        return $this->health_condition == 1 ? 'Good' : 'Not healthy';
+    }
 
+    // If you want to filter active institutions by default
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', 1);
+    }
     /**
      * Generate 12-character incremental People ID
      * Format: PE + Year (4) + Sequence (6)

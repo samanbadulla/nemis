@@ -41,7 +41,7 @@ class TeacherCreate extends Component
     // Personal Details
     // -------------------------
     public $nic, $title, $fullName, $gender, $birthday, $religion;
-    public $ethnicity, $civilStatus, $bloodGroup, $healthCondition = '0', $healthProblem;
+    public $ethnicity, $civilStatus, $bloodGroup, $healthCondition, $healthProblem;
 
     // -------------------------
     // Contact Details
@@ -82,8 +82,8 @@ class TeacherCreate extends Component
             'ethnicity' => 'required|string',
             'civilStatus' => 'required|string',
             'bloodGroup' => 'required|string',
-            'healthCondition' => 'required|string',
-            'healthProblem' => 'required_if:healthCondition,1',
+            'healthCondition' => 'required|boolean',
+            'healthProblem' => 'required_if:healthCondition,false|string|max:1000',
             'contact' => ['required', 'string', 'max:10', new UniquePhoneAcrossTables()],
             'email' => 'required|email|unique:people,email',
             'district' => 'required|string',
@@ -141,7 +141,7 @@ class TeacherCreate extends Component
         $this->ethnicityOptions = Ethnicity::all();
         $this->civilStatusOptions = CivilStatus::all();
         $this->bloodGroupOptions = BloodGroup::all();
-        $this->healthConditionOptions = ['1' => 'Yes', '0' => 'No'];
+        $this->healthConditionOptions = [true => 'Yes', false => 'No'];
         $this->districtOption = DistrictsList::orderBy('district_name')->get();
         $this->servicesOption = Service::all();
         $this->ranksOption = collect();
@@ -152,6 +152,8 @@ class TeacherCreate extends Component
         $this->appointmentMediumOptions = MediumOfInstruction::all();
         $this->teacherTypeOptions = TeacherType::all();
         $this->zonalEducationOfficeOption = ZonalEducationOffice::all();
+
+        $this->healthCondition = 1; // Default to healthy
     }
 
     // -------------------------
@@ -202,10 +204,9 @@ class TeacherCreate extends Component
         }
     }
 
-    public function updatedHealthCondition($value)
+    public function updatedHealthCondition()
     {
-        $this->healthCondition = $value;
-        if ($value == '0') {
+        if ($this->healthCondition == true) {
             $this->healthProblem = null;
         }
     }
@@ -226,8 +227,8 @@ class TeacherCreate extends Component
             'ethnicity' => 'required|string',
             'civilStatus' => 'required|string',
             'bloodGroup' => 'required|string',
-            'healthCondition' => 'required|string',
-            'healthProblem' => 'required_if:healthCondition,1',
+            'healthCondition' => 'required|boolean',
+            'healthProblem' => 'nullable|string|max:1000',
             'contact' => ['required', 'string', 'max:10', new UniquePhoneAcrossTables()],
             'email' => 'required|email|unique:people,email',
             'district' => 'required|string',

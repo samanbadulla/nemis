@@ -24,7 +24,7 @@ return new class extends Migration
             $table->char('religion_id', 3)->comment('Foreign key referencing religions table');
             $table->char('ethnicity_id', 3)->comment('Foreign key referencing ethnicities table');
             $table->char('civil_status_id', 3)->comment('Foreign key referencing civil_statuses table');
-            $table->enum('health_condition', ['0', '1'])->default('1')->comment('1: Normal, 0: Special Needs');
+            $table->boolean('health_condition')->default(true)->comment('true: Normal, false: Special Needs');
             $table->text('health_problem')->nullable();
             $table->char('blood_group_id', 3)->nullable()->comment('Foreign key referencing blood_groups table');
             $table->string('email')->unique();

@@ -127,10 +127,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('principal/{id}/profile/qualification', PrincipalQualification::class)->name('principal.profile.qualification');
     Route::get('principal/{id}/profile/employment', PrincipalEmployment::class)->name('principal.profile.employment');
     Route::get('principal/{id}/profile/family', PrincipalFamily::class)->name('principal.profile.family');
-
-
-
-
 });
 
 require __DIR__.'/auth.php';

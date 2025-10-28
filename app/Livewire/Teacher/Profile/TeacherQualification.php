@@ -81,7 +81,7 @@ class TeacherQualification extends Component
         // Close modal
         $this->showModal = false;
 
-        session()->flash('message', 'Qualification updated successfully!');
+        session()->flash('success', 'Qualification updated successfully!');
     }
 
     public function delete($id)
@@ -91,7 +91,7 @@ class TeacherQualification extends Component
 
         if ($record) {
             $record->delete();
-            session()->flash('message', 'Qualification deleted successfully.');
+            session()->flash('success', 'Qualification deleted successfully.');
         } else {
             session()->flash('error', 'Record not found.');
         }

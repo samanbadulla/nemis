@@ -35,6 +35,18 @@
                         </div>
                     </div>
 
+                    @if (session()->has('success'))
+                        <div class="p-3 mb-3 text-green-700 bg-green-100 rounded">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if (session()->has('error'))
+                        <div class="p-3 mb-3 text-red-700 bg-red-100 rounded">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     {{-- Main Content Grid --}}
                     <div class="space-y-6">
 
@@ -94,12 +106,6 @@
                                     </form>
                                 </div>
                             </flux:modal>
-
-                            @if (session()->has('message'))
-                                <div class="mt-3 text-green-600">
-                                    {{ session('message') }}
-                                </div>
-                            @endif
 
                             <div class="bg-white">
 
