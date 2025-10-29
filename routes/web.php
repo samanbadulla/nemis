@@ -3,28 +3,30 @@
 use App\Livewire\Roles\RoleEdit;
 use App\Livewire\Users\UserEdit;
 use App\Livewire\Roles\RoleIndex;
+use App\Livewire\Sleas\SleasList;
 use App\Livewire\Users\UserIndex;
 use App\Livewire\Roles\RoleCreate;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Users\UserCreate;
 use App\Livewire\Settings\Password;
+use App\Livewire\Sleas\SleasCreate;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Teacher\TeacherEdit;
+
 use App\Livewire\Teacher\TeacherList;
 use Illuminate\Support\Facades\Route;
-
 use App\Livewire\Offices\OfficesIndex;
+
 use App\Livewire\Teacher\TeacherCreate;
 use App\Livewire\Teacher\TeacherProfile;
-
 use App\Livewire\Principal\PrincipalEdit;
+
 use App\Livewire\Principal\PrincipalList;
 use App\Livewire\Principal\PrincipalCreate;
-
 use App\Livewire\Offices\Deo\DeoOfficesList;
+
 use App\Livewire\Offices\Moe\MoeOfficesList;
 use App\Livewire\Offices\Peo\PeoOfficesList;
-
 use App\Livewire\Offices\Zeo\ZeoOfficesList;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Offices\Deo\DeoOfficesCreate;
@@ -41,9 +43,9 @@ use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Teacher\Profile\TeacherFamily;
 use App\Livewire\Institutions\InstitutionsIndex;
 use App\Livewire\Offices\Pmoe\PmoeOfficesCreate;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Institutions\InstitutionsCreate;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
@@ -51,9 +53,9 @@ use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
 use App\Livewire\Offices\Peo\ProvincialOfficeByPmoe;
 use App\Livewire\Teacher\Profile\TeacherQualification;
 use App\Livewire\Principal\Profile\PrincipalEmployment;
+use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
-use App\Livewire\Institutions\Profile\InstitutionsProfile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -134,6 +136,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('principal/{id}/profile/qualification', PrincipalQualification::class)->name('principal.profile.qualification');
     Route::get('principal/{id}/profile/employment', PrincipalEmployment::class)->name('principal.profile.employment');
     Route::get('principal/{id}/profile/family', PrincipalFamily::class)->name('principal.profile.family');
+
+    Route::get('sleas/list', SleasList::class)->name('sleas.list');
+    Route::get('sleas/create', SleasCreate::class)->name('sleas.create');
+
 });
 
 require __DIR__.'/auth.php';

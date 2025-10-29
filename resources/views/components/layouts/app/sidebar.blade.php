@@ -91,6 +91,15 @@
                 <flux:navlist.item icon="users" :href="route('principal.list')" :current="request()->routeIs('principal.list')" wire:navigate>
                     {{ __('Principal') }}
                 </flux:navlist.item>
+                <flux:navlist.item icon="users" :href="route('sleas.list')" :current="request()->routeIs('sleas.list')"  wire:navigate>
+                    {{ __('SLEAS') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="users"  wire:navigate>
+                    {{ __('SLTES') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="users"  wire:navigate>
+                    {{ __('SLTAS') }}
+                </flux:navlist.item>
             </flux:navlist.group>
 
 
