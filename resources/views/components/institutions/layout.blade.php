@@ -3,9 +3,9 @@
         <flux:navlist>
             <flux:navlist.item :href="route('institutions.profile.overview',$institutionid)" :current="request()->routeIs('institutions.profile.overview')" wire:navigate>{{ __('Overview') }}</flux:navlist.item>
             <flux:navlist.item :href="route('institutions.profile.profile',$institutionid)" :current="request()->routeIs('institutions.profile.profile')" wire:navigate>{{ __('Profile') }}</flux:navlist.item>
+            <flux:navlist.item :href="route('institutions.profile.staff',$institutionid)" :current="request()->routeIs('institutions.profile.staff')" wire:navigate>{{ __('Staff') }}</flux:navlist.item>
+  
 
-            <flux:navlist.item wire:navigate>{{ __('SLPS') }}</flux:navlist.item>
-            <flux:navlist.item wire:navigate>{{ __('SLTS') }}</flux:navlist.item>
         </flux:navlist>
     </div>
 

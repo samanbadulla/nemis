@@ -54,6 +54,8 @@ use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
+use App\Livewire\Institutions\Profile\InstitutionStaff;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('institutions/{id}/profile/overview', InstitutionsOverview::class)->name('institutions.profile.overview');
     Route::get('institutions/{id}/profile/profile', InstitutionsProfile::class)->name('institutions.profile.profile');
+    Route::get('institutions/{id}/profile/staff', InstitutionStaff::class)->name('institutions.profile.staff');
+
+ 
 
 
 

@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                            <flux:link href="{{ route('institutions.profile', $institution->id) }}"
+                                            <flux:link href="{{ route('institutions.profile.overview', $institution->id) }}"
                                                 variant="ghost">{{ $institution->name }}</flux:link>
                                         </div>
                                         <div class="text-sm text-slate-500 dark:text-slate-400">
