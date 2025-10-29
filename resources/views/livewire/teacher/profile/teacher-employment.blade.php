@@ -117,6 +117,49 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
+                                        Current working place
+                                    </h2>
+                                </div>
+                                <flux:separator variant="subtle" />
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+
+                                {{-- Full Name --}}
+                                <div
+                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
+                                        Institution name</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        [{{ $teacherAppointment->currentAppointment->workplace->office()->census_no }}]
+                                        {{ $teacherAppointment->currentAppointment->workplace->office()->name }}</p>
+                                </div>
+                                {{-- Name with Initials --}}
+                                <div
+                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Apoint
+                                        Date</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $teacherAppointment->currentAppointment->appoint_date }}</p>
+                                </div>
+                            </div>
+
+                            {{-- Full Address Block --}}
+                            <div
+                                class="mt-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                                <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Address</p>
+                                <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                    {{ $teacherAppointment->currentAppointment->workplace->office()->address }}<br>
+                                </p>
+                            </div>
+
+                        </section>
+
+                        {{-- 1. Personal & Socio-Cultural Details --}}
+                        <section>
+                            <div class="mb-3">
+                                <div class="flex items-baseline justify-between py-2">
+                                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         First Employment
                                     </h2>
                                     <flux:button icon="pencil-square" size="sm" variant="primary">Edit
@@ -227,48 +270,7 @@
 
                         </section>
 
-                        {{-- 1. Personal & Socio-Cultural Details --}}
-                        <section>
-                            <div class="mb-3">
-                                <div class="flex items-baseline justify-between py-2">
-                                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
-                                        Current working place
-                                    </h2>
-                                </div>
-                                <flux:separator variant="subtle" />
-                            </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
-
-                                {{-- Full Name --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                                        Institution name</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        [{{ $teacherAppointment->currentAppointment->workplace->office()->census_no }}]
-                                        {{ $teacherAppointment->currentAppointment->workplace->office()->name }}</p>
-                                </div>
-                                {{-- Name with Initials --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Apoint
-                                        Date</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacherAppointment->currentAppointment->appoint_date }}</p>
-                                </div>
-                            </div>
-
-                            {{-- Full Address Block --}}
-                            <div
-                                class="mt-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
-                                <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Address</p>
-                                <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                    {{ $teacherAppointment->currentAppointment->workplace->office()->address }}<br>
-                                </p>
-                            </div>
-
-                        </section>
 
                         {{-- 1. Personal & Socio-Cultural Details --}}
                         <section>
