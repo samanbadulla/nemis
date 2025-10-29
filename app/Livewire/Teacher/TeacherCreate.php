@@ -37,6 +37,7 @@ use App\Rules\UniquePhoneAcrossTables;
 
 class TeacherCreate extends Component
 {
+    public $step = 1;
     // -------------------------
     // Personal Details
     // -------------------------

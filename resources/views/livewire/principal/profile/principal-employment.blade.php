@@ -94,8 +94,8 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                                         Institution name</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        [{{ $principalAppointment->currentAppointment->workplace->office()->census_no ?? 'N/A' }}]
-                                        {{ $principalAppointment->currentAppointment->workplace->office()->name ?? 'N/A' }}</p>
+                                        [{{ $principalAppointment->workplace->office()->census_no ?? 'N/A' }}]
+                                        {{ $principalAppointment->workplace->office()->name ?? 'N/A' }}</p>
                                 </div>
                                 {{-- Name with Initials --}}
                                 <div
@@ -103,7 +103,7 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Apoint
                                         Date</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->currentAppointment->appoint_date }}</p>
+                                        {{ $principalAppointment->appoint_date }}</p>
                                 </div>
                             </div>
 
@@ -112,7 +112,7 @@
                                 class="mt-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
                                 <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Address</p>
                                 <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                    {{ $principalAppointment->currentAppointment->workplace->office()->address }}<br>
+                                    {{ $principalAppointment->workplace->office()->address }}<br>
                                 </p>
                             </div>
 
@@ -148,7 +148,7 @@
                                         appointment date
                                     </p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->first_appointment_date->format('d-m-Y') }}
+                                        {{ $principalAppointment->appointment->first_appointment_date->format('d-m-Y') }}
                                     </p>
                                 </div>
 
@@ -160,16 +160,6 @@
                                     </p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                         {{ $principalAppointment->appointment_letter_no }}</p>
-                                </div>
-
-                                {{-- Gender --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                                        Appointment category
-                                    </p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->teacherCategory->name }}</p>
                                 </div>
 
                                 {{-- Religion --}}
@@ -190,45 +180,6 @@
                                         {{ $principalAppointment->appointment->rank->rank_name }}</p>
                                 </div>
 
-                                {{-- Civil Status --}}
-                                <div
-                                    class="p-2 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Types of
-                                        teachers</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->teacherType->type_name }}</p>
-                                </div>
-
-                                {{-- Civil Status --}}
-                                <div
-                                    class="p-2 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                                        Appointment medium</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->medium->name }}</p>
-                                </div>
-
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
-
-                                {{-- Full Name --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-                                        Appointment Subject</p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->appointmentSubject->name_en }}</p>
-                                </div>
-
-                                {{-- Name with Initials --}}
-                                <div
-                                    class="p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600">
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">subject
-                                    </p>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $principalAppointment->mainSubject->name_en }}</p>
-                                </div>
                             </div>
 
                         </section>

@@ -79,7 +79,7 @@ class Teacher extends Model
     // Appointment subject
     public function appointmentSubject()
     {
-        return $this->belongsTo(SubjectList::class, 'appointment_subject', 'subject_id');
+        return $this->belongsTo(ApointedSubject::class, 'appointment_subject', 'a_subject_id');
     }
 
     // Main subject

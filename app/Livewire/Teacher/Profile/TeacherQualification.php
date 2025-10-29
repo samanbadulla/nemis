@@ -97,8 +97,6 @@ class TeacherQualification extends Component
         }
     }
 
-
-
     public function render()
     {
         $qualificationList = PeopleEducationQualification::where('active_status', '1')->where('people_id', $this->teacher->people_id)->get();
