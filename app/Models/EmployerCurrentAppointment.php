@@ -50,6 +50,24 @@ class EmployerCurrentAppointment extends Model
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
     }
 
+    // Employer appointment
+    public function appointment()
+    {
+        return $this->belongsTo(EmployerAppointment::class, 'appointment_id', 'appointment_id');
+    }
+
+    // Appointment history
+    public function appointmentHistory()
+    {
+        return $this->belongsTo(EmployerAppointmentHistory::class, 'appointment_id', 'appointment_id');
+    }
+
+    // Attachment appointment
+    public function attachmentAppointment()
+    {
+        return $this->belongsTo(EmployerAttachmentAppointment::class, 'appointment_id', 'appointment_id');
+    }
+
     public function workplace()
     {
         return $this->belongsTo(Workplaces::class, 'workplace_id', 'workplace_id');
