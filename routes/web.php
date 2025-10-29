@@ -43,7 +43,7 @@ use App\Livewire\Institutions\InstitutionsIndex;
 use App\Livewire\Offices\Pmoe\PmoeOfficesCreate;
 use App\Livewire\Institutions\InstitutionsCreate;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
-use App\Livewire\Institutions\InstitutionsProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
@@ -53,6 +53,7 @@ use App\Livewire\Teacher\Profile\TeacherQualification;
 use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
+use App\Livewire\Institutions\Profile\InstitutionsProfile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -78,6 +79,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('institutions/{id}/profile', InstitutionsProfile::class)->name('institutions.profile');
 
     Route::get('institutions/{id}/profile/overview', InstitutionsOverview::class)->name('institutions.profile.overview');
+    Route::get('institutions/{id}/profile/profile', InstitutionsProfile::class)->name('institutions.profile.profile');
+
 
 
     Route::get('offices', OfficesIndex::class)->name('offices.index');

@@ -9,9 +9,9 @@ class InstitutionsProfile extends Component
 {
     public $id;
     public function render()
-    {
+   {
         $institution = Institution::find($this->id);
-        //dd($institution);
-        return view('livewire.institutions.institutions-profile', compact('institution'));
+        dd($institution);
+       return view('livewire.institutions.institutions-profile', compact('institution'));
     }
 }
