@@ -64,7 +64,7 @@ class TeacherCreate extends Component
     // -------------------------
     // Current Appointment
     // -------------------------
-    public $teacherRegType, $currentAppointmentDate, $currentAppointmentLetterNo, $currentService, $currentServiceRank;
+    public $teacherRegType = 'existing', $currentAppointmentDate, $currentAppointmentLetterNo, $currentService, $currentServiceRank;
     public $currentZonalEducationOffice, $currentInstitutionCategory, $currentInstitution, $currentTeachingSubject;
 
     // -------------------------
