@@ -74,7 +74,7 @@ class SleasCreate extends Component
     public $zonalEducationOfficeOption = [];
     public $officeLevelOption = [], $workingPlaceOption = [];
 
-    public $officeLevel;
+    public $officeLevel, $currentOfficeLevel;
 
     // -------------------------
     // Validation Rules
@@ -117,8 +117,8 @@ class SleasCreate extends Component
                     'service' => 'required|string',
                     'serviceRank' => 'required|string',
                     'position' => 'required|string',
-                    'zonalEducationOffice' => 'required|string',
-                    'institutionCategory' => 'required|string',
+                    'zonalEducationOffice' => ['nullable', 'exists:zonal_education_offices,workplace_id'],
+                    'institutionCategory' => ['nullable', 'exists:institution_categories,institution_category_id'],
                     'institution' => 'required|string',
                 ];
             case 4:
@@ -129,8 +129,8 @@ class SleasCreate extends Component
                     'currentService' => 'required|string',
                     'currentServiceRank' => 'required|string',
                     'currentPosition' => 'required|string',
-                    'currentZonalEducationOffice' => 'required|string',
-                    'currentInstitutionCategory' => 'required|string',
+                    'zonalEducationOffice' => ['nullable', 'exists:zonal_education_offices,workplace_id'],
+                    'institutionCategory' => ['nullable', 'exists:institution_categories,institution_category_id'],
                     'currentInstitution' => 'required|string',
                 ];
             default:
@@ -247,6 +247,22 @@ class SleasCreate extends Component
      * update workplaces accordingly.
      */
     public function updatedOfficeLevel($value)
+    {
+        if ($value === 'OLID006') {
+            // Special case for institutions
+            $this->workingPlaceOption = collect();
+            $this->workingPlace = '';
+        } else {
+            $this->workingPlaceOption = Workplaces::where('office_level_id', $value)->get();
+            $this->workingPlace = '';
+        }
+    }
+
+    /**
+     * When 'currentOfficeLevel' changes,
+     * update workplaces accordingly.
+     */
+    public function updatedCurrentOfficeLevel($value)
     {
         if ($value === 'OLID006') {
             // Special case for institutions
@@ -390,7 +406,7 @@ class SleasCreate extends Component
                 'service_id' => $this->service,
                 'rank_id' => $this->serviceRank,
                 'position_id' => $this->position,
-                'office_level_id' => 'OLID006',
+                'office_level_id' => $this->officeLevel,
                 'workplace_id' => $this->institution,
                 'appointment_letter_no' => $this->appointmentLetterNo,
                 'appointment_letter' => 'letter.pdf',
@@ -403,7 +419,7 @@ class SleasCreate extends Component
                 'appoint_date' => $this->firstAppointmentDate,
                 'service_id' => $this->service,
                 'rank_id' => $this->serviceRank,
-                'office_level_id' => 'OLID006',
+                'office_level_id' => $this->currentOfficeLevel,
                 'position_id' => $this->currentPosition,
                 'workplace_id' => $this->institution,
             ]);
@@ -425,7 +441,7 @@ class SleasCreate extends Component
 
             DB::commit();
 
-            session()->flash('success', 'Principal created successfully!');
+            session()->flash('success', 'SLEAS Officer profile created successfully!');
             $this->resetForm();
         } catch (\Throwable $e) {
             DB::rollBack();
