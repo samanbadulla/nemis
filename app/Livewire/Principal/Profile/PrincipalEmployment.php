@@ -10,6 +10,10 @@ use App\Models\OfficeLevel;
 use App\Models\ServiceRank;
 use Illuminate\Validation\Rule;
 use App\Models\EmployerAppointment;
+use App\Models\InstitutionCategory;
+use App\Models\ZonalEducationOffice;
+use App\Models\EmployerAppointmentHistory;
+use App\Models\EmployerCurrentAppointment;
 
 class PrincipalEmployment extends Component
 {

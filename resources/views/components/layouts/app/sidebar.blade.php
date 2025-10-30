@@ -86,19 +86,19 @@
                 x-on:click.stop="toggleGroup('employers')"
             >
                 <flux:navlist.item icon="academic-cap" :href="route('teacher.list')" :current="request()->routeIs('teacher.list')" wire:navigate>
-                    {{ __('Teacher') }}
+                    {{ __('Teachers') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="users" :href="route('principal.list')" :current="request()->routeIs('principal.list')" wire:navigate>
-                    {{ __('Principal') }}
+                <flux:navlist.item icon="academic-cap" :href="route('principal.list')" :current="request()->routeIs('principal.list')" wire:navigate>
+                    {{ __('Principals') }}
                 </flux:navlist.item>
                 <flux:navlist.item icon="users" :href="route('sleas.list')" :current="request()->routeIs('sleas.list')"  wire:navigate>
-                    {{ __('SLEAS') }}
+                    {{ __('Edu. Administrators') }}
+                </flux:navlist.item>
+                <flux:navlist.item icon="users" :href="route('sltes.list')" :current="request()->routeIs('sltes.list')" wire:navigate>
+                    {{ __('Teacher Educators') }}
                 </flux:navlist.item>
                 <flux:navlist.item icon="users"  wire:navigate>
-                    {{ __('SLTES') }}
-                </flux:navlist.item>
-                <flux:navlist.item icon="users"  wire:navigate>
-                    {{ __('SLTAS') }}
+                    {{ __('Teacher Advisers') }}
                 </flux:navlist.item>
             </flux:navlist.group>
 

@@ -13,8 +13,8 @@
 
 
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Create SLEAS Officer') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Create SLEAS profile and account') }}
+        <flux:heading size="xl" level="1">{{ __('Create Sri lanka Teascher Educator Service Officer') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Create SLTES profile and account') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
 

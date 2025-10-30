@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Livewire\Sleas;
+namespace App\Livewire\Sltes;
+
+use Livewire\Component;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -8,7 +10,6 @@ use App\Models\Title;
 use App\Models\People;
 use App\Models\Service;
 use App\Models\Teacher;
-use Livewire\Component;
 use App\Models\Position;
 use App\Models\Religion;
 use App\Models\Ethnicity;
@@ -35,7 +36,7 @@ use App\Rules\UniquePhoneAcrossTables;
 use App\Models\EmployerCurrentAppointment;
 use App\Models\DivisionalSecretariatOffice;
 
-class SleasCreate extends Component
+class SltesCreate extends Component
 {
     // -------------------------
     // Personal Details
@@ -222,6 +223,6 @@ class SleasCreate extends Component
 
     public function render()
     {
-        return view('livewire.sleas.sleas-create');
+        return view('livewire.sltes.sltes-create');
     }
 }

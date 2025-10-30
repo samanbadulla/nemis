@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Sleas;
+namespace App\Livewire\Sltes;
 
 use App\Models\People;
 use Livewire\Component;
 
-class SleasList extends Component
+class SltesList extends Component
 {
     public $query = '';
     public $results = [];
@@ -42,10 +42,10 @@ class SleasList extends Component
             'currentAppointment.workplace.institution',
         ])
             ->whereHas('currentAppointment', function ($query) {
-                $query->where('service_id', 'SER005'); // Only SLEAS
+                $query->where('service_id', 'SER002'); // Only SLTES
             })
             ->get();
 
-        return view('livewire.sleas.sleas-list', compact('employees'));
+        return view('livewire.sltes.sltes-list', compact('employees'));
     }
 }

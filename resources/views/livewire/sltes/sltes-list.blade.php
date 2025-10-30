@@ -1,7 +1,7 @@
 <div>
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Sri lanka Education Administrator service') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Manage SLEAS profile and account') }}
+        <flux:heading size="xl" level="1">{{ __('Sri lanka Teacher Educator service') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Manage SLTES profile and account') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
 
@@ -9,16 +9,16 @@
 
             {{-- Search Button (Modal Trigger) --}}
             <flux:modal.trigger name="search-profile">
-                <flux:input as="button" placeholder="Search SLEAS..." icon="magnifying-glass" kbd="⌘K"
+                <flux:input as="button" placeholder="Search SLTES..." icon="magnifying-glass" kbd="⌘K"
                     class="w-48 md:w-60 cursor-pointer transition-all hover:shadow-sm focus:ring-2 focus:ring-blue-500" />
             </flux:modal.trigger>
 
             {{-- Create Teacher Button (Permission Based) --}}
 
-                <a href="{{ route('sleas.create') }}">
+                <a href="{{ route('sltes.create') }}">
                     <flux:button icon="plus" color="primary"
                         class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
-                        Create SLEAS Officer
+                        Create SLTES Officer
                     </flux:button>
                 </a>
 
@@ -29,10 +29,10 @@
                     {{-- Header --}}
                     <div class="text-center">
                         <flux:heading size="lg" class="text-gray-800 dark:text-gray-100">
-                            Search SLEAS Profile
+                            Search SLTES Profile
                         </flux:heading>
                         <flux:text class="mt-2 text-gray-500 dark:text-gray-400 text-sm">
-                            Search for a SLEAS by
+                            Search for a SLTES by
                             <span class="font-semibold text-gray-700 dark:text-gray-300">NIC</span>.
                         </flux:text>
                     </div>
