@@ -66,7 +66,7 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                            <a href="{{route('offices.moe.profile', $data->id)}}">
+                            <a href="{{route('offices.moe.profile.overview', $data->id)}}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
                             <a href="">

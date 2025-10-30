@@ -21,13 +21,13 @@ class InstitutionsOverview extends Component
         $institution = Institution::find($this->id);
 
         // Placeholder random student count (replace later with actual relationship)
-        $this->studentCount = rand(500, 600);
+        $this->studentCount = 0;
 
         // Count staff linked to this institution
         $this->staffCount = EmployerCurrentAppointment::where('workplace_id', $institution->workplace_id)->count();
 
         // Placeholder parent count (less than students)
-        $this->parentCount = rand(400, $this->studentCount - 1);
+        $this->parentCount = 0;
     }
 
     public function render()
