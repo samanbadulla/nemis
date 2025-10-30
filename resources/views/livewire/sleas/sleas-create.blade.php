@@ -314,8 +314,15 @@
                         </flux:select>
                     </flux:field>
 
-                    <div class="flex flex-col md:flex-row gap-4">
+                    <flux:select label="Working Place Level" wire:model.live="officeLevel">
+                        <option value="">Select</option>
+                        @foreach ($officeLevelOption as $level)
+                            <option value="{{ $level->office_level_id }}">{{ $level->office_level_name }}</option>
+                        @endforeach
+                    </flux:select>
 
+                    @if ($officeLevel == 'OLID006')
+                    <div class="flex flex-col md:flex-row gap-4">
                         <!-- Office Level -->
                         <div class="md:w-1/2 w-full">
                             <flux:field>
@@ -342,15 +349,14 @@
                             </flux:field>
                         </div>
                     </div>
+                    @endif
 
-                    <flux:field>
-                        <flux:select label="First Appointment Institution" wire:model.live="institution">
-                            <option value="">Select</option>
-                            @foreach ($institutionOption as $office)
-                                <option value="{{ $office->workplace_id }}">{{ $office->name }}</option>
-                            @endforeach
-                        </flux:select>
-                    </flux:field>
+                    <flux:select label="Working Place" wire:model.live="institution">
+                        <option value="">Select</option>
+                        @foreach ($workingPlaceOption as $office)
+                            <option value="{{ $office->workplace_id }}">{{ $office->office_name }}</option>
+                        @endforeach
+                    </flux:select>
                 </div>
             @endif
 

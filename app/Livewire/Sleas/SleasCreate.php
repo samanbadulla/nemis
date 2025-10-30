@@ -16,8 +16,10 @@ use App\Models\Ethnicity;
 use App\Models\BloodGroup;
 use App\Models\GenderList;
 use App\Models\GnDivision;
+use App\Models\Workplaces;
 use App\Models\CivilStatus;
 use App\Models\Institution;
+use App\Models\OfficeLevel;
 use App\Models\ServiceRank;
 use App\Models\DistrictsList;
 use App\Rules\UniqueHashedNic;
@@ -25,9 +27,9 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\EmployerAppointment;
 use App\Models\InstitutionCategory;
+
 use App\Models\ZonalEducationOffice;
 use Illuminate\Support\Facades\Hash;
-
 use App\Rules\UniquePhoneAcrossTables;
 use App\Models\EmployerCurrentAppointment;
 use App\Models\DivisionalSecretariatOffice;
@@ -70,6 +72,9 @@ class SleasCreate extends Component
     public $districtOption = [], $divisionalSecretaryofficeOption = [], $gnDivisionOption = [];
     public $servicesOption = [], $ranksOption = [], $currentRanksOption = [], $positionOption = [], $currentPositionOption = [], $institutionCategoryOption = [], $institutionOption = [], $currentInstitutionOption = [];
     public $zonalEducationOfficeOption = [];
+    public $officeLevelOption = [], $workingPlaceOption = [];
+
+    public $officeLevel;
 
     // -------------------------
     // Validation Rules
@@ -195,6 +200,8 @@ class SleasCreate extends Component
         $this->currentInstitutionOption = collect();
         $this->zonalEducationOfficeOption = ZonalEducationOffice::active()->get();
         $this->healthCondition = true;
+
+        $this->officeLevelOption = OfficeLevel::all();
     }
 
     public function updatedDistrict($value)
@@ -235,6 +242,22 @@ class SleasCreate extends Component
         }
     }
 
+     /**
+     * When 'officeLevel' changes,
+     * update workplaces accordingly.
+     */
+    public function updatedOfficeLevel($value)
+    {
+        if ($value === 'OLID006') {
+            // Special case for institutions
+            $this->workingPlaceOption = collect();
+            $this->workingPlace = '';
+        } else {
+            $this->workingPlaceOption = Workplaces::where('office_level_id', $value)->get();
+            $this->workingPlace = '';
+        }
+    }
+
     public function updatedCurrentZonalEducationOffice($value)
     {
         if ($value && $this->currentInstitutionCategory) {
@@ -247,16 +270,24 @@ class SleasCreate extends Component
         }
     }
 
+    /**
+     * When 'institutionCategory' changes,
+     * filter institutions by category + ZEO.
+     */
     public function updatedInstitutionCategory($value)
     {
         if ($value && $this->zonalEducationOffice) {
-            $this->institutionOption = Institution::where('institution_category_id', $value)
-                ->where('zeo_wp_id', $this->zonalEducationOffice)
+            $this->workingPlaceOption = Workplaces::where('office_level_id', 'OLID006')
+                ->whereHas('institution', function ($query) use ($value) {
+                    $query->where('institution_category_id', $value)
+                        ->where('zeo_wp_id', $this->zonalEducationOffice);
+                })
                 ->get();
-            $this->institution = '';
         } else {
-            $this->institutionOption = collect();
+            $this->workingPlaceOption = collect();
         }
+
+        $this->workingPlace = '';
     }
 
     public function updatedCurrentInstitutionCategory($value)
