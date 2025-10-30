@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Principal;
+namespace App\Livewire\Sleas;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -16,8 +16,10 @@ use App\Models\Ethnicity;
 use App\Models\BloodGroup;
 use App\Models\GenderList;
 use App\Models\GnDivision;
+use App\Models\Workplaces;
 use App\Models\CivilStatus;
 use App\Models\Institution;
+use App\Models\OfficeLevel;
 use App\Models\ServiceRank;
 use App\Models\DistrictsList;
 use App\Rules\UniqueHashedNic;
@@ -25,14 +27,14 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\EmployerAppointment;
 use App\Models\InstitutionCategory;
+
 use App\Models\ZonalEducationOffice;
 use Illuminate\Support\Facades\Hash;
-
 use App\Rules\UniquePhoneAcrossTables;
 use App\Models\EmployerCurrentAppointment;
 use App\Models\DivisionalSecretariatOffice;
 
-class PrincipalCreate extends Component
+class SleasCreate extends Component
 {
     public $step = 1;
     public $maxStep = 4;
@@ -70,6 +72,9 @@ class PrincipalCreate extends Component
     public $districtOption = [], $divisionalSecretaryofficeOption = [], $gnDivisionOption = [];
     public $servicesOption = [], $ranksOption = [], $currentRanksOption = [], $positionOption = [], $currentPositionOption = [], $institutionCategoryOption = [], $institutionOption = [], $currentInstitutionOption = [];
     public $zonalEducationOfficeOption = [];
+    public $officeLevelOption = [], $workingPlaceOption = [];
+
+    public $officeLevel, $currentOfficeLevel;
 
     // -------------------------
     // Validation Rules
@@ -112,8 +117,8 @@ class PrincipalCreate extends Component
                     'service' => 'required|string',
                     'serviceRank' => 'required|string',
                     'position' => 'required|string',
-                    'zonalEducationOffice' => 'required|string',
-                    'institutionCategory' => 'required|string',
+                    'zonalEducationOffice' => ['nullable', 'exists:zonal_education_offices,workplace_id'],
+                    'institutionCategory' => ['nullable', 'exists:institution_categories,institution_category_id'],
                     'institution' => 'required|string',
                 ];
             case 4:
@@ -124,8 +129,8 @@ class PrincipalCreate extends Component
                     'currentService' => 'required|string',
                     'currentServiceRank' => 'required|string',
                     'currentPosition' => 'required|string',
-                    'currentZonalEducationOffice' => 'required|string',
-                    'currentInstitutionCategory' => 'required|string',
+                    'zonalEducationOffice' => ['nullable', 'exists:zonal_education_offices,workplace_id'],
+                    'institutionCategory' => ['nullable', 'exists:institution_categories,institution_category_id'],
                     'currentInstitution' => 'required|string',
                 ];
             default:
@@ -188,13 +193,15 @@ class PrincipalCreate extends Component
         $this->servicesOption = Service::active()->get();
         $this->ranksOption = collect();
         $this->currentRanksOption = collect();
-        $this->positionOption = Position::where('service_id','SER004')->get();
-        $this->currentPositionOption = Position::where('service_id','SER004')->get();
+        $this->positionOption = Position::where('service_id','SER005')->get();
+        $this->currentPositionOption = Position::where('service_id','SER005')->get();
         $this->institutionCategoryOption = InstitutionCategory::active()->get();
         $this->institutionOption = collect();
         $this->currentInstitutionOption = collect();
         $this->zonalEducationOfficeOption = ZonalEducationOffice::active()->get();
         $this->healthCondition = true;
+
+        $this->officeLevelOption = OfficeLevel::all();
     }
 
     public function updatedDistrict($value)
@@ -235,6 +242,38 @@ class PrincipalCreate extends Component
         }
     }
 
+     /**
+     * When 'officeLevel' changes,
+     * update workplaces accordingly.
+     */
+    public function updatedOfficeLevel($value)
+    {
+        if ($value === 'OLID006') {
+            // Special case for institutions
+            $this->workingPlaceOption = collect();
+            $this->workingPlace = '';
+        } else {
+            $this->workingPlaceOption = Workplaces::where('office_level_id', $value)->get();
+            $this->workingPlace = '';
+        }
+    }
+
+    /**
+     * When 'currentOfficeLevel' changes,
+     * update workplaces accordingly.
+     */
+    public function updatedCurrentOfficeLevel($value)
+    {
+        if ($value === 'OLID006') {
+            // Special case for institutions
+            $this->workingPlaceOption = collect();
+            $this->workingPlace = '';
+        } else {
+            $this->workingPlaceOption = Workplaces::where('office_level_id', $value)->get();
+            $this->workingPlace = '';
+        }
+    }
+
     public function updatedCurrentZonalEducationOffice($value)
     {
         if ($value && $this->currentInstitutionCategory) {
@@ -247,16 +286,24 @@ class PrincipalCreate extends Component
         }
     }
 
+    /**
+     * When 'institutionCategory' changes,
+     * filter institutions by category + ZEO.
+     */
     public function updatedInstitutionCategory($value)
     {
         if ($value && $this->zonalEducationOffice) {
-            $this->institutionOption = Institution::where('institution_category_id', $value)
-                ->where('zeo_wp_id', $this->zonalEducationOffice)
+            $this->workingPlaceOption = Workplaces::where('office_level_id', 'OLID006')
+                ->whereHas('institution', function ($query) use ($value) {
+                    $query->where('institution_category_id', $value)
+                        ->where('zeo_wp_id', $this->zonalEducationOffice);
+                })
                 ->get();
-            $this->institution = '';
         } else {
-            $this->institutionOption = collect();
+            $this->workingPlaceOption = collect();
         }
+
+        $this->workingPlace = '';
     }
 
     public function updatedCurrentInstitutionCategory($value)
@@ -306,7 +353,7 @@ class PrincipalCreate extends Component
                 'currentInstitution',
             ]);
             $this->currentRanksOption = collect();
-            $this->currentPositionOption = Position::where('service_id','SER004')->get();
+            $this->currentPositionOption = Position::where('service_id','SER005')->get();
             $this->currentInstitutionOption = collect();
         }
     }
@@ -359,7 +406,7 @@ class PrincipalCreate extends Component
                 'service_id' => $this->service,
                 'rank_id' => $this->serviceRank,
                 'position_id' => $this->position,
-                'office_level_id' => 'OLID006',
+                'office_level_id' => $this->officeLevel,
                 'workplace_id' => $this->institution,
                 'appointment_letter_no' => $this->appointmentLetterNo,
                 'appointment_letter' => 'letter.pdf',
@@ -372,7 +419,7 @@ class PrincipalCreate extends Component
                 'appoint_date' => $this->firstAppointmentDate,
                 'service_id' => $this->service,
                 'rank_id' => $this->serviceRank,
-                'office_level_id' => 'OLID006',
+                'office_level_id' => $this->currentOfficeLevel,
                 'position_id' => $this->currentPosition,
                 'workplace_id' => $this->institution,
             ]);
@@ -394,7 +441,7 @@ class PrincipalCreate extends Component
 
             DB::commit();
 
-            session()->flash('success', 'Principal created successfully!');
+            session()->flash('success', 'SLEAS Officer profile created successfully!');
             $this->resetForm();
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -421,6 +468,6 @@ class PrincipalCreate extends Component
 
     public function render()
     {
-        return view('livewire.principal.principal-create');
+        return view('livewire.sleas.sleas-create');
     }
 }

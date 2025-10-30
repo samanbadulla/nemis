@@ -3,28 +3,34 @@
 use App\Livewire\Roles\RoleEdit;
 use App\Livewire\Users\UserEdit;
 use App\Livewire\Roles\RoleIndex;
+use App\Livewire\Sleas\SleasList;
+use App\Livewire\Sltes\SltesList;
 use App\Livewire\Users\UserIndex;
 use App\Livewire\Roles\RoleCreate;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Users\UserCreate;
 use App\Livewire\Settings\Password;
+use App\Livewire\Sleas\SleasCreate;
+use App\Livewire\Sltes\SltesCreate;
+
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Teacher\TeacherEdit;
 use App\Livewire\Teacher\TeacherList;
-use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Route;
 use App\Livewire\Offices\OfficesIndex;
 use App\Livewire\Teacher\TeacherCreate;
-use App\Livewire\Teacher\TeacherProfile;
 
+use App\Livewire\Teacher\TeacherProfile;
 use App\Livewire\Principal\PrincipalEdit;
 use App\Livewire\Principal\PrincipalList;
-use App\Livewire\Principal\PrincipalCreate;
 
+use App\Livewire\Sleas\Profile\SleasIndex;
+use App\Livewire\Principal\PrincipalCreate;
+use App\Livewire\Sleas\Profile\SleasFamily;
 use App\Livewire\Offices\Deo\DeoOfficesList;
 use App\Livewire\Offices\Moe\MoeOfficesList;
 use App\Livewire\Offices\Peo\PeoOfficesList;
-
 use App\Livewire\Offices\Zeo\ZeoOfficesList;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Offices\Deo\DeoOfficesCreate;
@@ -41,7 +47,9 @@ use App\Livewire\Offices\Deo\DeoOfficesProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
+use App\Livewire\Sleas\Profile\SleasEmployment;
 use App\Livewire\Teacher\Profile\TeacherFamily;
 //use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Institutions\InstitutionsIndex;
@@ -56,10 +64,8 @@ use App\Livewire\Offices\Deo\Profile\DeoOverview;
 use App\Livewire\Offices\Moe\Profile\MoeOverview;
 use App\Livewire\Offices\Peo\Profile\PeoOverview;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
-use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
-use App\Livewire\Offices\Pmoe\Profile\PmoeProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
-use App\Livewire\Offices\Pmoe\Profile\PmoeOverview;
 use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
 use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
@@ -70,7 +76,7 @@ use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
-
+use App\Livewire\Institutions\Profile\InstitutionsProfile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -174,6 +180,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('principal/{id}/profile/qualification', PrincipalQualification::class)->name('principal.profile.qualification');
     Route::get('principal/{id}/profile/employment', PrincipalEmployment::class)->name('principal.profile.employment');
     Route::get('principal/{id}/profile/family', PrincipalFamily::class)->name('principal.profile.family');
+
+    Route::get('sleas/list', SleasList::class)->name('sleas.list');
+    Route::get('sleas/create', SleasCreate::class)->name('sleas.create');
+    Route::get('sleas/{id}/profile/index', SleasIndex::class)->name('sleas.profile.index');
+    Route::get('sleas/{id}/profile/qualification', SleasQualification::class)->name('sleas.profile.qualification');
+    Route::get('sleas/{id}/profile/employment', SleasEmployment::class)->name('sleas.profile.employment');
+    Route::get('sleas/{id}/profile/family', SleasFamily::class)->name('sleas.profile.family');
+
+    Route::get('sltes/list', SltesList::class)->name('sltes.list');
+    Route::get('sltes/create', SltesCreate::class)->name('sltes.create');
+
+
+
 });
 
 require __DIR__.'/auth.php';

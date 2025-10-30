@@ -1,7 +1,7 @@
 <div>
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Teacher') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Manage teacher profile and account') }}
+        <flux:heading size="xl" level="1">{{ __('Sri lanka Teacher Educator service') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Manage SLTES profile and account') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
 
@@ -9,19 +9,19 @@
 
             {{-- Search Button (Modal Trigger) --}}
             <flux:modal.trigger name="search-profile">
-                <flux:input as="button" placeholder="Search Teacher..." icon="magnifying-glass" kbd="⌘K"
+                <flux:input as="button" placeholder="Search SLTES..." icon="magnifying-glass" kbd="⌘K"
                     class="w-48 md:w-60 cursor-pointer transition-all hover:shadow-sm focus:ring-2 focus:ring-blue-500" />
             </flux:modal.trigger>
 
             {{-- Create Teacher Button (Permission Based) --}}
-            @can('create teachers')
-                <a href="{{ route('teacher.create') }}">
+
+                <a href="{{ route('sltes.create') }}">
                     <flux:button icon="plus" color="primary"
                         class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
-                        Create Teacher
+                        Create SLTES Officer
                     </flux:button>
                 </a>
-            @endcan
+
 
             {{-- Search Modal --}}
             <flux:modal name="search-profile" class="md:w-[28rem] rounded-xl shadow-lg">
@@ -29,10 +29,10 @@
                     {{-- Header --}}
                     <div class="text-center">
                         <flux:heading size="lg" class="text-gray-800 dark:text-gray-100">
-                            Search Teacher Profile
+                            Search SLTES Profile
                         </flux:heading>
                         <flux:text class="mt-2 text-gray-500 dark:text-gray-400 text-sm">
-                            Search for a teacher by
+                            Search for a SLTES by
                             <span class="font-semibold text-gray-700 dark:text-gray-300">NIC</span>.
                         </flux:text>
                     </div>
@@ -46,16 +46,16 @@
                     {{-- Results --}}
                     @if (!empty($results) && count($results) > 0)
                         <ul class="divide-y divide-gray-200 dark:divide-gray-700 mt-2">
-                            @foreach ($results as $teacher)
+                            @foreach ($results as $employer)
                                 <li
                                     class="py-2 px-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md cursor-pointer transition">
-                                    <a href="{{route('teacher.profile.index', $teacher->id)}}">
+                                    <a href="{{route('sleas.profile.index', $employer->id)}}">
                                         <div class="flex justify-between items-center">
                                             <span class="font-semibold text-gray-800 dark:text-gray-100">
-                                                {{ $teacher['name_with_initials'] }}
+                                                {{ $employer['name_with_initials'] }}
                                             </span>
                                             <span class="text-sm text-gray-500 dark:text-gray-400">
-                                                {{ $teacher['nic'] }}
+                                                {{ $employer['nic'] }}
                                             </span>
                                         </div>
                                     </a>
@@ -156,11 +156,8 @@
                             {{ $employee->email }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
-                            <a href="{{ route('teacher.profile.index', $employee->id) }}">
+                            <a href="{{ route('sleas.profile.index', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
-                            </a>
-                             <a href="{{ route('teacher.profile.index', $employee->id) }}">
-                                <flux:button size="sm" icon="eye">ID</flux:button>
                             </a>
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
                         </td>

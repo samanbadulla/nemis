@@ -94,11 +94,15 @@ class PrincipalEmployment extends Component
         $this->officeLevelOption = OfficeLevel::all();
         $this->zonalEducationOfficeOption = ZonalEducationOffice::all();
         $this->institutionCategoryOption = InstitutionCategory::all();
-        
+
         $this->people = People::with('currentAppointment')->find($id);
         if ($this->people && $this->people->currentAppointment) {
             $appointmentId = $this->people->currentAppointment->appointment_id;
             $this->principalAppointment = EmployerCurrentAppointment::where('appointment_id', $appointmentId)->first();
+
+            // Load available service records for this employee
+            $this->userServicesOptions = EmployerAppointment::where('employee_id', $this->people->people_id)->get();
+            
         } else {
             $this->principalAppointment = null;
         }
@@ -220,7 +224,7 @@ class PrincipalEmployment extends Component
         } else {
             $serviceUpdate = collect(); // return an empty collection if no employee
         }
-        
+
         return view('livewire.principal.profile.principal-employment', compact('serviceUpdate'));
     }
 }

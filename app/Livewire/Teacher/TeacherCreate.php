@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Teacher;
 
+use Livewire\Component;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 use App\Models\User;
 use App\Models\Title;
 use App\Models\People;
 use App\Models\Service;
 use App\Models\Teacher;
-use Livewire\Component;
 use App\Models\Religion;
 use App\Models\Ethnicity;
 use App\Models\BloodGroup;
@@ -21,14 +24,12 @@ use App\Models\ServiceRank;
 use App\Models\SubjectList;
 use App\Models\TeacherType;
 use App\Models\DistrictsList;
+use App\Models\ApointedSubject;
 use App\Models\TeacherCategory;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 use App\Models\EmployerAppointment;
 use App\Models\InstitutionCategory;
 use App\Models\MediumOfInstruction;
 use App\Models\ZonalEducationOffice;
-use Illuminate\Support\Facades\Hash;
 use App\Models\EmployerCurrentAppointment;
 use App\Models\DivisionalSecretariatOffice;
 
@@ -38,6 +39,8 @@ use App\Rules\UniquePhoneAcrossTables;
 class TeacherCreate extends Component
 {
     public $step = 1;
+    public $maxStep = 4;
+
     // -------------------------
     // Personal Details
     // -------------------------
@@ -59,57 +62,86 @@ class TeacherCreate extends Component
     public $zonalEducationOffice, $institutionCategory, $institution;
 
     // -------------------------
+    // Current Appointment
+    // -------------------------
+    public $teacherRegType = 'existing', $currentAppointmentDate, $currentAppointmentLetterNo, $currentService, $currentServiceRank;
+    public $currentZonalEducationOffice, $currentInstitutionCategory, $currentInstitution, $currentTeachingSubject;
+
+    // -------------------------
     // Dropdown Options
     // -------------------------
     public $titleOptions = [], $religionOptions = [], $genderOptions = [], $ethnicityOptions = [], $civilStatusOptions = [];
     public $bloodGroupOptions = [], $healthConditionOptions = [];
     public $districtOption = [], $divisionalSecretaryofficeOption = [], $gnDivisionOption = [];
-    public $servicesOption = [], $ranksOption = [], $institutionCategoryOption = [], $institutionOption = [];
-    public $teacherCategoriesOption = [], $appointmentSubjectOption = [], $appointmentMediumOptions = [];
+    public $servicesOption = [], $ranksOption = [], $currentRanksOption = [], $institutionCategoryOption = [], $institutionOption = [], $currentInstitutionOption = [];
+    public $teacherCategoriesOption = [], $appointmentSubjectOption = [], $subjectOption = [], $appointmentMediumOptions = [];
     public $teacherTypeOptions = [], $zonalEducationOfficeOption = [];
 
     // -------------------------
     // Validation Rules
     // -------------------------
-    protected function rules()
+    protected function rulesForCurrentStep()
     {
-        return [
-            'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
-            'title' => 'required|string',
-            'fullName' => 'required|string|max:255',
-            'gender' => 'required|string',
-            'birthday' => 'required|date',
-            'religion' => 'required|string',
-            'ethnicity' => 'required|string',
-            'civilStatus' => 'required|string',
-            'bloodGroup' => 'required|string',
-            'healthCondition' => 'required|boolean',
-            'healthProblem' => 'required_if:healthCondition,false|string|max:1000',
-            'contact' => ['required', 'string', 'max:10', new UniquePhoneAcrossTables()],
-            'email' => 'required|email|unique:people,email',
-            'district' => 'required|string',
-            'divisionalDecretaryOffice' => 'required|string',
-            'gnDivision' => 'required|string',
-            'addressLine1' => 'required|string|max:255',
-            'addressLine2' => 'required|string|max:255',
-            'addressLine3' => 'nullable|string|max:255',
-            'postalCode' => 'required|string|max:10',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'teacherCategory' => 'required|string',
-            'firstAppointmentDate' => 'required|date',
-            'appointmentLetterNo' => 'required|string|max:20',
-            'service' => 'required|string',
-            'serviceRank' => 'required|string',
-            'teacherType' => 'required|string',
-            'appointmentSubject' => 'required|string',
-            'appointmentMedium' => 'required|string',
-            'mainTeachingSubject' => 'required|string',
-            'secondaryTeachingSubject' => 'required|string',
-            'zonalEducationOffice' => 'required|string',
-            'institutionCategory' => 'required|string',
-            'institution' => 'required|string',
-        ];
+        switch ($this->step) {
+            case 1:
+                return [
+                    'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
+                    'title' => 'required|string',
+                    'fullName' => 'required|string|max:255',
+                    'gender' => 'required|string',
+                    'birthday' => 'required|date',
+                    'religion' => 'required|string',
+                    'ethnicity' => 'required|string',
+                    'civilStatus' => 'required|string',
+                    'bloodGroup' => 'required|string',
+                    'healthCondition' => 'required|boolean',
+                    'healthProblem' => 'nullable|string|max:1000',
+                ];
+            case 2:
+                return [
+                    'contact' => ['required', 'string', 'max:10', new UniquePhoneAcrossTables()],
+                    'email' => 'required|email|unique:people,email',
+                    'district' => 'required|string',
+                    'divisionalDecretaryOffice' => 'required|string',
+                    'gnDivision' => 'required|string',
+                    'addressLine1' => 'required|string|max:255',
+                    'addressLine2' => 'required|string|max:255',
+                    'addressLine3' => 'nullable|string|max:255',
+                    'postalCode' => 'required|string|max:10',
+                    'latitude' => 'nullable|numeric',
+                    'longitude' => 'nullable|numeric',
+                ];
+            case 3:
+                return [
+                    'teacherCategory' => 'required|string',
+                    'firstAppointmentDate' => 'required|date',
+                    'appointmentLetterNo' => 'required|string|max:20',
+                    'service' => 'required|string',
+                    'serviceRank' => 'required|string',
+                    'teacherType' => 'required|string',
+                    'appointmentSubject' => 'required|string',
+                    'appointmentMedium' => 'required|string',
+                    'mainTeachingSubject' => 'required|string',
+                    'secondaryTeachingSubject' => 'required|string',
+                    'zonalEducationOffice' => 'required|string',
+                    'institutionCategory' => 'required|string',
+                    'institution' => 'required|string',
+                ];
+            case 4:
+                return [
+                    'teacherRegType' => 'required|string',
+                    'currentAppointmentDate' => 'required|date',
+                    'currentAppointmentLetterNo' => 'required|string|max:20',
+                    'currentService' => 'required|string',
+                    'currentServiceRank' => 'required|string',
+                    'currentZonalEducationOffice' => 'required|string',
+                    'currentInstitutionCategory' => 'required|string',
+                    'currentInstitution' => 'required|string',
+                    'currentTeachingSubject' => 'required|string',
+                ];
+            default:
+                return [];
+        }
     }
 
     protected $messages = [
@@ -124,46 +156,64 @@ class TeacherCreate extends Component
     ];
 
     // -------------------------
-    // Live Validation on Field Update
+    // Live Validation on Update
     // -------------------------
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName);
+        $rules = $this->rulesForCurrentStep();
+        if (array_key_exists($propertyName, $rules)) {
+            $this->validateOnly($propertyName, $rules);
+        }
     }
 
     // -------------------------
-    // Mount Method for Dropdowns
+    // Step Navigation
     // -------------------------
+    public function nextStep()
+    {
+        $this->validate($this->rulesForCurrentStep());
+        if ($this->step < $this->maxStep) {
+            $this->step++;
+            $this->resetValidation();
+        }
+    }
+
+    public function previousStep()
+    {
+        if ($this->step > 1) {
+            $this->step--;
+            $this->resetValidation();
+        }
+    }
+
     public function mount()
     {
-        $this->titleOptions = Title::all();
-        $this->genderOptions = GenderList::all();
-        $this->religionOptions = Religion::all();
-        $this->ethnicityOptions = Ethnicity::all();
-        $this->civilStatusOptions = CivilStatus::all();
+        $this->titleOptions = Title::active()->get();
+        $this->genderOptions = GenderList::active()->get();
+        $this->religionOptions = Religion::active()->get();
+        $this->ethnicityOptions = Ethnicity::active()->get();
+        $this->civilStatusOptions = CivilStatus::active()->get();
         $this->bloodGroupOptions = BloodGroup::all();
         $this->healthConditionOptions = [true => 'Yes', false => 'No'];
-        $this->districtOption = DistrictsList::orderBy('district_name')->get();
-        $this->servicesOption = Service::all();
+        $this->districtOption = DistrictsList::active()->orderBy('district_name')->get();
+        $this->servicesOption = Service::active()->get();
         $this->ranksOption = collect();
-        $this->institutionCategoryOption = InstitutionCategory::all();
+        $this->currentRanksOption = collect();
+        $this->institutionCategoryOption = InstitutionCategory::active()->get();
         $this->institutionOption = collect();
-        $this->teacherCategoriesOption = TeacherCategory::all();
-        $this->appointmentSubjectOption = SubjectList::all();
-        $this->appointmentMediumOptions = MediumOfInstruction::all();
-        $this->teacherTypeOptions = TeacherType::all();
-        $this->zonalEducationOfficeOption = ZonalEducationOffice::all();
-
-        $this->healthCondition = 1; // Default to healthy
+        $this->currentInstitutionOption = collect();
+        $this->teacherCategoriesOption = TeacherCategory::active()->get();
+        $this->subjectOption = SubjectList::active()->get();
+        $this->appointmentSubjectOption = ApointedSubject::active()->get();
+        $this->appointmentMediumOptions = MediumOfInstruction::active()->get();
+        $this->teacherTypeOptions = TeacherType::active()->get();
+        $this->zonalEducationOfficeOption = ZonalEducationOffice::active()->get();
+        $this->healthCondition = true;
     }
 
-    // -------------------------
-    // Dynamic Dropdown Updates
-    // -------------------------
     public function updatedDistrict($value)
     {
-        $this->divisionalSecretaryofficeOption = DivisionalSecretariatOffice::where('district_id', $value)
-            ->orderBy('dso_name')->get();
+        $this->divisionalSecretaryofficeOption = DivisionalSecretariatOffice::where('district_id', $value)->orderBy('dso_name')->get();
         $this->divisionalDecretaryOffice = '';
         $this->gnDivision = '';
         $this->gnDivisionOption = collect();
@@ -181,6 +231,12 @@ class TeacherCreate extends Component
         $this->serviceRank = '';
     }
 
+    public function updatedCurrentService($value)
+    {
+        $this->currentRanksOption = ServiceRank::where('service_id', $value)->get();
+        $this->currentServiceRank = '';
+    }
+
     public function updatedZonalEducationOffice($value)
     {
         if ($value && $this->institutionCategory) {
@@ -190,6 +246,18 @@ class TeacherCreate extends Component
             $this->institution = '';
         } else {
             $this->institutionOption = collect();
+        }
+    }
+
+    public function updatedCurrentZonalEducationOffice($value)
+    {
+        if ($value && $this->currentInstitutionCategory) {
+            $this->currentInstitutionOption = Institution::where('zeo_wp_id', $value)
+                ->where('institution_category_id', $this->currentInstitutionCategory)
+                ->get();
+            $this->currentInstitution = '';
+        } else {
+            $this->currentInstitutionOption = collect();
         }
     }
 
@@ -205,6 +273,18 @@ class TeacherCreate extends Component
         }
     }
 
+    public function updatedCurrentInstitutionCategory($value)
+    {
+        if ($value && $this->currentZonalEducationOffice) {
+            $this->currentInstitutionOption = Institution::where('institution_category_id', $value)
+                ->where('zeo_wp_id', $this->currentZonalEducationOffice)
+                ->get();
+            $this->currentInstitution = '';
+        } else {
+            $this->currentInstitutionOption = collect();
+        }
+    }
+
     public function updatedHealthCondition()
     {
         if ($this->healthCondition == true) {
@@ -213,50 +293,46 @@ class TeacherCreate extends Component
     }
 
     // -------------------------
-    // Save Method
+    // Dynamic Dropdown Behaviors
+    // -------------------------
+    public function updatedTeacherRegType($value)
+    {
+        if ($value === 'new') {
+            $this->currentRanksOption = $this->ranksOption ;
+            $this->currentInstitutionOption = $this->institutionOption;
+
+            $this->currentAppointmentDate = $this->firstAppointmentDate;
+            $this->currentAppointmentLetterNo = $this->appointmentLetterNo;
+            $this->currentService = $this->service;
+            $this->currentServiceRank = $this->serviceRank;
+            $this->currentZonalEducationOffice = $this->zonalEducationOffice;
+            $this->currentInstitutionCategory = $this->institutionCategory;
+            $this->currentInstitution = $this->institution;
+            $this->currentTeachingSubject = $this->mainTeachingSubject;
+        } else {
+            $this->reset([
+                'currentAppointmentDate',
+                'currentAppointmentLetterNo',
+                'currentService',
+                'currentServiceRank',
+                'currentZonalEducationOffice',
+                'currentInstitutionCategory',
+                'currentInstitution',
+                'currentTeachingSubject'
+            ]);
+            $this->currentRanksOption = collect();
+            $this->currentInstitutionOption = collect();
+        }
+    }
+
+    // -------------------------
+    // Save Logic
     // -------------------------
     public function save()
     {
-        $this->validate([
-            'title' => 'required|string',
-            'nic' => ['required', 'string', 'regex:/^(\d{9}[vVxX]|\d{12})$/', new UniqueHashedNic()],
-            //'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
-            'fullName' => 'required|string|max:255',
-            'gender' => 'required|string',
-            'birthday' => 'required|date',
-            'religion' => 'required|string',
-            'ethnicity' => 'required|string',
-            'civilStatus' => 'required|string',
-            'bloodGroup' => 'required|string',
-            'healthCondition' => 'required|boolean',
-            'healthProblem' => 'nullable|string|max:1000',
-            'contact' => ['required', 'string', 'max:10', new UniquePhoneAcrossTables()],
-            'email' => 'required|email|unique:people,email',
-            'district' => 'required|string',
-            'divisionalDecretaryOffice' => 'required|string',
-            'gnDivision' => 'required|string',
-            'addressLine1' => 'required|string|max:255',
-            'addressLine2' => 'required|string|max:255',
-            'addressLine3' => 'nullable|string|max:255',
-            'postalCode' => 'required|string|max:10',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'teacherCategory' => 'required|string',
-            'firstAppointmentDate' => 'required|date',
-            'appointmentLetterNo' => 'required|string|max:20',
-            'service' => 'required|string',
-            'serviceRank' => 'required|string',
-            'teacherType' => 'required|string',
-            'appointmentSubject' => 'required|string',
-            'appointmentMedium' => 'required|string',
-            'mainTeachingSubject' => 'required|string',
-            'secondaryTeachingSubject' => 'required|string',
-            'zonalEducationOffice' => 'required|string',
-            'institutionCategory' => 'required|string',
-            'institution' => 'required|string',
-        ]);
+        $this->validate($this->rulesForCurrentStep());
 
-        DB::beginTransaction(); // Start transaction
+        DB::beginTransaction();
 
         try {
             // Save People
@@ -296,8 +372,8 @@ class TeacherCreate extends Component
                 'retirement_date' => $retirementDate,
                 'service_id' => $this->service,
                 'rank_id' => $this->serviceRank,
-                'position_id' => 'POS001', // Teacher Position
-                'office_level_id' => 'OLID006', // Institution Level
+                'position_id' => 'POS001',
+                'office_level_id' => 'OLID006',
                 'workplace_id' => $this->institution,
                 'appointment_letter_no' => $this->appointmentLetterNo,
                 'appointment_letter' => 'letter.pdf',
@@ -342,56 +418,30 @@ class TeacherCreate extends Component
 
             $user->assignRole('teacher');
 
-            DB::commit(); // Commit only if all operations succeeded
+            DB::commit();
 
             session()->flash('success', 'Teacher created successfully!');
             $this->resetForm();
         } catch (\Throwable $e) {
-            DB::rollBack(); // Rollback on any failure
+            DB::rollBack();
             session()->flash('error', 'Error: ' . $e->getMessage());
         }
     }
 
-
-
     private function resetForm()
     {
         $this->reset([
-            'nic',
-            'title',
-            'fullName',
-            'gender',
-            'birthday',
-            'religion',
-            'ethnicity',
-            'civilStatus',
-            'bloodGroup',
-            'healthCondition',
-            'healthProblem',
-            'contact',
-            'email',
-            'district',
-            'divisionalDecretaryOffice',
-            'gnDivision',
-            'addressLine1',
-            'addressLine2',
-            'addressLine3',
-            'postalCode',
-            'latitude',
-            'longitude',
-            'teacherCategory',
-            'firstAppointmentDate',
-            'appointmentLetterNo',
-            'service',
-            'serviceRank',
-            'teacherType',
-            'appointmentSubject',
-            'appointmentMedium',
-            'mainTeachingSubject',
-            'secondaryTeachingSubject',
-            'zonalEducationOffice',
-            'institutionCategory',
-            'institution'
+            'nic', 'title', 'fullName', 'gender', 'birthday', 'religion',
+            'ethnicity', 'civilStatus', 'bloodGroup', 'healthCondition', 'healthProblem',
+            'contact', 'email', 'district', 'divisionalDecretaryOffice', 'gnDivision',
+            'addressLine1', 'addressLine2', 'addressLine3', 'postalCode', 'latitude', 'longitude',
+            'teacherCategory', 'firstAppointmentDate', 'appointmentLetterNo', 'service',
+            'serviceRank', 'teacherType', 'appointmentSubject', 'appointmentMedium',
+            'mainTeachingSubject', 'secondaryTeachingSubject', 'zonalEducationOffice',
+            'institutionCategory', 'institution',
+            'teacherRegType', 'currentAppointmentDate', 'currentAppointmentLetterNo',
+            'currentService', 'currentServiceRank', 'currentZonalEducationOffice', 'currentInstitutionCategory',
+            'currentInstitution', 'currentTeachingSubject',
         ]);
     }
 
