@@ -32,6 +32,12 @@ class ZonalEducationOffice extends Model
         'active_status',
     ];
 
+    // If you want to filter active institutions by default
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', 1);
+    }
+    
     /**
      * Each Zonal Education Office belongs to a Provincial Education Office
      */
