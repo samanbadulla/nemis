@@ -99,6 +99,10 @@ class PrincipalEmployment extends Component
         if ($this->people && $this->people->currentAppointment) {
             $appointmentId = $this->people->currentAppointment->appointment_id;
             $this->principalAppointment = EmployerCurrentAppointment::where('appointment_id', $appointmentId)->first();
+
+            // Load available service records for this employee
+            $this->userServicesOptions = EmployerAppointment::where('employee_id', $this->people->people_id)->get();
+            
         } else {
             $this->principalAppointment = null;
         }

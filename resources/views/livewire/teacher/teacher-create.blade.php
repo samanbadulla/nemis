@@ -18,6 +18,17 @@
         </flux:subheading>
         <flux:separator variant="subtle" />
 
+                {{-- Step Progress Bar --}}
+    <div class="flex max-w-xl justify-between items-center my-4">
+        <div class="flex-1 relative">
+            <div class="h-2 bg-gray-200 rounded-full">
+                <div class="h-2 bg-blue-600 rounded-full transition-all duration-500"
+                    style="width: {{ ($step / $maxStep) * 100 }}%"></div>
+            </div>
+        </div>
+        <span class="ml-4 text-sm text-gray-600">Step {{ $step }} of {{ $maxStep }}</span>
+    </div>
+    
         <form wire:submit.prevent="save" class="mt-6 max-w-xl space-y-6">
             @csrf
             <!-- Personal Details -->
@@ -129,7 +140,6 @@
                     <div class="w-full">
                         <flux:field>
                             <flux:select label="Healthy?" wire:model.live="healthCondition">
-                                <option value="">Select Health Condition</option>
                                 @foreach ($healthConditionOptions as $value => $label)
                                     <option value="{{ $value }}">{{ $label }}</option>
                                 @endforeach
@@ -319,7 +329,7 @@
                                 <flux:select label="Appointment Subject" wire:model.live="appointmentSubject">
                                     <option value="">Select</option>
                                     @foreach ($appointmentSubjectOption as $subject)
-                                        <option value="{{ $subject->subject_id }}">{{ $subject->name_en }}</option>
+                                        <option value="{{ $subject->a_subject_id }}">{{ $subject->name_en }}</option>
                                     @endforeach
                                 </flux:select>
                             </flux:field>
@@ -344,7 +354,7 @@
                             <flux:field>
                                 <flux:select label="Main teaching subject" wire:model.live="mainTeachingSubject">
                                     <option value="">Select</option>
-                                    @foreach ($appointmentSubjectOption as $subject)
+                                    @foreach ($subjectOption as $subject)
                                         <option value="{{ $subject->subject_id }}">{{ $subject->name_en }}</option>
                                     @endforeach
                                 </flux:select>
@@ -357,7 +367,7 @@
                                 <flux:select label="Secondary teaching subject (optional)"
                                     wire:model.live="secondaryTeachingSubject">
                                     <option value="">Select</option>
-                                    @foreach ($appointmentSubjectOption as $subject)
+                                    @foreach ($subjectOption as $subject)
                                         <option value="{{ $subject->subject_id }}">{{ $subject->name_en }}</option>
                                     @endforeach
                                 </flux:select>
@@ -392,8 +402,6 @@
                                 </flux:select>
                             </flux:field>
                         </div>
-
-
                     </div>
 
                     <flux:field>
@@ -406,12 +414,129 @@
                     </flux:field>
                 </div>
             @endif
-            
-            <div class="flex justify-end">
-                <flux:button type="submit" variant="primary">
-                    Create Teacher
-                </flux:button>
+
+            @if ($step === 4)
+
+                <div class="mt-6 max-w-xl space-y-6">
+                    <flux:heading size="lg" level="2" class="mt-8 mb-4">Current Appointment Details
+                    </flux:heading>
+                    <flux:separator variant="subtle" />
+                    <flux:radio.group label="Select registration type for the Teacher"
+                        wire:model.live="teacherRegType">
+                        <flux:radio name="teacherRegType" value="new" label="New teacher"
+                            description="New teacher users can perform any action." checked />
+                        <flux:radio name="teacherRegType" value="existing" label="Existing teacher"
+                            description="Existing teacher users have the ability to read, create, and update." />
+                    </flux:radio.group>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <!-- First Appointment Date -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:input type="date" label="Current Appointment Date"
+                                    wire:model.live="currentAppointmentDate" />
+                            </flux:field>
+                        </div>
+
+                        <!-- Appointment letter number -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:input label="Current Appointment Letter No"
+                                    wire:model.live="currentAppointmentLetterNo" placeholder="Enter letter number" />
+                            </flux:field>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <!-- Service -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:select label="Current Service" wire:model.live="currentService">
+                                    <option value="">Select</option>
+                                    @foreach ($servicesOption as $service)
+                                        <option value="{{ $service->service_id }}">{{ $service->service_name }}
+                                        </option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:field>
+                        </div>
+
+                        <!-- Rank -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:select label="Current Service Rank" wire:model.live="currentServiceRank">
+                                    <option value="">Select</option>
+                                    @foreach ($currentRanksOption as $rank)
+                                        <option value="{{ $rank->rank_id }}">{{ $rank->rank_name }}</option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:field>
+                        </div>
+                    </div>
+
+                    <flux:field>
+                        <flux:select label="Current teaching subject" wire:model.live="currentTeachingSubject">
+                            <option value="">Select</option>
+                            @foreach ($subjectOption as $subject)
+                                <option value="{{ $subject->subject_id }}">{{ $subject->name_en }}</option>
+                            @endforeach
+                        </flux:select>
+                    </flux:field>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+
+                        <!-- Office Level -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:select label="Zonal Education Office"
+                                    wire:model.live="currentZonalEducationOffice">
+                                    <option value="">Select</option>
+                                    @foreach ($zonalEducationOfficeOption as $zone)
+                                        <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}
+                                        </option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:field>
+                        </div>
+
+                        <!-- Institution Type -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:select label="Institution Category"
+                                    wire:model.live="currentInstitutionCategory">
+                                    <option value="">Select</option>
+                                    @foreach ($institutionCategoryOption as $data)
+                                        <option value="{{ $data->institution_category_id }}">
+                                            {{ $data->institution_category_name }}</option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:field>
+                        </div>
+                    </div>
+                    <flux:field>
+                        <flux:select label="Current Appointment Institution" wire:model.live="currentInstitution">
+                            <option value="">Select</option>
+                            @foreach ($currentInstitutionOption as $office)
+                                <option value="{{ $office->workplace_id }}">{{ $office->name }}</option>
+                            @endforeach
+                        </flux:select>
+                    </flux:field>
+
+                </div>
+            @endif
+
+            <div class="flex justify-between mt-4">
+                @if ($step > 1)
+                    <flux:button wire:click="previousStep">Previous</flux:button>
+                @endif
+
+                @if ($step < $maxStep)
+                    <flux:button wire:click="nextStep" variant="primary">Next</flux:button>
+                @else
+                    <flux:button wire:click="save" variant="primary">submit</flux:button>
+                @endif
             </div>
+
         </form>
 
         @if (session()->has('success'))
@@ -422,3 +547,4 @@
 
     </div>
 </div>
+

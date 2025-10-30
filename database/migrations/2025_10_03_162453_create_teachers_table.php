@@ -29,7 +29,7 @@ return new class extends Migration
             $table->foreign('teacher_category')->references('categories_id')->on('teacher_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('teacher_type')->references('teacher_types_id')->on('teacher_types')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('appointment_medium')->references('medium_id')->on('medium_of_instructions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('appointment_subject')->references('subject_id')->on('subject_lists')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('appointment_subject')->references('a_subject_id')->on('apointed_subjects')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('main_subject')->references('subject_id')->on('subject_lists')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('secondary_subject')->references('subject_id')->on('subject_lists')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('current_teaching_subject')->references('subject_id')->on('subject_lists')->onDelete('cascade')->onUpdate('cascade');
