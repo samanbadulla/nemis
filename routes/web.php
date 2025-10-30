@@ -19,12 +19,13 @@ use App\Livewire\Teacher\TeacherList;
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Offices\OfficesIndex;
-use App\Livewire\Teacher\TeacherCreate;
+use App\Http\Controllers\pdf\TeacherId;
 
+use App\Livewire\Teacher\TeacherCreate;
 use App\Livewire\Teacher\TeacherProfile;
 use App\Livewire\Principal\PrincipalEdit;
-use App\Livewire\Principal\PrincipalList;
 
+use App\Livewire\Principal\PrincipalList;
 use App\Livewire\Sleas\Profile\SleasIndex;
 use App\Livewire\Principal\PrincipalCreate;
 use App\Livewire\Sleas\Profile\SleasFamily;
@@ -42,8 +43,8 @@ use App\Livewire\Teacher\Profile\TeacherIndex;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
-use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
 //use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
 use App\Livewire\Teacher\Profile\TeacherFamily;
@@ -129,6 +130,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('teacher/{id}/profile/qualification', TeacherQualification::class)->name('teacher.profile.qualification');
     Route::get('teacher/{id}/profile/employment', TeacherEmployment::class)->name('teacher.profile.employment');
     Route::get('teacher/{id}/profile/family', TeacherFamily::class)->name('teacher.profile.family');
+    Route::get('/pdf/{id}', [TeacherId::class, 'generatePDF'])->name('teacher.id.pdf');
+
     Route::middleware(['permission:create teachers'])->group(function () {
         // Routes accessible only by teachers with 'create teachers' permission
         Route::get('teacher/create', TeacherCreate::class)->name('teacher.create');

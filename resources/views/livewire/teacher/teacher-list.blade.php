@@ -159,7 +159,7 @@
                             <a href="{{ route('teacher.profile.index', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
-                             <a href="{{ route('teacher.profile.index', $employee->id) }}">
+                             <a href="{{ route('teacher.id.pdf', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">ID</flux:button>
                             </a>
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
