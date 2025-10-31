@@ -97,7 +97,7 @@
                 <flux:navlist.item icon="users" :href="route('sltes.list')" :current="request()->routeIs('sltes.list')" wire:navigate>
                     {{ __('Teacher Educators') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="users"  wire:navigate>
+                <flux:navlist.item icon="users" :href="route('sltas.list')" :current="request()->routeIs('sltas.list')"  wire:navigate>
                     {{ __('Teacher Advisers') }}
                 </flux:navlist.item>
             </flux:navlist.group>

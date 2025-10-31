@@ -13,8 +13,8 @@
 
 
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl" level="1">{{ __('Create principal') }}</flux:heading>
-        <flux:subheading size="lg" class="mb-6">{{ __('Create principal profile and account') }}
+        <flux:heading size="xl" level="1">{{ __('Create SLTAS Officer') }}</flux:heading>
+        <flux:subheading size="lg" class="mb-6">{{ __('Create SLTAS Officer profile and account') }}
         </flux:subheading>
         <flux:separator variant="subtle" />
 
@@ -314,8 +314,15 @@
                         </flux:select>
                     </flux:field>
 
-                    <div class="flex flex-col md:flex-row gap-4">
+                    <flux:select label="Working Place Level" wire:model.live="officeLevel">
+                        <option value="">Select</option>
+                        @foreach ($officeLevelOption as $level)
+                            <option value="{{ $level->office_level_id }}">{{ $level->office_level_name }}</option>
+                        @endforeach
+                    </flux:select>
 
+                    @if ($officeLevel == 'OLID006')
+                    <div class="flex flex-col md:flex-row gap-4">
                         <!-- Office Level -->
                         <div class="md:w-1/2 w-full">
                             <flux:field>
@@ -342,15 +349,14 @@
                             </flux:field>
                         </div>
                     </div>
+                    @endif
 
-                    <flux:field>
-                        <flux:select label="First Appointment Institution" wire:model.live="institution">
-                            <option value="">Select</option>
-                            @foreach ($institutionOption as $office)
-                                <option value="{{ $office->workplace_id }}">{{ $office->name }}</option>
-                            @endforeach
-                        </flux:select>
-                    </flux:field>
+                    <flux:select label="Working Place" wire:model.live="institution">
+                        <option value="">Select</option>
+                        @foreach ($workingPlaceOption as $office)
+                            <option value="{{ $office->workplace_id }}">{{ $office->office_name }}</option>
+                        @endforeach
+                    </flux:select>
                 </div>
             @endif
 
@@ -423,13 +429,19 @@
                         </flux:select>
                     </flux:field>
 
-                    <div class="flex flex-col md:flex-row gap-4">
+                    <flux:select label="Working Place Level" wire:model.live="currentOfficeLevel">
+                        <option value="">Select</option>
+                        @foreach ($officeLevelOption as $level)
+                            <option value="{{ $level->office_level_id }}">{{ $level->office_level_name }}</option>
+                        @endforeach
+                    </flux:select>
 
+                    @if ($officeLevel == 'OLID006')
+                    <div class="flex flex-col md:flex-row gap-4">
                         <!-- Office Level -->
                         <div class="md:w-1/2 w-full">
                             <flux:field>
-                                <flux:select label="Zonal Education Office"
-                                    wire:model.live="currentZonalEducationOffice">
+                                <flux:select label="Zonal Education Office" wire:model.live="zonalEducationOffice">
                                     <option value="">Select</option>
                                     @foreach ($zonalEducationOfficeOption as $zone)
                                         <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}
@@ -442,8 +454,7 @@
                         <!-- Institution Type -->
                         <div class="md:w-1/2 w-full">
                             <flux:field>
-                                <flux:select label="Institution Category"
-                                    wire:model.live="currentInstitutionCategory">
+                                <flux:select label="Institution Category" wire:model.live="institutionCategory">
                                     <option value="">Select</option>
                                     @foreach ($institutionCategoryOption as $data)
                                         <option value="{{ $data->institution_category_id }}">
@@ -453,14 +464,14 @@
                             </flux:field>
                         </div>
                     </div>
-                    <flux:field>
-                        <flux:select label="Current Appointment Institution" wire:model.live="currentInstitution">
-                            <option value="">Select</option>
-                            @foreach ($currentInstitutionOption as $office)
-                                <option value="{{ $office->workplace_id }}">{{ $office->name }}</option>
-                            @endforeach
-                        </flux:select>
-                    </flux:field>
+                    @endif
+
+                    <flux:select label="Working Place" wire:model.live="currentInstitution">
+                        <option value="">Select</option>
+                        @foreach ($workingPlaceOption as $office)
+                            <option value="{{ $office->workplace_id }}">{{ $office->office_name }}</option>
+                        @endforeach
+                    </flux:select>
 
                 </div>
             @endif

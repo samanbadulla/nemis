@@ -366,12 +366,12 @@
                     <flux:heading size="lg" level="2" class="mt-8 mb-4">Current Appointment Details
                     </flux:heading>
                     <flux:separator variant="subtle" />
-                    <flux:radio.group label="Select registration type for the Teacher"
+                    <flux:radio.group label="Select registration type for the Officer"
                         wire:model.live="teacherRegType">
-                        <flux:radio name="teacherRegType" value="new" label="New teacher"
-                            description="New teacher users can perform any action." checked />
-                        <flux:radio name="teacherRegType" value="existing" label="Existing teacher"
-                            description="Existing teacher users have the ability to read, create, and update." />
+                        <flux:radio name="teacherRegType" value="new" label="New Officer"
+                            description="New Officer can perform any action." checked />
+                        <flux:radio name="teacherRegType" value="existing" label="Existing Officer"
+                            description="Existing Officer have the ability to read, create, and update." />
                     </flux:radio.group>
 
                     <div class="flex flex-col md:flex-row gap-4">
