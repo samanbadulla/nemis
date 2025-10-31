@@ -65,7 +65,11 @@ use App\Livewire\Offices\Moe\Profile\MoeOverview;
 use App\Livewire\Offices\Peo\Profile\PeoOverview;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
 //use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
+use App\Livewire\Offices\Pmoe\Profile\PmoeProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
+use App\Livewire\Sleas\Profile\SleasQualification;
+use App\Livewire\Offices\Pmoe\Profile\PmoeOverview;
 use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
 use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
@@ -76,7 +80,7 @@ use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
-use App\Livewire\Institutions\Profile\InstitutionsProfile;
+
 
 Route::get('/', function () {
     return view('welcome');
