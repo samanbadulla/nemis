@@ -4,6 +4,7 @@ use App\Livewire\Roles\RoleEdit;
 use App\Livewire\Users\UserEdit;
 use App\Livewire\Roles\RoleIndex;
 use App\Livewire\Sleas\SleasList;
+use App\Livewire\Sltas\SltasList;
 use App\Livewire\Sltes\SltesList;
 use App\Livewire\Users\UserIndex;
 use App\Livewire\Roles\RoleCreate;
@@ -11,20 +12,24 @@ use App\Livewire\Settings\Profile;
 use App\Livewire\Users\UserCreate;
 use App\Livewire\Settings\Password;
 use App\Livewire\Sleas\SleasCreate;
-use App\Livewire\Sltes\SltesCreate;
 
+use App\Livewire\Sltas\SltasCreate;
+use App\Livewire\Sltes\SltesCreate;
 use App\Livewire\Settings\Appearance;
+
 use App\Livewire\Teacher\TeacherEdit;
 use App\Livewire\Teacher\TeacherList;
-
 use Illuminate\Support\Facades\Route;
+
 use App\Livewire\Offices\OfficesIndex;
+use App\Http\Controllers\pdf\TeacherId;
+
 use App\Livewire\Teacher\TeacherCreate;
-
 use App\Livewire\Teacher\TeacherProfile;
-use App\Livewire\Principal\PrincipalEdit;
-use App\Livewire\Principal\PrincipalList;
 
+use App\Livewire\Principal\PrincipalEdit;
+
+use App\Livewire\Principal\PrincipalList;
 use App\Livewire\Sleas\Profile\SleasIndex;
 use App\Livewire\Principal\PrincipalCreate;
 use App\Livewire\Sleas\Profile\SleasFamily;
@@ -45,9 +50,9 @@ use App\Livewire\Offices\Zeo\ZeoOfficesCreate;
 use App\Livewire\Teacher\Profile\TeacherIndex;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
 use App\Livewire\Teacher\Profile\TeacherFamily;
@@ -171,6 +176,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('teacher/{id}/profile/qualification', TeacherQualification::class)->name('teacher.profile.qualification');
     Route::get('teacher/{id}/profile/employment', TeacherEmployment::class)->name('teacher.profile.employment');
     Route::get('teacher/{id}/profile/family', TeacherFamily::class)->name('teacher.profile.family');
+    Route::get('/pdf/{id}', [TeacherId::class, 'generatePDF'])->name('teacher.id.pdf');
+
     Route::middleware(['permission:create teachers'])->group(function () {
         // Routes accessible only by teachers with 'create teachers' permission
         Route::get('teacher/create', TeacherCreate::class)->name('teacher.create');
@@ -194,6 +201,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('sltes/list', SltesList::class)->name('sltes.list');
     Route::get('sltes/create', SltesCreate::class)->name('sltes.create');
+
+    Route::get('sltas/list', SltasList::class)->name('sltas.list');
+    Route::get('sltas/create', SltasCreate::class)->name('sltas.create');
+
 
 
 

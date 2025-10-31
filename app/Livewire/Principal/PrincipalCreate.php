@@ -374,7 +374,7 @@ class PrincipalCreate extends Component
                 'rank_id' => $this->serviceRank,
                 'office_level_id' => 'OLID006',
                 'position_id' => $this->currentPosition,
-                'workplace_id' => $this->institution,
+                'workplace_id' => $this->currentInstitution,
             ]);
 
             $user = User::updateOrCreate(

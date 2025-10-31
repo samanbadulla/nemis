@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Sltes;
+namespace App\Livewire\Sltas;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -34,7 +34,7 @@ use App\Rules\UniquePhoneAcrossTables;
 use App\Models\EmployerCurrentAppointment;
 use App\Models\DivisionalSecretariatOffice;
 
-class SltesCreate extends Component
+class SltasCreate extends Component
 {
     public $step = 1;
     public $maxStep = 4;
@@ -193,8 +193,8 @@ class SltesCreate extends Component
         $this->servicesOption = Service::active()->get();
         $this->ranksOption = collect();
         $this->currentRanksOption = collect();
-        $this->positionOption = Position::where('service_id','SER002')->get();
-        $this->currentPositionOption = Position::where('service_id','SER002')->get();
+        $this->positionOption = Position::where('service_id','SER003')->get();
+        $this->currentPositionOption = Position::where('service_id','SER003')->get();
         $this->institutionCategoryOption = InstitutionCategory::active()->get();
         $this->institutionOption = collect();
         $this->currentInstitutionOption = collect();
@@ -353,7 +353,7 @@ class SltesCreate extends Component
                 'currentInstitution',
             ]);
             $this->currentRanksOption = collect();
-            $this->currentPositionOption = Position::where('service_id','SER002')->get();
+            $this->currentPositionOption = Position::where('service_id','SER003')->get();
             $this->currentInstitutionOption = collect();
         }
     }
@@ -437,11 +437,11 @@ class SltesCreate extends Component
                 ]
             );
 
-            $user->assignRole('sltes');
+            $user->assignRole('sltas');
 
             DB::commit();
 
-            session()->flash('success', 'SLTES Officer profile created successfully!');
+            session()->flash('success', 'SLTAS Officer profile created successfully!');
             $this->resetForm();
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -468,6 +468,6 @@ class SltesCreate extends Component
 
     public function render()
     {
-        return view('livewire.sltes.sltes-create');
+        return view('livewire.sltas.sltas-create');
     }
 }

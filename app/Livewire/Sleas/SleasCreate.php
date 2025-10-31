@@ -421,7 +421,7 @@ class SleasCreate extends Component
                 'rank_id' => $this->serviceRank,
                 'office_level_id' => $this->currentOfficeLevel,
                 'position_id' => $this->currentPosition,
-                'workplace_id' => $this->institution,
+                'workplace_id' => $this->currentInstitution,
             ]);
 
             $user = User::updateOrCreate(
@@ -437,7 +437,7 @@ class SleasCreate extends Component
                 ]
             );
 
-            $user->assignRole('principal');
+            $user->assignRole('sltas');
 
             DB::commit();
 

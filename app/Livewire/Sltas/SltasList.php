@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Sltes;
+namespace App\Livewire\Sltas;
 
 use App\Models\People;
 use Livewire\Component;
 
-class SltesList extends Component
+class SltasList extends Component
 {
     public $query = '';
     public $results = [];
@@ -20,7 +20,7 @@ class SltesList extends Component
 
             $this->results = People::where('full_name', 'like', "%{$search}%")
                 ->orWhere('nic_hash', $nicHash)
-                ->whereHas('currentAppointment', fn($q) => $q->where('service_id', 'SER002'))
+                ->whereHas('currentAppointment', fn($q) => $q->where('service_id', 'SER003'))
                 ->limit(10)
                 ->get();
         } else {
@@ -42,10 +42,10 @@ class SltesList extends Component
             'currentAppointment.workplace.institution',
         ])
             ->whereHas('currentAppointment', function ($query) {
-                $query->where('service_id', 'SER002'); // Only SLTES
+                $query->where('service_id', 'SER003'); // Only SLTAS
             })
             ->get();
 
-        return view('livewire.sltes.sltes-list', compact('employees'));
+        return view('livewire.sltas.sltas-list', compact('employees'));
     }
 }
