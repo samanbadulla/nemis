@@ -31,8 +31,12 @@ use App\Livewire\Principal\PrincipalEdit;
 
 use App\Livewire\Principal\PrincipalList;
 use App\Livewire\Sleas\Profile\SleasIndex;
+use App\Livewire\Sltas\Profile\SltasIndex;
+use App\Livewire\Sltes\Profile\SltesIndex;
 use App\Livewire\Principal\PrincipalCreate;
 use App\Livewire\Sleas\Profile\SleasFamily;
+use App\Livewire\Sltas\Profile\SltasFamily;
+use App\Livewire\Sltes\Profile\SltesFamily;
 use App\Livewire\Offices\Deo\DeoOfficesList;
 use App\Livewire\Offices\Moe\MoeOfficesList;
 use App\Livewire\Offices\Peo\PeoOfficesList;
@@ -46,34 +50,38 @@ use App\Livewire\Offices\Peo\PeoOfficesCreate;
 use App\Livewire\Offices\Peo\Profile\PeoStaff;
 use App\Livewire\Offices\Pmoe\PmoeOfficesList;
 use App\Livewire\Offices\Zeo\Profile\ZeoStaff;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesCreate;
 use App\Livewire\Teacher\Profile\TeacherIndex;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
+use App\Livewire\Sltas\Profile\SltasEmployment;
+use App\Livewire\Sltes\Profile\SltesEmployment;
 use App\Livewire\Teacher\Profile\TeacherFamily;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Institutions\InstitutionsIndex;
 use App\Livewire\Offices\Deo\Profile\DeoProfile;
 use App\Livewire\Offices\Moe\Profile\Moeprofile;
 use App\Livewire\Offices\Peo\Profile\PeoProfile;
 use App\Livewire\Offices\Pmoe\PmoeOfficesCreate;
 use App\Livewire\Offices\Pmoe\Profile\PmoeStaff;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\Profile\ZeoProfile;
 use App\Livewire\Institutions\InstitutionsCreate;
 use App\Livewire\Offices\Deo\Profile\DeoOverview;
 use App\Livewire\Offices\Moe\Profile\MoeOverview;
 use App\Livewire\Offices\Peo\Profile\PeoOverview;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
 use App\Livewire\Offices\Pmoe\Profile\PmoeProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Sleas\Profile\SleasQualification;
+use App\Livewire\Sltas\Profile\SltasQualification;
+use App\Livewire\Sltes\Profile\SltesQualification;
 use App\Livewire\Offices\Pmoe\Profile\PmoeOverview;
 use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Teacher\Profile\TeacherEmployment;
@@ -119,24 +127,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('offices/moe/{id}/profile/moefprofile', Moeprofile::class)->name('offices.moe.profile.moeprofile');
     Route::get('offices/moe/{id}/profile/staff', MoeStaff::class)->name('offices.moe.profile.staff');
     // Route::get('offices/moe/{id}/profile/staff', MoeStaff::class)->name('offices.moe.profile.staff');
-    
+
     Route::get('offices/pmoe/{id}/profile/overview', PmoeOverview::class)->name('offices.pmoe.profile.overview');
     Route::get('offices/pmoe/{id}/profile/profile', PmoeProfile::class)->name('offices.pmoe.profile.profile');
     Route::get('offices/pmoe/{id}/profile/staff', PmoeStaff::class)->name('offices.pmoe.profile.staff');
 
-    
+
     Route::get('offices/peo/{id}/profile/overview', PeoOverview::class)->name('offices.peo.profile.overview');
     Route::get('offices/peo/{id}/profile/profile',  PeoProfile::class)->name('offices.peo.profile.profile');
     Route::get('offices/peo/{id}/profile/staff',    PeoStaff::class)->name('offices.peo.profile.staff');
-    
+
     Route::get('offices/zeo/{id}/profile/overview', ZeoOverview::class)->name('offices.zeo.profile.overview');
     Route::get('offices/zeo/{id}/profile/profile',  ZeoProfile::class)->name('offices.zeo.profile.profile');
     Route::get('offices/zeo/{id}/profile/staff',    ZeoStaff::class)->name('offices.zeo.profile.staff');
-  
+
     Route::get('offices/deo/{id}/profile/overview', DeoOverview::class)->name('offices.deo.profile.overview');
     Route::get('offices/deo/{id}/profile/profile',  DeoProfile::class)->name('offices.deo.profile.profile');
     Route::get('offices/deo/{id}/profile/staff',    DeoStaff::class)->name('offices.deo.profile.staff');
-     
+
 
     Route::get('offices', OfficesIndex::class)->name('offices.index');
 
@@ -201,9 +209,18 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('sltes/list', SltesList::class)->name('sltes.list');
     Route::get('sltes/create', SltesCreate::class)->name('sltes.create');
+    Route::get('sltes/{id}/profile/index', SltesIndex::class)->name('sltes.profile.index');
+    Route::get('sltes/{id}/profile/qualification', SltesQualification::class)->name('sltes.profile.qualification');
+    Route::get('sltes/{id}/profile/employment', SltesEmployment::class)->name('sltes.profile.employment');
+    Route::get('sltes/{id}/profile/family', SltesFamily::class)->name('sltes.profile.family');
+
 
     Route::get('sltas/list', SltasList::class)->name('sltas.list');
     Route::get('sltas/create', SltasCreate::class)->name('sltas.create');
+    Route::get('sltas/{id}/profile/index', SltasIndex::class)->name('sltas.profile.index');
+    Route::get('sltas/{id}/profile/qualification', SltasQualification::class)->name('sltas.profile.qualification');
+    Route::get('sltas/{id}/profile/employment', SltasEmployment::class)->name('sltas.profile.employment');
+    Route::get('sltas/{id}/profile/family', SltasFamily::class)->name('sltas.profile.family');
 
 
 

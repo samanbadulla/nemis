@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        <flux:link href="{{ route('teacher.profile.index', $employee->id) }}" variant="ghost">
+                                        <flux:link href="{{ route('sltas.profile.index', $employee->id) }}" variant="ghost">
                                             {{ $employee->title->title_name ?? '' }} {{ $employee->name_with_initials }}
                                         </flux:link>
                                     </div>
@@ -156,7 +156,7 @@
                             {{ $employee->email }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
-                            <a href="{{ route('sleas.profile.index', $employee->id) }}">
+                            <a href="{{ route('sltas.profile.index', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>

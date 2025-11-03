@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        <flux:link href="{{ route('teacher.profile.index', $employee->id) }}" variant="ghost">
+                                        <flux:link href="{{ route('sleas.profile.index', $employee->id) }}" variant="ghost">
                                             {{ $employee->title->title_name ?? '' }} {{ $employee->name_with_initials }}
                                         </flux:link>
                                     </div>
