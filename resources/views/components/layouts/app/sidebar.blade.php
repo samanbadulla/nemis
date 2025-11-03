@@ -101,6 +101,8 @@
                     {{ __('Teacher Advisers') }}
                 </flux:navlist.item>
             </flux:navlist.group>
+            <flux:navlist.item icon="clipboard-document" :href="route('subjects.apointed')" :current="request()->routeIs('subjects.apointed')" wire:navigate>{{ __('Apoinment subjects') }}</flux:navlist.item>
+            <flux:navlist.item icon="clipboard-document-list" :href="route('subjects.teaching')" :current="request()->routeIs('subjects.teaching')" wire:navigate>{{ __('Teaching subjects') }}</flux:navlist.item>
 
 
         </flux:navlist>

@@ -18,7 +18,7 @@ class BulkTeachersImport extends Component
     public $failCount = 0;
 
     protected $rules = [
-        'file' => 'required|file|mimes:xlsx,xls|max:5120', // 5MB limit
+        'file' => 'required|file|mimes:xlsx,xls|max:102800', // 10MB limit
     ];
 
     public function import()

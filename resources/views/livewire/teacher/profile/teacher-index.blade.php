@@ -229,7 +229,7 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">GN
                                         Division</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacher->gnDivision->gn_division_name }}</p>
+                                        {{ $teacher->gnDivision->gn_division_name ?? 'N/A'}}</p>
                                 </div>
                             </div>
 

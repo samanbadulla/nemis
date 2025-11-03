@@ -98,7 +98,7 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                                         Secondary teaching subject (optional)</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacherAppointment->secondarySubject->name_en }}</p>
+                                        {{ $teacherAppointment->secondarySubject->name_en ?? 'N/A'}}</p>
                                 </div>
                                 {{-- Name with Initials --}}
                                 <div
@@ -280,7 +280,7 @@
                                         Previous Service-related information
                                     </h2>
                                     <flux:modal.trigger name="add-service-record">
-                                        <flux:button icon="plus" size="sm" variant="primary">Previous Record
+                                        <flux:button icon="plus" size="sm">Previous Record
                                         </flux:button>
                                     </flux:modal.trigger>
                                 </div>
@@ -485,7 +485,6 @@
                         <flux:select.option value="0">Position</flux:select.option>
                         <flux:select.option value="1">Grade update</flux:select.option>
                         <flux:select.option value="2">Transfer</flux:select.option>
-                        <flux:select.option value="3">Retirement</flux:select.option>
                     </flux:select>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">

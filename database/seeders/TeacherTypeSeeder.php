@@ -16,7 +16,7 @@ class TeacherTypeSeeder extends Seeder
         $now = Carbon::now()->format('Y-m-d H:i:s');
         $teacherTypes = [
             ['teacher_types_id' => 'TCHTYPE001', 'type_name' => 'Primary School Teachers', 'created_at' => $now, 'updated_at' => $now],
-            ['teacher_types_id' => 'TCHTYPE002', 'type_name' => '6-11 Teachers', 'created_at' => $now, 'updated_at' => $now],
+            ['teacher_types_id' => 'TCHTYPE002', 'type_name' => '1-11 Teachers', 'created_at' => $now, 'updated_at' => $now],
             ['teacher_types_id' => 'TCHTYPE003', 'type_name' => '6-11 Teachers', 'created_at' => $now, 'updated_at' => $now],
             ['teacher_types_id' => 'TCHTYPE004', 'type_name' => '6-13 Teachers', 'created_at' => $now, 'updated_at' => $now],
             ['teacher_types_id' => 'TCHTYPE005', 'type_name' => '12-13 Teachers', 'created_at' => $now, 'updated_at' => $now],

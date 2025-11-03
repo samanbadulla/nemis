@@ -53,43 +53,70 @@
             <flux:input wire:model.live="query" class="w-48 md:w-64" placeholder="Search..." />
         </div>
 
+        <div class="flex items-center space-x-3 mb-2">
+            <span class="text-sm text-gray-500 dark:text-gray-400">
+                Total: {{ $institutions->total() }} Institution
+            </span>
+        </div>
         <div class="overflow-x-auto">
+            <!-- Optional: Add filters or actions here -->
             <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
                 <thead class="bg-slate-50 dark:bg-slate-800">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                            #
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                             Name
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                             Address
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                             Zone
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                             Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-right text-xs font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-700">
-                    @forelse ($institutions as $institution)
+                    @forelse ($institutions as $key => $institution)
                         <tr class="hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-900 dark:text-slate-100">
+                                    {{ $key + 1 }}
+                                </div>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full"
-                                            src="{{ asset('images/default_logo.png') }}" alt="">
+                                        {{-- <img class="h-10 w-10 rounded-full"
+                                            src="{{ asset('images/default_logo.png') }}" alt=""> --}}
+                                        <svg class="h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg"
+                                            width="16" height="16" fill="currentColor" class="bi bi-bank2"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916zM12.375 6v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2M.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1z" />
+                                        </svg>
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                            <flux:link href="{{ route('institutions.profile.overview', $institution->id) }}"
+                                            <flux:link
+                                                href="{{ route('institutions.profile.overview', $institution->id) }}"
                                                 variant="ghost">{{ $institution->name }}</flux:link>
                                         </div>
                                         <div class="text-sm text-slate-500 dark:text-slate-400">
-                                            Census No.: {{ $institution->census_no }}
+                                            Census No.: {{ str_pad($institution->census_no, 5, '0', STR_PAD_LEFT) }}
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +151,6 @@
                                 <a href="#">
                                     <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                                 </a>
-                                <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
                             </td>
                         </tr>
                     @empty

@@ -198,7 +198,7 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
             'rank_id' => 'required|string|max:10|exists:service_ranks,rank_id',
             'workplace_id' => 'required|string|max:10|exists:workplaces,workplace_id',
             'appointment_letter_no' => 'required|string|max:255',
-            'w_op_no' => 'required|string|max:255',
+            'w_op_no' => 'nullable|string|max:255',
             // current employee check
             'current_appoint_date' => 'required|date',
             'current_service_id' => 'required|string|max:10|exists:services,service_id',

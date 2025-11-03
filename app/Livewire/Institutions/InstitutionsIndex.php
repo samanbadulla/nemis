@@ -60,7 +60,7 @@ class InstitutionsIndex extends Component
 
     public function render()
     {
-        $query = Institution::query()->with(['zonalEducationOffice', 'divisionalEducationOffice']);
+        $query = Institution::query()->with(['zonalEducationOffice', 'divisionalEducationOffice'])->orderBy('census_no', 'asc');;
 
         // Search filter
         if ($this->query) {
