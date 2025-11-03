@@ -5,6 +5,20 @@
         </flux:subheading>
         <flux:separator variant="subtle" />
 
+        <div>
+            @if (session()->has('success'))
+                <div class="p-3 mb-4 text-sm text-green-800 bg-green-100 border border-green-300 rounded-lg">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session()->has('error'))
+                <div class="p-3 mb-4 text-sm text-red-800 bg-red-100 border border-red-300 rounded-lg">
+                    {{ session('error') }}
+                </div>
+            @endif
+        </div>
+
         <div class="my-6 flex items-center justify-end gap-3">
 
             {{-- Search Button (Modal Trigger) --}}
@@ -19,6 +33,16 @@
                     <flux:button icon="plus" color="primary"
                         class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
                         Create Teacher
+                    </flux:button>
+                </a>
+            @endcan
+
+            {{-- Create Teacher Button (Permission Based) --}}
+            @can('create teachers')
+                <a href="{{ route('teacher.bulk.upload') }}">
+                    <flux:button icon="plus" color="primary"
+                        class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
+                        Bulk Upload Teachers
                     </flux:button>
                 </a>
             @endcan
@@ -49,7 +73,7 @@
                             @foreach ($results as $teacher)
                                 <li
                                     class="py-2 px-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md cursor-pointer transition">
-                                    <a href="{{route('teacher.profile.index', $teacher->id)}}">
+                                    <a href="{{ route('teacher.profile.index', $teacher->id) }}">
                                         <div class="flex justify-between items-center">
                                             <span class="font-semibold text-gray-800 dark:text-gray-100">
                                                 {{ $teacher['name_with_initials'] }}
@@ -112,16 +136,20 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
-                                    @if($employee->gender_id == "G02")
-                                        <img class="h-10 w-10 rounded-full" src="{{ asset('images/profile_f.png') }}" alt="">
+                                    @if ($employee->gender_id == 'G02')
+                                        <img class="h-10 w-10 rounded-full" src="{{ asset('images/profile_f.png') }}"
+                                            alt="">
                                     @else
-                                        <img class="h-10 w-10 rounded-full" src="{{ asset('images/profile_m.png') }}" alt="">
+                                        <img class="h-10 w-10 rounded-full" src="{{ asset('images/profile_m.png') }}"
+                                            alt="">
                                     @endif
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        <flux:link href="{{ route('teacher.profile.index', $employee->id) }}" variant="ghost">
-                                            {{ $employee->title->title_name ?? '' }} {{ $employee->name_with_initials }}
+                                        <flux:link href="{{ route('teacher.profile.index', $employee->id) }}"
+                                            variant="ghost">
+                                            {{ $employee->title->title_name ?? '' }}
+                                            {{ $employee->name_with_initials }}
                                         </flux:link>
                                     </div>
                                     <div class="text-sm text-gray-500">
@@ -159,8 +187,11 @@
                             <a href="{{ route('teacher.profile.index', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
-                             <a href="{{ route('teacher.id.pdf', $employee->id) }}">
-                                <flux:button size="sm" icon="eye">ID</flux:button>
+                            <a href="{{ route('teacher.id.pdf', $employee->id) }}">
+                                <flux:button size="sm" icon="identification">ID</flux:button>
+                            </a>
+                            <a href="{{ route('teacher.profile.pdf', $employee->id) }}">
+                                <flux:button size="sm" icon="document">pdf</flux:button>
                             </a>
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
                         </td>

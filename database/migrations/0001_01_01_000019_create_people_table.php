@@ -31,12 +31,19 @@ return new class extends Migration
             $table->string('phone', 10)->unique();
             $table->char('district_id', 10)->nullable()->comment('District ID where the employer is located');
             $table->char('gn_division_id', 10)->nullable()->comment('Grama Niladhari Division ID');
+            
             $table->text('address_line1');
             $table->text('address_line2');
             $table->text('address_line3')->nullable();
             $table->string('postal_code', 10)->nullable();
             $table->string('latitude', 10)->nullable();
             $table->string('longitude', 10)->nullable();
+
+            $table->text('t_address_line1')->nullable();
+            $table->text('t_address_line2')->nullable();
+            $table->text('t_address_line3')->nullable();
+            $table->string('t_postal_code', 10)->nullable();
+
             $table->string('profile_picture')->nullable();
             $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();

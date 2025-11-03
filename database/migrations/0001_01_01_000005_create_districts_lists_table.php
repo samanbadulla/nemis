@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('districts_lists', function (Blueprint $table) {
             $table->id();
             $table->string('district_id',10)->unique();
+            $table->unsignedInteger('district_code')->unique();
             $table->string('province_id',10);
             $table->string('district_name',50)->unique();
             $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
