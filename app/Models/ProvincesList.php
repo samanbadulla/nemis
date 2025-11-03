@@ -15,6 +15,7 @@ class ProvincesList extends Model
 
     protected $fillable = [
         'province_id',
+        'province_code',
         'province_name',
         'active_status',
     ];

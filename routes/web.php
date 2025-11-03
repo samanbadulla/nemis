@@ -22,7 +22,7 @@ use App\Livewire\Teacher\TeacherList;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Offices\OfficesIndex;
-use App\Http\Controllers\pdf\TeacherId;
+use App\Http\Controllers\Pdf\TeacherId;
 
 use App\Livewire\Teacher\TeacherCreate;
 use App\Livewire\Teacher\TeacherProfile;
@@ -47,7 +47,6 @@ use App\Livewire\Offices\Peo\Profile\PeoStaff;
 use App\Livewire\Offices\Pmoe\PmoeOfficesList;
 use App\Livewire\Offices\Zeo\Profile\ZeoStaff;
 use App\Livewire\Offices\Zeo\ZeoOfficesCreate;
-use App\Livewire\Teacher\Profile\TeacherIndex;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
 //use App\Livewire\Institutions\InstitutionsProfile;
@@ -55,7 +54,6 @@ use App\Livewire\Offices\Peo\PeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
-use App\Livewire\Teacher\Profile\TeacherFamily;
 //use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Institutions\InstitutionsIndex;
 use App\Livewire\Offices\Deo\Profile\DeoProfile;
@@ -76,10 +74,8 @@ use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Sleas\Profile\SleasQualification;
 use App\Livewire\Offices\Pmoe\Profile\PmoeOverview;
 use App\Livewire\Principal\Profile\PrincipalFamily;
-use App\Livewire\Teacher\Profile\TeacherEmployment;
 use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
 use App\Livewire\Offices\Peo\ProvincialOfficeByPmoe;
-use App\Livewire\Teacher\Profile\TeacherQualification;
 use App\Livewire\Institutions\Profile\InstitutionStaff;
 use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
@@ -171,27 +167,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('roles/{id}/edit', RoleEdit::class)->name('roles.edit');
     });
 
-    Route::get('teacher/list', TeacherList::class)->name('teacher.list');
-    Route::get('teacher/{id}/profile/index', TeacherIndex::class)->name('teacher.profile.index');
-    Route::get('teacher/{id}/profile/qualification', TeacherQualification::class)->name('teacher.profile.qualification');
-    Route::get('teacher/{id}/profile/employment', TeacherEmployment::class)->name('teacher.profile.employment');
-    Route::get('teacher/{id}/profile/family', TeacherFamily::class)->name('teacher.profile.family');
-    Route::get('/pdf/{id}', [TeacherId::class, 'generatePDF'])->name('teacher.id.pdf');
-
-    Route::middleware(['permission:create teachers'])->group(function () {
-        // Routes accessible only by teachers with 'create teachers' permission
-        Route::get('teacher/create', TeacherCreate::class)->name('teacher.create');
-        Route::get('teacher/edit', TeacherEdit::class)->name('teacher.edit');
-    });
-
-    Route::get('principal/list', PrincipalList::class)->name('principal.list');
-    Route::get('principal/create', PrincipalCreate::class)->name('principal.create');
-    Route::get('principal/edit', PrincipalEdit::class)->name('principal.edit');
-    Route::get('principal/{id}/profile/index', PrincipalIndex::class)->name('principal.profile.index');
-    Route::get('principal/{id}/profile/qualification', PrincipalQualification::class)->name('principal.profile.qualification');
-    Route::get('principal/{id}/profile/employment', PrincipalEmployment::class)->name('principal.profile.employment');
-    Route::get('principal/{id}/profile/family', PrincipalFamily::class)->name('principal.profile.family');
-
     Route::get('sleas/list', SleasList::class)->name('sleas.list');
     Route::get('sleas/create', SleasCreate::class)->name('sleas.create');
     Route::get('sleas/{id}/profile/index', SleasIndex::class)->name('sleas.profile.index');
@@ -211,3 +186,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/teacher.php';
+require __DIR__.'/principal.php';

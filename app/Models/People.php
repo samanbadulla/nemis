@@ -37,6 +37,12 @@ class People extends Model
         'postal_code',
         'latitude',
         'longitude',
+
+        't_address_line1',
+        't_address_line2',
+        't_address_line3',
+        't_postal_code',
+
         'profile_picture',
         'active_status',
     ];

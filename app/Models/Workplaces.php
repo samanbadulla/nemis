@@ -76,4 +76,46 @@ class Workplaces extends Model
             ?? $office->short_name
             ?? 'Unnamed Office';
     }
+
+    public function getAllChildWorkplaces()
+    {
+        $workplaceIds = [$this->workplace_id];
+        
+        // Get direct children
+        $children = Workplaces::where('parent_workplace_id', $this->workplace_id)->get();
+        
+        foreach ($children as $child) {
+            $workplaceIds = array_merge($workplaceIds, $child->getAllChildWorkplaces());
+        }
+        
+        return $workplaceIds;
+    }
+
+    /**
+     * Get all parent workplaces recursively
+     */
+    public function getAllParentWorkplaces()
+    {
+        $workplaceIds = [$this->workplace_id];
+        
+        if ($this->parent_workplace_id) {
+            $parent = Workplaces::where('workplace_id', $this->parent_workplace_id)->first();
+            if ($parent) {
+                $workplaceIds = array_merge($workplaceIds, $parent->getAllParentWorkplaces());
+            }
+        }
+        
+        return $workplaceIds;
+    }
+
+    /**
+     * Get workplace hierarchy (both parents and children)
+     */
+    public function getWorkplaceHierarchy()
+    {
+        $parents = $this->getAllParentWorkplaces();
+        $children = $this->getAllChildWorkplaces();
+        
+        return array_unique(array_merge($parents, $children));
+    }
 }

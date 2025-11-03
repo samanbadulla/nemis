@@ -15,6 +15,7 @@ class DistrictsList extends Model
 
     protected $fillable = [
         'district_id',
+        'district_code',
         'province_id',
         'district_name',
         'active_status',
