@@ -3,13 +3,15 @@
 namespace App\Imports;
 
 use App\Models\People;
-use App\Models\EmployerAppointment;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\DB;
+use App\Models\EmployerAppointment;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
+use App\Models\EmployerCurrentAppointment;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
 class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows
 {
@@ -89,6 +91,30 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
                 ]
             );
 
+             // Create Current Appointment
+            EmployerCurrentAppointment::create([
+                'appointment_id' => $appointmentId,
+                'employee_id' => $people->people_id,
+                'appoint_date' => $row['current_appoint_date'] ?? null,
+                'service_id' => $row['current_service_id'] ?? null,
+                'rank_id' => $$row['current_rank_id'] ?? null,
+                'office_level_id' => 'OLID006',
+                'position_id' => 'POS001',
+                'workplace_id' => $row['current_workplace_id'] ?? null,
+            ]);
+
+            Teacher::create([
+                'appointment_id' => $appointmentId,
+                'employee_id' => $people->people_id,
+                'teacher_category' => $row['teacher_category'] ?? null,
+                'teacher_type' => $row['teacher_type'] ?? null,
+                'appointment_medium' => $row['appointment_medium'] ?? null,
+                'appointment_subject' => $row['appointment_subject'] ?? null,
+                'main_subject' => $row['main_subject'] ?? null,
+                'secondary_subject' => $row['secondary_subject'] ?? null,
+                'current_teaching_subject' => $row['current_teaching_subject'] ?? null,
+            ]);
+
             DB::commit();
             $this->successCount++;
             return $people;
@@ -124,6 +150,18 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
             'appointment_letter_no' => 'required|string|max:255',
             'w_op_no' => 'required|string|max:255',
             // current employee check
+            'current_appoint_date' => 'required|date',
+            'current_service_id' => 'required|string|max:10|exists:services,service_id',
+            'current_rank_id' => 'required|string|max:10|exists:service_ranks,rank_id',
+            'current_workplace_id' => 'required|string|max:10|exists:workplaces,workplace_id',
+            // Teacher related validations
+            'teacher_category' => 'required|string|max:10|exists:teacher_categories,categories_id',
+            'teacher_type' => 'required|string|max:10|exists:teacher_types,teacher_types_id',
+            'appointment_medium' => 'required|string|max:10|exists:medium_of_instructions,medium_id',
+            'appointment_subject' => 'required|string|max:10|exists:apointed_subjects,a_subject_id',
+            'main_subject' => 'nullable|string|max:10|exists:subject_lists,subject_id',
+            'secondary_subject' => 'nullable|string|max:10|exists:subject_lists,subject_id',
+            'current_teaching_subject' => 'nullable|string|max:10|exists:subject_lists,subject_id',
         ];
     }
 
