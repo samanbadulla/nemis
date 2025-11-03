@@ -28,6 +28,7 @@ class EmployerAppointment extends Model
         'workplace_id',
         'appointment_letter_no',
         'appointment_letter',
+        'pay_sheet_no',
         'w_op_no',
         'active_status',
     ];

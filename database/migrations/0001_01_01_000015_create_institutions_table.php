@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('authority_id', 10)->comment('Foreign key referencing authorities table');
             $table->char('language_id', 10)->comment('Foreign key referencing institution_languages table');
             $table->char('gender_id', 10)->comment('Foreign key referencing institution_genders table');
+            $table->char('ins_ethnicity_id', 10)->comment('Foreign key referencing institution_ethnisities table');
             $table->char('institution_types_id', 10)->comment('foreign key referencing institution_types table');
             $table->char('grade_span_id', 10)->nullable()->comment('foreign key referencing grade_spans table');
             $table->enum('sport_s', ['1','0'])->default('0');
@@ -50,11 +51,12 @@ return new class extends Migration
             $table->foreign('authority_id')->references('authority_id')->on('institution_authorities');
             $table->foreign('language_id')->references('language_id')->on('institution_languages');
             $table->foreign('gender_id')->references('gender_id')->on('institution_genders');
-            $table->foreign('police_station_id')->references('police_station_id')->on('police_stations')->onDelete('cascade');
-            $table->foreign('moh_area_id')->references('moh_area_id')->on('moh_areas')->onDelete('cascade');
-            $table->foreign('institution_types_id')->references('institution_types_id')->on('institution_types')->onDelete('cascade');
-            $table->foreign('grade_span_id')->references('grade_span_id')->on('grade_spans')->onDelete('cascade');
-            
+            $table->foreign('ins_ethnicity_id')->references('ethnicity_id')->on('institution_ethnisities');
+            $table->foreign('police_station_id')->references('police_station_id')->on('police_stations');
+            $table->foreign('moh_area_id')->references('moh_area_id')->on('moh_areas');
+            $table->foreign('institution_types_id')->references('institution_types_id')->on('institution_types');
+            $table->foreign('grade_span_id')->references('grade_span_id')->on('grade_spans');
+
         });
     }
 

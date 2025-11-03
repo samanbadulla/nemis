@@ -90,7 +90,8 @@ use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
-
+use App\Livewire\Subjects\ApointedSubjectIndex;
+use App\Livewire\Subjects\TeachingSubjectIndex;
 
 Route::get('/', function () {
     return view('welcome');
@@ -197,6 +198,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sltas/{id}/profile/qualification', SltasQualification::class)->name('sltas.profile.qualification');
     Route::get('sltas/{id}/profile/employment', SltasEmployment::class)->name('sltas.profile.employment');
     Route::get('sltas/{id}/profile/family', SltasFamily::class)->name('sltas.profile.family');
+
+    Route::get('subjects/apointed-subject', ApointedSubjectIndex::class)->name('subjects.apointed');
+    Route::get('subjects/teaching-subject', TeachingSubjectIndex::class)->name('subjects.teaching');
 
 
 

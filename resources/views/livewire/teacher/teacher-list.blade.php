@@ -193,7 +193,6 @@
                             <a href="{{ route('teacher.profile.pdf', $employee->id) }}">
                                 <flux:button size="sm" icon="document">pdf</flux:button>
                             </a>
-                            <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
                         </td>
                     </tr>
                 @empty

@@ -29,6 +29,12 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
      */
     public function model(array $row)
     {
+        // Skip if NIC is empty
+        if (empty($row['nic'])) {
+            $this->failCount++;
+            return null;
+        }
+
         $healthValue = trim(strtolower($row['health_condition'] ?? 'yes'));
         $healthCondition = in_array($healthValue, ['yes', 'y', 'true', '1'], true);
 
@@ -38,10 +44,45 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
         DB::beginTransaction();
 
         try {
-            $people = People::updateOrCreate(
-                ['nic_hash' => hash('sha256', strtoupper($row['nic']))],
-                [
+            // Check if people already exists with this NIC
+            $nicHash = hash('sha256', strtoupper($row['nic']));
+            $existingPeople = People::where('nic_hash', $nicHash)->first();
+
+            if ($existingPeople) {
+                $people = $existingPeople;
+                // Update existing record
+                $people->update([
+                    'title_id' => $row['title_id'] ?? null,
+                    'full_name' => $row['full_name'] ?? null,
+                    'name_with_initials' => $initials,
+                    'gender_id' => $row['gender_id'] ?? null,
+                    'date_of_birth' => $row['date_of_birth'] ?? null,
+                    'religion_id' => $row['religion_id'] ?? null,
+                    'ethnicity_id' => $row['ethnicity_id'] ?? null,
+                    'civil_status_id' => $row['civil_status_id'] ?? null,
+                    'health_condition' => $healthCondition,
+                    'health_problem' => $row['health_problem'] ?? null,
+                    'blood_group_id' => $row['blood_group_id'] ?? null,
+                    'email' => $row['email'] ?? null,
+                    'phone' => $row['phone'] ?? null,
+                    'district_id' => $row['district_id'] ?? null,
+                    'gn_division_id' => $row['gn_division_id'] ?? null,
+                    'address_line1' => $row['address_line1'] ?? '',
+                    'address_line2' => $row['address_line2'] ?? '',
+                    'address_line3' => $row['address_line3'] ?? null,
+                    'postal_code' => $row['postal_code'] ?? null,
+                    'latitude' => $row['latitude'] ?? null,
+                    'longitude' => $row['longitude'] ?? null,
+                    't_address_line1' => $row['t_address_line1'] ?? null,
+                    't_address_line2' => $row['t_address_line2'] ?? null,
+                    't_address_line3' => $row['t_address_line3'] ?? null,
+                    't_postal_code' => $row['t_postal_code'] ?? null,
+                ]);
+            } else {
+                // Create new people record
+                $people = People::create([
                     'nic' => $row['nic'] ?? null,
+                    'nic_hash' => $nicHash,
                     'title_id' => $row['title_id'] ?? null,
                     'full_name' => $row['full_name'] ?? null,
                     'name_with_initials' => $initials,
@@ -68,10 +109,11 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
                     't_address_line3' => $row['t_address_line3'] ?? null,
                     't_postal_code' => $row['t_postal_code'] ?? null,
                     'profile_picture' => 'default.png',
-                   // 'created_by' => $this->userId,
-                ]
-            );
+                    //'created_by' => $this->userId,
+                ]);
+            }
 
+            // Update or create employer appointment
             EmployerAppointment::updateOrCreate(
                 ['employee_id' => $people->people_id],
                 [
@@ -87,33 +129,40 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
                     'appointment_letter_no' => $row['appointment_letter_no'] ?? null,
                     'appointment_letter' => 'default_letter.pdf',
                     'w_op_no' => $row['w_op_no'] ?? null,
-                   // 'created_by' => $this->userId,
+                    //'created_by' => $this->userId,
                 ]
             );
 
-             // Create Current Appointment
-            EmployerCurrentAppointment::create([
-                'appointment_id' => $appointmentId,
-                'employee_id' => $people->people_id,
-                'appoint_date' => $row['current_appoint_date'] ?? null,
-                'service_id' => $row['current_service_id'] ?? null,
-                'rank_id' => $$row['current_rank_id'] ?? null,
-                'office_level_id' => 'OLID006',
-                'position_id' => 'POS001',
-                'workplace_id' => $row['current_workplace_id'] ?? null,
-            ]);
+            // Create or update Current Appointment
+            EmployerCurrentAppointment::updateOrCreate(
+                ['employee_id' => $people->people_id],
+                [
+                    'appointment_id' => $appointmentId,
+                    'employee_id' => $people->people_id,
+                    'appoint_date' => $row['current_appoint_date'] ?? null,
+                    'service_id' => $row['current_service_id'] ?? null,
+                    'rank_id' => $row['current_rank_id'] ?? null, // FIXED: removed extra $
+                    'office_level_id' => 'OLID006',
+                    'position_id' => 'POS001',
+                    'workplace_id' => $row['current_workplace_id'] ?? null,
+                ]
+            );
 
-            Teacher::create([
-                'appointment_id' => $appointmentId,
-                'employee_id' => $people->people_id,
-                'teacher_category' => $row['teacher_category'] ?? null,
-                'teacher_type' => $row['teacher_type'] ?? null,
-                'appointment_medium' => $row['appointment_medium'] ?? null,
-                'appointment_subject' => $row['appointment_subject'] ?? null,
-                'main_subject' => $row['main_subject'] ?? null,
-                'secondary_subject' => $row['secondary_subject'] ?? null,
-                'current_teaching_subject' => $row['current_teaching_subject'] ?? null,
-            ]);
+            // Create or update Teacher record
+            Teacher::updateOrCreate(
+                ['employee_id' => $people->people_id],
+                [
+                    'appointment_id' => $appointmentId,
+                    'employee_id' => $people->people_id,
+                    'teacher_category' => $row['teacher_category'] ?? null,
+                    'teacher_type' => $row['teacher_type'] ?? null,
+                    'appointment_medium' => $row['appointment_medium'] ?? null,
+                    'appointment_subject' => $row['appointment_subject'] ?? null,
+                    'main_subject' => $row['main_subject'] ?? null,
+                    'secondary_subject' => $row['secondary_subject'] ?? null,
+                    'current_teaching_subject' => $row['current_teaching_subject'] ?? null,
+                ]
+            );
 
             DB::commit();
             $this->successCount++;
@@ -124,6 +173,7 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
             Log::error('Teacher import failed', [
                 'row' => $row,
                 'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ]);
             return null;
         }
@@ -132,15 +182,15 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
     public function rules(): array
     {
         return [
-            'nic' => 'required|string|max:12|unique:people,nic',
+            'nic' => 'required|string|max:12',
             'full_name' => 'required|string|max:255',
             'title_id' => 'required|string|max:3|exists:titles,title_id',
             'gender_id' => 'required|string|max:3|exists:gender_lists,gender_id',
             'religion_id' => 'required|string|max:3|exists:religions,religion_id',
             'ethnicity_id' => 'required|string|max:3|exists:ethnicities,ethnicity_id',
             'civil_status_id' => 'required|string|max:3|exists:civil_statuses,civil_status_id',
-            'email' => 'required|email|max:255|unique:people,email',
-            'phone' => 'required|string|max:15|unique:people,phone',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
             'date_of_birth' => 'required|date',
             // EmployerAppointment related validations
             'first_appointment_date' => 'required|date',
@@ -148,7 +198,7 @@ class TeachersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
             'rank_id' => 'required|string|max:10|exists:service_ranks,rank_id',
             'workplace_id' => 'required|string|max:10|exists:workplaces,workplace_id',
             'appointment_letter_no' => 'required|string|max:255',
-            'w_op_no' => 'required|string|max:255',
+            'w_op_no' => 'nullable|string|max:255',
             // current employee check
             'current_appoint_date' => 'required|date',
             'current_service_id' => 'required|string|max:10|exists:services,service_id',
