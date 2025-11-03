@@ -14,6 +14,8 @@ class BulkTeachersImport extends Component
     use WithFileUploads;
 
     public $file;
+    public $successCount = 0;
+    public $failCount = 0;
 
     protected $rules = [
         'file' => 'required|file|mimes:xlsx,xls|max:5120', // 5MB limit
@@ -32,10 +34,15 @@ class BulkTeachersImport extends Component
         try {
             Excel::import($import, storage_path('app/public/' . $storedPath));
 
-            $successCount = $import->getSuccessCount();
-            $failCount = $import->getFailCount();
+            $this->successCount = $import->getSuccessCount();
+            $this->failCount = $import->getFailCount();
 
-            session()->flash('success', "Import completed: {$successCount} rows inserted, {$failCount} rows failed.");
+            if ($this->successCount > 0) {
+                session()->flash('success', 'Teachers imported successfully!');
+            } else {
+                session()->flash('error', 'No teachers were imported. Please check your file.');
+            }
+
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
 

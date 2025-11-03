@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('appointment_letter_no')->nullable()->comment('Appointment letter number');
             $table->string('appointment_letter')->nullable()->comment('Path to the appointment letter document');
             $table->char('w_op_no', 10)->nullable()->comment('W&OP number'); // fixed
+            $table->char('pay_sheet_no', 10)->nullable()->comment('Pay sheet number'); // fixed
             $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 

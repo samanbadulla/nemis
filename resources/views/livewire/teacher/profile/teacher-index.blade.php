@@ -58,7 +58,7 @@
                                         Personal & Cultural
                                     </h2>
                                     <flux:modal.trigger name="edit-profile-personal-info">
-                                        <flux:button>Edit profile</flux:button>
+                                        <flux:button>Edit</flux:button>
                                     </flux:modal.trigger>
                                 </div>
                                 <flux:separator variant="subtle" />
@@ -135,7 +135,7 @@
                             </div>
                         </section>
 
-                        {{-- 2. Health Profile --}}
+                        {{-- 2. Health information --}}
                         <section>
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
@@ -143,7 +143,7 @@
                                         Health Information
                                     </h2>
                                     <flux:modal.trigger name="edit-profile-health-info">
-                                        <flux:button>Edit profile</flux:button>
+                                        <flux:button>Edit</flux:button>
                                     </flux:modal.trigger>
                                 </div>
                                 <flux:separator variant="subtle" />
@@ -188,8 +188,9 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Contact & Address
                                     </h2>
-                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit
-                                    </flux:button>
+                                    <flux:modal.trigger name="edit-contact-info">
+                                        <flux:button>Edit</flux:button>
+                                    </flux:modal.trigger>
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -254,14 +255,14 @@
                                 <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Residential
                                     Address</p>
                                 <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                    {{ $teacher->address_line1 }}<br>
-                                    @if ($teacher->address_line2)
-                                        {{ $teacher->address_line2 }}<br>
+                                    {{ $teacher->t_address_line1 }}<br>
+                                    @if ($teacher->t_address_line2)
+                                        {{ $teacher->t_address_line2 }}<br>
                                     @endif
-                                    @if ($teacher->address_line3)
-                                        {{ $teacher->address_line3 }}<br>
+                                    @if ($teacher->t_address_line3)
+                                        {{ $teacher->t_address_line3 }}<br>
                                     @endif
-                                    <span class="font-bold">{{ $teacher->postal_code }}</span>
+                                    <span class="font-bold">{{ $teacher->t_postal_code }}</span>
                                 </p>
                             </div>
                         </section>
@@ -279,6 +280,7 @@
             </div>
         </div>
         {{-- Edit Profile Modal --}}
+        {{-- Edit general information --}}
         <flux:modal wire:model="showModalPersonalInfo" name="edit-profile-personal-info" class="md:w-96">
             <div class="space-y-6">
                 <div>
@@ -376,7 +378,7 @@
                 </form>
             </div>
         </flux:modal>
-
+        {{-- Edit health information --}}
         <flux:modal wire:model="showModalHealthInfo" name="edit-profile-health-info" class="md:w-96">
             <div class="space-y-6">
                 <div>
@@ -420,6 +422,118 @@
                                 </flux:field>
                             </div>
                         @endif
+
+                    </div>
+
+                    <div class="flex mt-4">
+                        <flux:spacer />
+                        <flux:button type="submit" variant="primary">Save changes</flux:button>
+                    </div>
+                </form>
+            </div>
+        </flux:modal>
+        {{-- Edit contact information --}}
+        <flux:modal wire:model="showModalContactInfo" name="edit-contact-info" class="md:w-150">
+
+            <div class="space-y-4">
+                <div>
+                    <flux:heading size="lg">Update profile</flux:heading>
+                    <flux:text class="mt-2">Make changes to your personal details.
+                    </flux:text>
+                </div>
+
+                <form wire:submit.prevent="editContactInfo" class="space-y-4">
+                    <flux:field>
+                        <flux:input label="Contact" wire:model.live="contact"
+                            placeholder="Enter Contact (10 digits)" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:input label="Email" type="email" wire:model.live="email"
+                            placeholder="Enter email" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:input label="Address Line 1" wire:model.live="addressLine1"
+                            placeholder="Enter address line 1" />
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:input label="Address Line 2" wire:model.live="addressLine2"
+                            placeholder="Enter address line 2" />
+                    </flux:field>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <!-- Address Line 3 -->
+                        <div class="md:w-3/4 w-full">
+                            <flux:field>
+                                <flux:input label="Address Line 3" wire:model.live="addressLine3"
+                                    placeholder="Enter address line 3" />
+                            </flux:field>
+                        </div>
+
+                        <!-- Postal Code -->
+                        <div class="md:w-1/4 w-full">
+                            <flux:field>
+                                <flux:input label="Postal Code" wire:model.live="postalCode"
+                                    placeholder="Enter postal code" />
+                            </flux:field>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <!-- latitude -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:input label="Latitude" wire:model.live="latitude"
+                                    placeholder="Enter latitude (optional)" />
+                            </flux:field>
+                        </div>
+
+                        <!-- longitude -->
+                        <div class="md:w-1/2 w-full">
+                            <flux:field>
+                                <flux:input label="Longitude" wire:model.live="longitude"
+                                    placeholder="Enter longitude (optional)" />
+                            </flux:field>
+                        </div>
+                    </div>
+
+                    <div
+                        class="p-4 space-y-6 bg-gray-100 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700">
+                        <p class="text-gray-700 dark:text-gray-200 font-bold">
+                            Temporary Address (If different from permanent address)
+                        </p>
+
+                        <flux:field class="text-gray-700 dark:text-gray-300">
+                            <flux:input label="Address Line 1" wire:model.live="tAddressLine1"
+                                class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                placeholder="Enter address line 1" />
+                        </flux:field>
+
+                        <flux:field class="text-gray-700 dark:text-gray-300">
+                            <flux:input label="Address Line 2" wire:model.live="tAddressLine2"
+                                class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                placeholder="Enter address line 2" />
+                        </flux:field>
+
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="md:w-3/4 w-full">
+                                <flux:field class="text-gray-700 dark:text-gray-300">
+                                    <flux:input label="Address Line 3" wire:model.live="tAddressLine3"
+                                        class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                        placeholder="Enter address line 3" />
+                                </flux:field>
+                            </div>
+
+                            <div class="md:w-1/4 w-full">
+                                <flux:field class="text-gray-700 dark:text-gray-300">
+                                    <flux:input label="Postal Code" wire:model.live="tPostalCode"
+                                        class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                        placeholder="Enter postal code" />
+                                </flux:field>
+                            </div>
+                        </div>
 
                     </div>
 

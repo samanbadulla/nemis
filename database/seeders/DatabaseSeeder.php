@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InstitutionCategoriesTableSeeder::class);
         $this->call(InstitutionLanguageSeeder::class);
         $this->call(InstitutionGenderSeeder::class);
+        $this->call(InstitutionAuthoritySeeder::class);
         $this->call(GradeSpanSeeder::class);
         $this->call(AppointedSubjectsSeeder::class);
         $this->call(SubjectSeeder::class);

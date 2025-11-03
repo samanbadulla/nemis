@@ -34,6 +34,7 @@ class TeacherIndex extends Component
     public $teacher;
     public $showModalPersonalInfo = false; // control modal visibility
     public $showModalHealthInfo = false; // control modal visibility
+    public $showModalContactInfo = false; // control modal visibility
 
     // -------------------------
     // Personal Details
@@ -41,6 +42,13 @@ class TeacherIndex extends Component
     public $nic, $title, $fullName, $gender, $birthday, $religion;
     public $ethnicity, $civilStatus;
     public $bloodGroup, $healthCondition, $healthProblem;
+
+    // -------------------------
+    // Contact Details
+    // -------------------------
+    public $contact, $email;
+    public $addressLine1, $addressLine2, $addressLine3, $postalCode, $latitude, $longitude;
+    public $tAddressLine1, $tAddressLine2, $tAddressLine3, $tPostalCode;
 
     // -------------------------
     // Dropdown Options
@@ -70,6 +78,28 @@ class TeacherIndex extends Component
             'bloodGroup' => 'required|string',
             'healthCondition' => 'required|boolean',
             'healthProblem' => 'required_if:healthCondition,false|string|max:1000',
+
+            'contact' => [
+                'required',
+                'string',
+                'min:10',
+                'max:10',
+                new UniquePhoneAcrossTables(
+                    $this->teacher->people_id,   // ignore in people
+                    $this->teacher->user->id ?? null // ignore in users
+                ),
+            ],
+            'email' => 'required|email|unique:people,email',
+            'addressLine1' => 'required|string|max:255',
+            'addressLine2' => 'required|string|max:255',
+            'addressLine3' => 'nullable|string|max:255',
+            'postalCode' => 'required|string|max:10',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'tAddressLine1' => 'nullable|string|max:255',
+            'tAddressLine2' => 'nullable|string|max:255',
+            'tAddressLine3' => 'nullable|string|max:255',
+            'tPostalCode' => 'nullable|string|max:10',
         ];
     }
 
@@ -97,6 +127,19 @@ class TeacherIndex extends Component
         $this->bloodGroup = $this->teacher->blood_group_id;
         $this->healthCondition = $this->teacher->health_condition;
         $this->healthProblem = $this->teacher->health_problem;
+
+        $this->contact = $this->teacher->phone;
+        $this->email = $this->teacher->email;
+        $this->addressLine1 = $this->teacher->address_line1;
+        $this->addressLine2 = $this->teacher->address_line2;
+        $this->addressLine3 = $this->teacher->address_line3;
+        $this->postalCode = $this->teacher->postal_code;
+        $this->latitude = $this->teacher->latitude;
+        $this->longitude = $this->teacher->longitude;
+        $this->tAddressLine1 = $this->teacher->t_address_line1;
+        $this->tAddressLine2 = $this->teacher->t_address_line2;
+        $this->tAddressLine3 = $this->teacher->t_address_line3;
+        $this->tPostalCode = $this->teacher->t_postal_code;
 
         $this->titleOptions = Title::all();
         $this->genderOptions = GenderList::all();
@@ -199,6 +242,66 @@ class TeacherIndex extends Component
         } catch (Exception $e) {
             DB::rollBack(); // Rollback on any failure
             session()->flash('error', 'An error occurred while updating health information: ' . $e->getMessage());
+        }
+    }
+
+    public function editContactInfo()
+    {
+        // Direct validation
+        $validated = $this->validate([
+            'contact' => [
+                'required',
+                'string',
+                'min:10',
+                'max:10',
+                new UniquePhoneAcrossTables(
+                    $this->teacher->people_id,   // ignore in people
+                    $this->teacher->user->id ?? null // ignore in users
+                ),
+            ],
+            'email' => 'required|email|unique:people,email,' . $this->teacher->people_id . ',people_id',
+            'addressLine1' => 'required|string|max:255',
+            'addressLine2' => 'required|string|max:255',
+            'addressLine3' => 'nullable|string|max:255',
+            'postalCode' => 'required|string|max:10',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'tAddressLine1' => 'nullable|string|max:255',
+            'tAddressLine2' => 'nullable|string|max:255',
+            'tAddressLine3' => 'nullable|string|max:255',
+            'tPostalCode' => 'nullable|string|max:10',
+        ]);
+
+        DB::beginTransaction(); // Start transaction
+        try {
+            // Fetch the record
+            $teacher = People::findOrFail($this->id);
+
+            // Update directly
+            $teacher->update([
+                'phone' => $this->contact,
+                'email' => $this->email,
+                'address_line1' => $this->addressLine1,
+                'address_line2' => $this->addressLine2,
+                'address_line3' => $this->addressLine3,
+                'postal_code' => $this->postalCode,
+                'latitude' => $this->latitude,
+                'longitude' => $this->longitude,
+                't_address_line1' => $this->tAddressLine1,
+                't_address_line2' => $this->tAddressLine2,
+                't_address_line3' => $this->tAddressLine3,
+                't_postal_code' => $this->tPostalCode,
+            ]);
+
+            DB::commit(); // Commit only if all operations succeeded
+
+            $this->teacher = People::find($this->id);
+            session()->flash('success', 'Contact information updated successfully.');
+            // Close modal
+            $this->showModalContactInfo = false;
+        } catch (Exception $e) {
+            DB::rollBack(); // Rollback on any failure
+            session()->flash('error', 'An error occurred while updating contact information: ' . $e->getMessage());
         }
     }
 
