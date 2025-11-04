@@ -88,7 +88,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="text-3xl font-bold text-gray-800 mb-2">12,458</div>
+            <div class="text-3xl font-bold text-gray-800 mb-2">{{ $institutionCount }}</div>
             <div class="flex items-center text-green-600 font-medium">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -38,6 +38,7 @@ class InstitutionStaff extends Component
         return view('livewire.institutions.profile.institution-staff', [
             'staffList' => $staffList,
             'institutionId' => $this->institutionId,
+            'institution'   => $institution,
         ]);
     }
 }

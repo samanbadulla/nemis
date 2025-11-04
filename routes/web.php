@@ -191,7 +191,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sltes/{id}/profile/employment', SltesEmployment::class)->name('sltes.profile.employment');
     Route::get('sltes/{id}/profile/family', SltesFamily::class)->name('sltes.profile.family');
 
-
     Route::get('sltas/list', SltasList::class)->name('sltas.list');
     Route::get('sltas/create', SltasCreate::class)->name('sltas.create');
     Route::get('sltas/{id}/profile/index', SltasIndex::class)->name('sltas.profile.index');

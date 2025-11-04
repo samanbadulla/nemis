@@ -22,12 +22,12 @@
         <div class="max-w-xl my-8">
             <div class="flex justify-between items-center mb-3">
                 <span class="text-sm font-medium text-gray-700">Step {{ $step }} of {{ $maxStep }}</span>
-                <span class="text-sm font-semibold text-blue-600">{{ round(($step / $maxStep) * 100) }}% Complete</span>
+                <span class="text-sm font-semibold text-blue-600">{{ round((($step-1) / $maxStep) * 100) }}% Complete</span>
             </div>
             <div class="relative">
                 <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
                     <div class="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-700 ease-out"
-                        style="width: {{ ($step / $maxStep) * 100 }}%">
+                        style="width: {{ (($step-1) / $maxStep) * 100 }}%">
                         <div class="h-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse"></div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     @for ($i = 1; $i <= $maxStep; $i++)
                         <div class="relative">
                             <div
-                                class="w-6 h-6 rounded-full border-4 border-white shadow-lg transition-all duration-300 
+                                class="w-6 h-6 rounded-full border-4 border-white shadow-lg transition-all duration-300
                               {{ $i <= $step ? 'bg-gradient-to-r from-blue-500 to-purple-600 scale-125' : 'bg-gray-300' }}">
                             </div>
                             @if ($i <= $step)
@@ -575,7 +575,7 @@
                         <flux:select label="Current Appointment Institution" wire:model.live="currentInstitution">
                             <option value="">Select</option>
                             @foreach ($currentInstitutionOption as $institution)
-                                <option value="{{ $institution->workplace_id }}">{{ $institution->short_name }}
+                                <option value="{{ $institution->workplace_id }}">{{ $institution->name }}
                                 </option>
                             @endforeach
                         </flux:select>
