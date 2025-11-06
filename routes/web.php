@@ -52,21 +52,25 @@ use App\Livewire\Offices\Pmoe\PmoeOfficesList;
 use App\Livewire\Offices\Zeo\Profile\ZeoStaff;
 //use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesCreate;
+use App\Livewire\MainTables\MainTablesCityList;
+use App\Livewire\MainTables\MainTablesOverview;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Sltas\Profile\SltasEmployment;
 use App\Livewire\Sltes\Profile\SltesEmployment;
+use App\Livewire\Subjects\ApointedSubjectIndex;
+use App\Livewire\Subjects\TeachingSubjectIndex;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Institutions\InstitutionsIndex;
 use App\Livewire\Offices\Deo\Profile\DeoProfile;
 use App\Livewire\Offices\Moe\Profile\Moeprofile;
 use App\Livewire\Offices\Peo\Profile\PeoProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Pmoe\PmoeOfficesCreate;
 use App\Livewire\Offices\Pmoe\Profile\PmoeStaff;
 use App\Livewire\Offices\Zeo\Profile\ZeoProfile;
@@ -76,6 +80,8 @@ use App\Livewire\Offices\Moe\Profile\MoeOverview;
 use App\Livewire\Offices\Peo\Profile\PeoOverview;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
 use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
+use App\Livewire\MainTables\MainTablesAuthorities;
+use App\Livewire\MainTables\MainTablesBloodGroups;
 use App\Livewire\Offices\Pmoe\Profile\PmoeProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Sleas\Profile\SleasQualification;
@@ -90,8 +96,6 @@ use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
-use App\Livewire\Subjects\ApointedSubjectIndex;
-use App\Livewire\Subjects\TeachingSubjectIndex;
 
 Route::get('/', function () {
     return view('welcome');
@@ -175,6 +179,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('roles', RoleIndex::class)->name('roles.index');
         Route::get('roles/create', RoleCreate::class)->name('roles.create');
         Route::get('roles/{id}/edit', RoleEdit::class)->name('roles.edit');
+
+        Route::get('main-table/overview', MainTablesOverview::class)->name('main-tables.overview');
+        Route::get('main-table/authorities', MainTablesAuthorities::class)->name('main-tables.authorities');
+        Route::get('main-table/blood-group', MainTablesBloodGroups::class)->name('main-tables.blood-group');
+        Route::get('main-table/city-list', MainTablesCityList::class)->name('main-tables.city-list');
     });
 
     Route::get('sleas/list', SleasList::class)->name('sleas.list');
@@ -200,7 +209,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('subjects/apointed-subject', ApointedSubjectIndex::class)->name('subjects.apointed');
     Route::get('subjects/teaching-subject', TeachingSubjectIndex::class)->name('subjects.teaching');
-
 
 
 
