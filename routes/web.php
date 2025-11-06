@@ -82,6 +82,7 @@ use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
 use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
 use App\Livewire\MainTables\MainTablesAuthorities;
 use App\Livewire\MainTables\MainTablesBloodGroups;
+use App\Livewire\MainTables\MainTablesCivilStatus;
 use App\Livewire\Offices\Pmoe\Profile\PmoeProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Sleas\Profile\SleasQualification;
@@ -184,6 +185,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('main-table/authorities', MainTablesAuthorities::class)->name('main-tables.authorities');
         Route::get('main-table/blood-group', MainTablesBloodGroups::class)->name('main-tables.blood-group');
         Route::get('main-table/city-list', MainTablesCityList::class)->name('main-tables.city-list');
+        Route::get('main-table/civil-status', MainTablesCivilStatus::class)->name('main-tables.civil-status');
+
     });
 
     Route::get('sleas/list', SleasList::class)->name('sleas.list');

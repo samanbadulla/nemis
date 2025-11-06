@@ -5,6 +5,7 @@
             <flux:navlist.item :href="route('main-tables.authorities')" :current="request()->routeIs('main-tables.authorities')" wire:navigate>{{ __('Authorities') }}</flux:navlist.item>
             <flux:navlist.item :href="route('main-tables.blood-group')" :current="request()->routeIs('main-tables.blood-group')" wire:navigate>{{ __('Blood Group') }}</flux:navlist.item>
             <flux:navlist.item :href="route('main-tables.city-list')" :current="request()->routeIs('main-tables.city-list')" wire:navigate>{{ __('City List') }}</flux:navlist.item>
+            <flux:navlist.item :href="route('main-tables.civil-status')" :current="request()->routeIs('main-tables.civil-status')" wire:navigate>{{ __('Civil Status') }}</flux:navlist.item>
 
 
             <flux:navlist.item wire:navigate>{{ __('Staff') }}</flux:navlist.item>

@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\DistrictsList;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Citylists extends Model
 {
@@ -30,5 +31,10 @@ class Citylists extends Model
     public function scopeActive($query)
     {
         return $query->where('active_status', '1');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(DistrictsList::class, 'district_id', 'district_id');
     }
 }

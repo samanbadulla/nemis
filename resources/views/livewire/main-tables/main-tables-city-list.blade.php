@@ -62,20 +62,52 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-700">
-                        {{-- @forelse ($bloodgroup as $key => $data)
+                        @forelse ($cities as $key => $data)
                             <tr class="hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10 text-sm font-medium">
-                                            {{ $bloodgroup->firstItem() + $key }}
+                                            {{ $cities->firstItem() + $key }}
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                                <flux:link href="{{ route('offices.pmoe.list') }}" variant="ghost">
-                                                    {{ $data->blood_group }}</flux:link>
+                                                    {{ $data->city_name_en }}
                                             </div>
                                             <div class="text-sm text-slate-500 dark:text-slate-400">
-                                                Blood Group Id: {{ $data->blood_group_id }}
+                                                City Id: {{ $data->city_id }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
+                                                    {{ $data->district->district_name ?? 'N/A' }}
+                                            </div>
+                                            <div class="text-sm text-slate-500 dark:text-slate-400">
+                                                District Id: {{ $data->district_id }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
+                                                    {{ $data->postcode }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
+                                                   Latitude : {{ $data->latitude ?? 'N/A' }}
+                                            </div>
+                                            <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
+                                                    Longitude : {{ $data->longitude ?? 'N/A' }}
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +120,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                                    <flux:modal.trigger wire:click="editBloodGroup({{ $data->id }})">
+                                    <flux:modal.trigger wire:click="editCityList({{ $data->id }})">
                                         <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                                     </flux:modal.trigger>
                                     <flux:button wire:click="toggleStatus({{ $data->id }})"
@@ -96,8 +128,8 @@
                                         size="sm" icon="{{ $data->active_status == '1' ? 'no-symbol' : 'check' }}"
                                         variant="{{ $data->active_status == '1' ? 'danger' : 'primary' }}">
                                     </flux:button>
-                                    <flux:button wire:click="deleteBloodGroup({{ $data->id }})"
-                                        wire:confirm="⚠️ You are about to delete '{{ $data->blood_group }}'.This action cannot be undone. All related records will be permanently removed.Do you really want to proceed?"
+                                    <flux:button wire:click="deleteCity({{ $data->id }})"
+                                        wire:confirm="⚠️ You are about to delete '{{ $data->city_name_en }}'.This action cannot be undone. All related records will be permanently removed.Do you really want to proceed?"
                                         size="sm" icon="trash"
                                         variant="danger">
                                     </flux:button>
@@ -107,27 +139,27 @@
                         @empty
                             <tr colspan="4">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-slate-900 dark:text-slate-100">No Zonal Education Office Found!
+                                    <div class="text-sm text-slate-900 dark:text-slate-100">No City Found!
                                     </div>
                                 </td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                     </tbody>
                 </table>
 
 
 
-                {{-- <div class="mt-4 mx-10">
-                    {{ $bloodgroup->links() }}
-                </div> --}}
+                <div class="mt-4 mx-10">
+                    {{ $cities->links() }}
+                </div>
             </div>
         </div>
 
-        <flux:modal wire:model="showModelNewBloodGroup" name="add-new-blood-group" class="md:w-96">
+        <flux:modal wire:model="showModelNewCity" name="add-new-city" class="md:w-96">
             <div class="space-y-6">
                 <div>
-                    <flux:heading size="lg">Add new Blood Group</flux:heading>
-                    <flux:text class="mt-2">Add new Blood Group to your system.
+                    <flux:heading size="lg">Add new City</flux:heading>
+                    <flux:text class="mt-2">Add new City to your system.
                     </flux:text>
                 </div>
                 @if (session()->has('error'))
@@ -135,34 +167,69 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form wire:submit.prevent="addNewBloodGroup">
+                <form wire:submit.prevent="addNewCity">
                     @csrf
                     <div class="mt-6 max-w-xl space-y-4">
 
                         <flux:field>
-                            <flux:input label="Blood Group ID" wire:model.live="bloodGroupId"
-                                placeholder="Enter Blood Group ID" mask="B99"/>
+                            <flux:input label="City ID" wire:model.live="cityId"
+                                placeholder="Enter City ID" mask="CT99999"/>
                         </flux:field>
 
                         <flux:field>
-                            <flux:input label="Blood Group" wire:model.live="bloodGroup" placeholder="Enter Blood Group" />
+                            <flux:select label="District" id="district" wire:model.live="district">
+                                <option value="">{{ __ ('Select District') }}</option>
+                                @foreach ($districtOption as $district)
+                                    <option value="{{ $district->district_id }}">{{ $district->district_name }}</option>
+                                @endforeach
+                            </flux:select>
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="City Name [English]" wire:model.live="cityNameEn"
+                                placeholder="Enter City Name [English]" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="City Name [Sinhala]" wire:model.live="cityNameSi"
+                                placeholder="Enter City Name [Sinhala]" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="City Name [Tamil]" wire:model.live="cityNameTa"
+                                placeholder="Enter City Name [Tamil]" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="Postal Code" wire:model.live="postalCode"
+                                placeholder="Enter Postal Code" mask="99999" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="Latitude (5.916 – 9.835)" wire:model.live="latitude"
+                                placeholder="Enter Latitude (5.916 – 9.835)" step="0.000001" min="5.916" max="9.835" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="Longitude (79.652 – 81.881)" wire:model.live="longitude"
+                                placeholder="Enter Longitude (79.652 – 81.881)" step="0.000001" min="79.652" max="81.881" />
                         </flux:field>
 
                     </div>
 
                     <div class="flex mt-4">
                         <flux:spacer />
-                        <flux:button type="submit" variant="primary">Add Blood Group</flux:button>
+                        <flux:button type="submit" variant="primary">Add New City</flux:button>
                     </div>
                 </form>
             </div>
         </flux:modal>
 
-        <flux:modal wire:model="showModelEditBloodGroup" name="edit-blood-group" class="md:w-96">
+        <flux:modal wire:model="showModelEditCityList" name="edit-blood-group" class="md:w-96">
             <div class="space-y-6">
                 <div>
-                    <flux:heading size="lg">Edit Blood Group</flux:heading>
-                    <flux:text class="mt-2">Change Blood Group information on your system.
+                    <flux:heading size="lg">Edit City</flux:heading>
+                    <flux:text class="mt-2">Change City information on your system.
                     </flux:text>
                 </div>
                 @if (session()->has('error'))
@@ -170,17 +237,52 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form wire:submit.prevent="updateBloodGroup">
+                <form wire:submit.prevent="updateCity">
                     @csrf
                     <div class="mt-6 max-w-xl space-y-4">
 
                         <flux:field>
-                            <flux:input label="Blood Group ID" wire:model.live="updateBloodGroupId"
-                                placeholder="Enter Blood Group ID" mask="B99"/>
+                            <flux:input label="City ID" wire:model.live="updateCityId"
+                                placeholder="Enter City ID" mask="CT99999"/>
                         </flux:field>
 
                         <flux:field>
-                            <flux:input label="Blood Group" wire:model.live="updateBloodGroup" placeholder="Enter Blood Group" />
+                            <flux:select label="District" id="district" wire:model.live="updateDistrict">
+                                <option value="">{{ __ ('Select District') }}</option>
+                                @foreach ($districtOption as $district)
+                                    <option value="{{ $district->district_id }}">{{ $district->district_name }}</option>
+                                @endforeach
+                            </flux:select>
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="City Name [English]" wire:model.live="updateCityNameEn"
+                                placeholder="Enter City Name [English]" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="City Name [Sinhala]" wire:model.live="updateCityNameSi"
+                                placeholder="Enter City Name [Sinhala]" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="City Name [Tamil]" wire:model.live="updateCityNameTa"
+                                placeholder="Enter City Name [Tamil]" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="Postal Code" wire:model.live="updatePostalCode"
+                                placeholder="Enter Postal Code" mask="99999" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="Latitude (5.916 – 9.835)" wire:model.live="updateLatitude"
+                                placeholder="Enter Latitude (5.916 – 9.835)" step="0.000001" min="5.916" max="9.835" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:input label="Longitude (79.652 – 81.881)" wire:model.live="updateLongitude"
+                                placeholder="Enter Longitude (79.652 – 81.881)" step="0.000001" min="79.652" max="81.881" />
                         </flux:field>
 
                     </div>
