@@ -575,7 +575,7 @@
                         <flux:select label="Current Appointment Institution" wire:model.live="currentInstitution">
                             <option value="">Select</option>
                             @foreach ($currentInstitutionOption as $institution)
-                                <option value="{{ $institution->workplace_id }}">{{ $institution->short_name }}
+                                <option value="{{ $institution->workplace_id }}">{{ $institution->name }}
                                 </option>
                             @endforeach
                         </flux:select>

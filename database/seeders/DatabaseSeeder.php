@@ -43,16 +43,16 @@ class DatabaseSeeder extends Seeder
         $this->call(InstitutionCategoriesTableSeeder::class);
         $this->call(InstitutionLanguageSeeder::class);
         $this->call(InstitutionGenderSeeder::class);
-        $this->call(InstitutionAuthoritySeeder::class);
+        $this->call(InstitutionEthnisitySeeder::class);
         $this->call(GradeSpanSeeder::class);
         $this->call(AppointedSubjectsSeeder::class);
         $this->call(SubjectSeeder::class);
         $this->call(AppointedSubjectsSeeder::class);
         $this->call(MediumOfInstructionSeeder::class);
-        //$this->call(InstitutionSeeder::class);
+        $this->call(InstitutionSeeder::class);
 
-        $this->call(InstitutionTableSeederPart1::class);
-        $this->call(InstitutionTableSeederPart2::class);
+        //$this->call(InstitutionTableSeederPart1::class);
+        //$this->call(InstitutionTableSeederPart2::class);
         $this->call(WorkplacesFromMinistrySeeder::class);
 
         $this->call(ServiceSeeder::class);
