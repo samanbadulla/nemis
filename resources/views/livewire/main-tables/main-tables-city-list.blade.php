@@ -124,7 +124,7 @@
                                         <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                                     </flux:modal.trigger>
                                     <flux:button wire:click="toggleStatus({{ $data->id }})"
-                                        wire:confirm="Are you sure you want to {{ $data->active_status == '1' ? 'deactivate' : 'activate' }} this Blood group?"
+                                        wire:confirm="Are you sure you want to {{ $data->active_status == '1' ? 'deactivate' : 'activate' }} this City?"
                                         size="sm" icon="{{ $data->active_status == '1' ? 'no-symbol' : 'check' }}"
                                         variant="{{ $data->active_status == '1' ? 'danger' : 'primary' }}">
                                     </flux:button>

@@ -79,7 +79,7 @@
                                         <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                                     </flux:modal.trigger>
                                     <flux:button wire:click="toggleStatus({{ $data->id }})"
-                                        wire:confirm="Are you sure you want to {{ $data->active_status == '1' ? 'deactivate' : 'activate' }} this Blood group?"
+                                        wire:confirm="Are you sure you want to {{ $data->active_status == '1' ? 'deactivate' : 'activate' }} this Civil Status?"
                                         size="sm" icon="{{ $data->active_status == '1' ? 'no-symbol' : 'check' }}"
                                         variant="{{ $data->active_status == '1' ? 'danger' : 'primary' }}">
                                     </flux:button>
@@ -132,7 +132,7 @@
                         </flux:field>
 
                         <flux:field>
-                            <flux:input label="Civil Status" wire:model.live="civilStatus"
+                            <flux:input label="Civil Status" wire:model.live="civilStatusName"
                                 placeholder="Enter Civil Status" />
                         </flux:field>
 
@@ -146,11 +146,11 @@
             </div>
         </flux:modal>
 
-        <flux:modal wire:model="showModelEditCityList" name="edit-blood-group" class="md:w-96">
+        <flux:modal wire:model="showModelEditCivilStatus" name="edit-civil-status" class="md:w-96">
             <div class="space-y-6">
                 <div>
-                    <flux:heading size="lg">Edit City</flux:heading>
-                    <flux:text class="mt-2">Change City information on your system.
+                    <flux:heading size="lg">Edit Civil Status</flux:heading>
+                    <flux:text class="mt-2">Change Civil Status information on your system.
                     </flux:text>
                 </div>
                 @if (session()->has('error'))
@@ -158,18 +158,18 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form wire:submit.prevent="updateCity">
+                <form wire:submit.prevent="updateCivilStatus">
                     @csrf
                     <div class="mt-6 max-w-xl space-y-4">
 
                         <flux:field>
-                            <flux:input label="City ID" wire:model.live="updateCityId"
-                                placeholder="Enter City ID" mask="CT99999"/>
+                            <flux:input label="Civil Status ID" wire:model.live="updateCivilStatusId"
+                                placeholder="Enter Civil Status ID" mask="C99"/>
                         </flux:field>
 
                         <flux:field>
-                            <flux:input label="City Name [English]" wire:model.live="updateCityNameEn"
-                                placeholder="Enter City Name [English]" />
+                            <flux:input label="Civil Status" wire:model.live="updateCivilStatus"
+                                placeholder="Enter Civil Status" />
                         </flux:field>
 
                     </div>
