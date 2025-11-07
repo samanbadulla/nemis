@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('city_name_si',50)->nullable();
             $table->string('city_name_ta',50)->nullable();
             $table->string('postcode',10);
-            $table->string('latitude',10);
-            $table->string('longitude',10);
+            $table->string('latitude',10)->nullable();
+            $table->string('longitude',10)->nullable();
             $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 

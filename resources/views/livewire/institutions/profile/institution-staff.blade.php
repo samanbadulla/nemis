@@ -10,13 +10,51 @@
     </div>
 
     <x-institutions.layout :institutionid="$institutionId">
+        <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                        <div
+                            class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden border-2 {{ $institution->active_status ? 'border-green-500' : 'border-red-500' }}">
+
+                            @if ($institution->logo)
+                                <img src="{{ asset('storage/' . $institution->logo) }}"
+                                    alt="{{ $institution->name }}"
+                                    class="w-full h-full object-cover {{ $institution->active_status ? '' : 'grayscale opacity-60' }}">
+                                @unless ($institution->active_status)
+                                    <div
+                                        class="absolute inset-0 flex items-center justify-center bg-red-500 bg-opacity-30 text-white text-xs font-bold">
+                                        Inactive
+                                    </div>
+                                @endunless
+                            @else
+                                <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                    <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                        </path>
+                                    </svg>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900 dark:text-white leading-tight">
+                                {{ $institution->name }}
+                            </h1>
+                            @if ($institution->short_name)
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ $institution->short_name }}
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+
         <div class="bg-white dark:bg-slate-900">
             <!-- Header -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
                     Staff List
                 </h2>
-                
+
                 <!-- Optional: Add filters or actions here -->
                 <div class="flex items-center space-x-3">
                     <span class="text-sm text-gray-500 dark:text-gray-400">

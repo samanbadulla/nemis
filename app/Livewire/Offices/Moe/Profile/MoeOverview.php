@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Offices\Moe\Profile;
 
+use App\Models\Service;
 use Livewire\Component;
 use App\Models\Workplaces;
-use App\Models\ProvincialMinistryOfEducationOffice;
-use App\Models\ProvincialEducationOffice;
 use App\Models\ZonalEducationOffice;
 use App\Models\DivisionalEducationOffice;
-use App\Models\Service;
+use App\Models\MinistryOfEducationOffice;
+use App\Models\ProvincialEducationOffice;
 use App\Models\EmployerCurrentAppointment;
+use App\Models\ProvincialMinistryOfEducationOffice;
 
 class MoeOverview extends Component
 {
@@ -20,6 +21,7 @@ class MoeOverview extends Component
     public $zonalOfficeCount;
     public $divisionCount;
     public $serviceCounts = [];
+    public $EducationMinistry;
 
     public function mount($id)
     {
@@ -47,9 +49,12 @@ class MoeOverview extends Component
 
     public function render()
     {
+        //$EducationMinistry = MinistryOfEducationOffice::find($this->officeId);
+
         return view('livewire.offices.moe.profile.moe-overview', [
             'officeId' => $this->officeId,
             'serviceCounts' => $this->serviceCounts,
+            // 'EducationMinistry' => $EducationMinistry,
         ]);
     }
 }

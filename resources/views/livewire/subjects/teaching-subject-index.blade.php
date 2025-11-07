@@ -42,8 +42,8 @@
                     <tr class="hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    {{ $key+1}}
+                                <div class="flex-shrink-0 h-10 w-10 text-sm font-medium">
+                                    {{ $teachingSubjects->firstItem() + $key}}
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-slate-900 dark:text-slate-100">

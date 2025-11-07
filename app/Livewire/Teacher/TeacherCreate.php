@@ -88,11 +88,11 @@ class TeacherCreate extends Component
         switch ($this->step) {
             case 1:
                 return [
-                    'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic()],
+                    'nic' => ['required', 'string', 'min:10', 'max:12', new UniqueHashedNic(), 'regex:/^(?:[0-9]{9}[vVxX]|[0-9]{12})$/'],
                     'title' => 'required|string',
                     'fullName' => 'required|string|max:255',
                     'gender' => 'required|string',
-                    'birthday' => 'required|date|before:today',
+                    'birthday' => ['required','date','before:today','after:' . now()->subYears(60)->toDateString()],
                     'religion' => 'required|string',
                     'ethnicity' => 'required|string',
                     'civilStatus' => 'required|string',
@@ -105,7 +105,7 @@ class TeacherCreate extends Component
                 ];
             case 2:
                 return [
-                    'contact' => ['required', 'string', 'min:10', 'max:10', new UniquePhoneAcrossTables()],
+                    'contact' => ['required', 'string', 'min:10', 'max:10', new UniquePhoneAcrossTables(), 'regex:/^0\d{9}$/'],
                     'email' => 'required|email|unique:people,email',
                     'addressLine1' => 'required|string|max:255',
                     'addressLine2' => 'required|string|max:255',
@@ -146,7 +146,7 @@ class TeacherCreate extends Component
                     'currentInstitution' => 'required|string',
                     'currentTeachingSubject' => 'required|string',
                 ];
-                
+
                 return $rules;
             default:
                 return [];
@@ -155,6 +155,7 @@ class TeacherCreate extends Component
 
     protected $messages = [
         'nic.required' => 'NIC is required',
+        'nic.regex' => 'Please enter a valid NIC number',
         'fullName.required' => 'Full Name is required',
         'email.required' => 'Email is required',
         'email.email' => 'Enter a valid email',
@@ -162,6 +163,7 @@ class TeacherCreate extends Component
         'contact.required' => 'Contact number is required',
         'contact.min' => 'Contact number should be 10 digits',
         'contact.max' => 'Contact number should be 10 digits',
+        'contact.regex' => 'Please enter a valid Contact number',
         'healthProblem.required_if' => 'Please provide health problem details when health condition is "No"',
         'appointmentLetterNo.required' => 'Appointment letter number is required',
         'birthday.before' => 'Birthday must be a past date',
@@ -321,7 +323,7 @@ class TeacherCreate extends Component
             $this->currentInstitutionCategory = $this->institutionCategory;
             $this->currentInstitution = $this->institution;
             $this->currentTeachingSubject = $this->mainTeachingSubject;
-            
+
             // Update dropdown options
             $this->currentRanksOption = $this->ranksOption;
             $this->currentInstitutionOption = $this->institutionOption;
@@ -354,7 +356,7 @@ class TeacherCreate extends Component
         try {
             // Convert health condition to boolean properly
             $healthCondition = filter_var($this->healthCondition, FILTER_VALIDATE_BOOLEAN);
-            
+
             // Generate initials
             $initials = People::generateInitials($this->fullName);
 
@@ -468,15 +470,15 @@ class TeacherCreate extends Component
 
             session()->flash('success', 'Teacher created successfully! Default password: password@123');
             $this->resetForm();
-            
+
         } catch (\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
             session()->flash('error', 'Validation error: Please check your input data.');
-            
+
         } catch (\Illuminate\Database\QueryException $e) {
             DB::rollBack();
             session()->flash('error', 'Database error: Unable to save teacher data.');
-            
+
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Teacher creation error: ' . $e->getMessage(), [
@@ -501,12 +503,12 @@ class TeacherCreate extends Component
             'currentService', 'currentServiceRank', 'currentZonalEducationOffice', 'currentInstitutionCategory',
             'currentInstitution', 'currentTeachingSubject',
         ]);
-        
+
         // Reset to step 1
         $this->step = 1;
         $this->teacherRegType = 'existing';
         $this->healthCondition = true;
-        
+
         // Reload dropdown options
         $this->mount();
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Sleas\Profile;
+namespace App\Livewire\Sltas\Profile;
 
 use App\Models\People;
 use Livewire\Component;
@@ -15,7 +15,7 @@ use App\Models\ZonalEducationOffice;
 use App\Models\EmployerAppointmentHistory;
 use App\Models\EmployerCurrentAppointment;
 
-class SleasEmployment extends Component
+class SltasEmployment extends Component
 {
     public $id;
     public $people;
@@ -225,6 +225,6 @@ class SleasEmployment extends Component
             $serviceUpdate = collect(); // return an empty collection if no employee
         }
 
-        return view('livewire.sleas.profile.sleas-employment', compact('serviceUpdate'));
+        return view('livewire.sltas.profile.sltas-employment', compact('serviceUpdate'));
     }
 }
