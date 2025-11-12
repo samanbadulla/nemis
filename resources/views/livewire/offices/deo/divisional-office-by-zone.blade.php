@@ -7,9 +7,11 @@
 
         <div class="my-4 gap-2 justify-end flex">
 
-            <a href="{{ route('offices.deo.create') }}">
-                <flux:button>Create Divisional Office</flux:button>
-            </a>
+            @can('create deo office')
+                <a href="{{ route('offices.deo.create') }}">
+                    <flux:button>Create Divisional Office</flux:button>
+                </a>
+            @endcan
 
         </div>
 
@@ -76,13 +78,21 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                            <a href="{{ route('offices.deo.profile.overview', $data->id) }}">
-                                <flux:button size="sm" icon="eye">View</flux:button>
-                            </a>
+                            @can('view deo profile overview')
+                                <a href="{{ route('offices.deo.profile.overview', $data->id) }}">
+                                    <flux:button size="sm" icon="eye">View</flux:button>
+                                </a>
+                            @endcan
+
+                            @can('deo office edit')
                             <a href="">
                                 <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                             </a>
+                            @endcan
+
+                            @can('deo office delete')
                             <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
+                            @endcan
                         </td>
                     </tr>
                 @empty

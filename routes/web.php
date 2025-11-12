@@ -158,17 +158,17 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('offices/deo/list', DeoOfficesList::class)->name('offices.deo.list')->middleware(['permission:view deo list']);
     Route::get('offices/deo/create', DeoOfficesCreate::class)->name('offices.deo.create')->middleware(['permission:create deo office']);
-    Route::get('offices/deo/{id}/zone', DivisionalOfficeByZone::class)->name('offices.deo.by-zone');
+    Route::get('offices/deo/{id}/zone', DivisionalOfficeByZone::class)->name('offices.deo.by-zone')->middleware(['permission:view deo list']);
     Route::get('offices/deo/{id}/profile', DeoOfficesProfile::class)->name('offices.deo.profile');
 
     Route::get('offices/zeo/list', ZeoOfficesList::class)->name('offices.zeo.list')->middleware(['permission:view zeo list']);
     Route::get('offices/zeo/create', ZeoOfficesCreate::class)->name('offices.zeo.create')->middleware(['permission:create zeo office']);
-    Route::get('offices/zeo/{id}/province', ZonaleOfficeByPeo::class)->name('offices.zeo.by-province');
+    Route::get('offices/zeo/{id}/province', ZonaleOfficeByPeo::class)->name('offices.zeo.by-province')->middleware(['permission:view zeo list']);
     Route::get('offices/zeo/{id}/profile', ZeoOfficesProfile::class)->name('offices.zeo.profile');
 
     Route::get('offices/peo/list/', PeoOfficesList::class)->name('offices.peo.list')->middleware(['permission:view peo list']);
     Route::get('offices/peo/create', PeoOfficesCreate::class)->name('offices.peo.create')->middleware(['permission:create peo office']);
-    Route::get('offices/peo/{id}/pmoe', ProvincialOfficeByPmoe::class)->name('offices.peo.by-pmoe');
+    Route::get('offices/peo/{id}/pmoe', ProvincialOfficeByPmoe::class)->name('offices.peo.by-pmoe')->middleware(['permission:view pmoe list']);
     Route::get('offices/peo/{id}/profile', PeoOfficesProfile::class)->name('offices.peo.profile');
 
     Route::get('offices/pmoe/list', PmoeOfficesList::class)->name('offices.pmoe.list')->middleware(['permission:view pmoe list']);
