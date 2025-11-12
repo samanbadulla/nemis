@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Family extends Model
 {
@@ -44,6 +45,52 @@ class Family extends Model
         'active_status',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->family_id)) {
+                $model->family_id = self::generateFamilyId();
+            }
+        });
+    }
+
+    // If you want to filter active institutions by default
+    public function scopeActive($query)
+    {
+        return $query->where('active_status', 1);
+    }
+
+    public function getMarriedDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Generate 12-character incremental People ID
+     * Format: PE + Year (2) + Sequence (8)
+     */
+    public static function generateFamilyId(): string
+    {
+        $year = now()->format('y'); // last two digits of current year, e.g., 25
+
+        // Find the latest record for the current year
+        $last = self::where('family_id', 'like', "FA{$year}%")
+            ->orderBy('family_id', 'desc')
+            ->first();
+
+        if ($last) {
+            // Extract numeric part (last 8 digits)
+            $lastNumber = (int)substr($last->family_id, -8);
+            $nextNumber = str_pad($lastNumber + 1, 8, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '00000001';
+        }
+
+        return "FA{$year}{$nextNumber}"; // Example: PE2500000123
+    }
+
     /**
      * Relationships
      */
@@ -64,14 +111,6 @@ class Family extends Model
     public function children()
     {
         return $this->hasMany(FamilyMember::class, 'family_id', 'family_id');
-    }
-
-    /**
-     * Scope to only include active families.
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active_status', '1');
     }
 
     public function getSpousInfo($teacherId)

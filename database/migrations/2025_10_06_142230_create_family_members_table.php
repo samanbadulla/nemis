@@ -16,12 +16,14 @@ return new class extends Migration
             $table->char('family_id', 12)->comment('FK → families.family_id');
             $table->string('child_name')->comment('Children name');
             $table->date('date_of_birth')->comment('Children birth day');
+            $table->char('gender_id', 3)->comment('Foreign key referencing gender list table');
             $table->string('birth_fc_no', 12)->comment('Children birth certificate number');
-            $table->enum('health_condition', ['0', '1'])->default('1')->comment('1: Normal, 0: Special Needs');
+            $table->boolean('health_condition')->default(true)->comment('true: Normal, false: Special Needs');
             $table->boolean('active_status')->default(true)->comment('true: Active, false: Inactive');
             $table->timestamps();
 
             $table->foreign('family_id')->references('family_id')->on('families')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('gender_id')->references('gender_id')->on('gender_lists')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

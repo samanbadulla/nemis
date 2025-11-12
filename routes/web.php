@@ -118,6 +118,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
+    Route::get('users', UserIndex::class)->name('users.index');
+    Route::get('users/create', UserCreate::class)->name('users.create');
+    Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
+
     Route::get('users/index', UserIndex::class)->name('users.index')->middleware(['permission:view users list']);
     Route::get('users/{id}/edit', UserEdit::class)->name('users.edit')->middleware(['permission:user edit']);
     Route::get('users/create', UserCreate::class)->name('users.create')->middleware(['permission:create user']);

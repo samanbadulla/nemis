@@ -41,4 +41,10 @@ class DistrictsList extends Model
     {
         return $this->hasMany(DivisionalSecretariatOffice::class, 'district_id', 'district_id');
     }
+
+    public function institutions()
+    {
+        return $this->hasMany(Institution::class, 'district_id', 'district_id');
+    }
+
 }

@@ -94,7 +94,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                 </svg>
-                <span class="text-sm">+2.5% from last month</span>
+                <span class="text-sm">100% Government schools</span>
             </div>
         </div>
 
@@ -110,13 +110,13 @@
                     </svg>
                 </div>
             </div>
-            <div class="text-3xl font-bold text-gray-800 mb-2">4.2M</div>
+            <div class="text-3xl font-bold text-gray-800 mb-2">0</div>
             <div class="flex items-center text-green-600 font-medium">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                 </svg>
-                <span class="text-sm">+1.8% enrollment</span>
+                <span class="text-sm">+0% enrollment</span>
             </div>
         </div>
     </div>
@@ -130,7 +130,7 @@
                 <div
                     class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Teaching Staff</h3>
+                        <h3 class="text-lg font-semibold text-gray-800">Teachers enrollment</h3>
                         <div class="p-3 bg-purple-50 rounded-xl group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
@@ -140,7 +140,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold text-gray-800 mb-2">245,867</div>
+                    <div class="text-2xl font-bold text-gray-800 mb-2">{{$teachersCount}}</div>
                     <div class="w-full bg-gray-100 rounded-full h-2 mb-3">
                         <div class="bg-purple-500 h-2 rounded-full transition-all duration-1000" style="width: 85%">
                         </div>
@@ -263,29 +263,26 @@
     </div>
 
     <!-- Regional Distribution -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
-        <div class="flex items-center justify-between mb-6">
-            <h3 class="text-xl font-semibold text-gray-800">Regional Distribution</h3>
-            <button class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1 group">
-                <span>View detailed report</span>
-                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </button>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            @foreach ([['region' => 'Western', 'schools' => '3,245', 'growth' => '+2.1%', 'color' => 'bg-blue-50 border-blue-200 text-blue-600'], ['region' => 'Central', 'schools' => '2,187', 'growth' => '+1.8%', 'color' => 'bg-green-50 border-green-200 text-green-600'], ['region' => 'Southern', 'schools' => '1,956', 'growth' => '+1.2%', 'color' => 'bg-purple-50 border-purple-200 text-purple-600'], ['region' => 'Northern', 'schools' => '1,432', 'growth' => '+3.4%', 'color' => 'bg-orange-50 border-orange-200 text-orange-600']] as $region)
-                <div
-                    class="bg-white p-5 rounded-xl border-2 {{ $region['color'] }} text-center hover:shadow-md transition-all duration-300 group cursor-pointer">
-                    <div class="text-2xl font-bold text-gray-800 mb-2">{{ $region['schools'] }}</div>
-                    <div class="text-sm font-medium text-gray-600 mb-2">{{ $region['region'] }} Province</div>
-                    <div
-                        class="text-xs font-medium {{ $region['color'] }} rounded-full px-3 py-1 inline-block border">
-                        {{ $region['growth'] }}
-                    </div>
-                </div>
-            @endforeach
-        </div>
+    <div class="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 mb-10">
+    <div class="flex items-center justify-between mb-8">
+        <h3 class="text-2xl font-bold text-gray-900">🗺️ Regional Distribution</h3>
+        <button class="text-green-600 hover:text-green-700 font-semibold text-sm tracking-wide flex items-center space-x-1 group transition-colors duration-200">
+            <span>View detailed report</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
     </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        @foreach ($provinceCounts as $region)
+            <div
+                class="bg-teal-50 p-6 rounded-2xl border border-teal-200 text-center transition-all duration-300 transform hover:scale-105 hover:shadow-lg cursor-pointer
+                hover:bg-teal-100 group">
+                <div class="text-xl font-extrabold text-teal-700 mb-1 leading-snug group-hover:text-teal-800">{{ $region->province_name }}</div>
+                <div class="text-lg font-medium text-gray-700 mt-2">{{ $region->total_institutions }} Institutions</div>
+            </div>
+        @endforeach
+    </div>
+</div>
 </x-layouts.app>

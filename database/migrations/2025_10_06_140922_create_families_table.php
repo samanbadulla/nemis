@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('families', function (Blueprint $table) {
             $table->id();
-            $table->char('family_id', 36)->unique();
+            $table->char('family_id', 12)->unique();
             $table->char('member_a_id', 12)->comment('FK → people table');
             $table->char('member_b_id', 12)->comment('FK → people table');
             $table->date('married_date', 12)->comment('Married date');

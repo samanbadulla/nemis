@@ -25,4 +25,9 @@ class ProvincesList extends Model
     {
         return $query->where('active_status', 1);
     }
+
+    public function districts()
+    {
+        return $this->hasMany(DistrictsList::class, 'province_id', 'province_id');
+    }
 }

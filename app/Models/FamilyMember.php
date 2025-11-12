@@ -31,6 +31,7 @@ class FamilyMember extends Model
         'family_id',
         'child_name',
         'date_of_birth',
+        'gender_id',
         'birth_fc_no',
         'health_condition',
         'active_status',
@@ -42,6 +43,11 @@ class FamilyMember extends Model
     public function scopeActive($query)
     {
         return $query->where('active_status', '1');
+    }
+
+    public function gender()
+    {
+        return $this->belongsTo(GenderList::class, 'gender_id', 'gender_id');
     }
 
     /**

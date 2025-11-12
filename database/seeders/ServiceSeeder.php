@@ -49,7 +49,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'service_id'   => 'SER005',
-                'service_name' => 'SLAES',
+                'service_name' => 'SLEAS',
                 'description'  => 'Sri Lanka Education Administrative Service',
                 'active_status'=> '1',
                 'created_at' => $now, 
