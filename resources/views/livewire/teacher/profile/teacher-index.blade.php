@@ -93,7 +93,7 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">D.O.B
                                     </p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $teacher->date_of_birth->format('d-m-Y') }}</p>
+                                        {{ $teacher->date_of_birth }}</p>
                                 </div>
 
                                 {{-- Gender --}}

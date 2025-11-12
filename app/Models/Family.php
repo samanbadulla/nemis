@@ -34,8 +34,8 @@ class Family extends Model
      */
     protected $fillable = [
         'family_id',
-        'member_m_id',
-        'member_f_id',
+        'member_a_id',
+        'member_b_id',
         'married_date',
         'married_cf_no',
         'married_cf',
@@ -49,15 +49,15 @@ class Family extends Model
      */
 
     // Husband (Male Member)
-    public function husband()
+    public function memberA()
     {
-        return $this->belongsTo(People::class, 'member_m_id', 'people_id');
+        return $this->belongsTo(People::class, 'member_a_id', 'people_id');
     }
 
     // Wife (Female Member)
-    public function wife()
+    public function memberB()
     {
-        return $this->belongsTo(People::class, 'member_f_id', 'people_id');
+        return $this->belongsTo(People::class, 'member_b_id', 'people_id');
     }
 
     // Children (if you later add a family_members table)
@@ -72,5 +72,14 @@ class Family extends Model
     public function scopeActive($query)
     {
         return $query->where('active_status', '1');
+    }
+
+    public function getSpousInfo($teacherId)
+    {
+        if ($this->memberA->people_id == $teacherId) {
+            return $this->memberB;
+        }
+
+        return $this->memberA;
     }
 }
