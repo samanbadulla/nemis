@@ -28,10 +28,12 @@ Route::middleware(['auth'])->group(function () {
         // Routes accessible only by teachers with 'create teachers' permission
         Route::get('teacher/create', TeacherCreate::class)->name('teacher.create');
         Route::get('teacher/bulk-upload', BulkTeachersImport::class)->name('teacher.bulk.upload');
-        Route::get('teacher/edit', TeacherEdit::class)->name('teacher.edit');
+        Route::get('/download-teachers-template', function () {
+            return Excel::download(new TeachersTemplateExport, 'teachers_import_template.xlsx');
+        })->name('teachers.download.template');
     });
 
-    Route::get('/download-teachers-template', function () {
-        return Excel::download(new TeachersTemplateExport, 'teachers_import_template.xlsx');
-    })->name('teachers.download.template');
+    Route::middleware(['permission:edit teachers'])->group(function () {
+        Route::get('teacher/edit', TeacherEdit::class)->name('teacher.edit');
+    });
 });

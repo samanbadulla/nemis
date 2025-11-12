@@ -11,7 +11,9 @@
     "require": {
         "php": "^8.2",
         "elibyy/tcpdf-laravel": "^11.5",
+        "firebase/php-jwt": "^6.11",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.1.1",
         "livewire/volt": "^1.7.0",
