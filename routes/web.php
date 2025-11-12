@@ -42,6 +42,7 @@ use App\Livewire\Offices\Moe\MoeOfficesList;
 use App\Livewire\Offices\Peo\PeoOfficesList;
 use App\Livewire\Offices\Zeo\ZeoOfficesList;
 use App\Http\Controllers\DashboardController;
+use App\Livewire\MainTables\MainTablesGender;
 use App\Livewire\Offices\Deo\DeoOfficesCreate;
 use App\Livewire\Offices\Deo\Profile\DeoStaff;
 use App\Livewire\Offices\Moe\MoeOfficesCreate;
@@ -49,24 +50,24 @@ use App\Livewire\Offices\Moe\Profile\MoeStaff;
 use App\Livewire\Offices\Peo\PeoOfficesCreate;
 use App\Livewire\Offices\Peo\Profile\PeoStaff;
 use App\Livewire\Offices\Pmoe\PmoeOfficesList;
-use App\Livewire\Offices\Zeo\Profile\ZeoStaff;
 //use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\Offices\Zeo\Profile\ZeoStaff;
 use App\Livewire\Offices\Zeo\ZeoOfficesCreate;
 use App\Livewire\MainTables\MainTablesCityList;
 use App\Livewire\MainTables\MainTablesDistrict;
-use App\Livewire\MainTables\MainTablesDSOffice;
 //use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\MainTables\MainTablesDSOffice;
 use App\Livewire\MainTables\MainTablesOverview;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
-use App\Livewire\Offices\Moe\MoeOfficesProfile;
 //use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\Offices\Moe\MoeOfficesProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
 use App\Livewire\Sltas\Profile\SltasEmployment;
-use App\Livewire\Sltes\Profile\SltesEmployment;
 //use App\Livewire\Institutions\InstitutionsProfile;
+use App\Livewire\Sltes\Profile\SltesEmployment;
 use App\Livewire\Subjects\ApointedSubjectIndex;
 use App\Livewire\Subjects\TeachingSubjectIndex;
 use App\Livewire\Institutions\InstitutionsIndex;
@@ -185,7 +186,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('roles/create', RoleCreate::class)->name('roles.create');
         Route::get('roles/{id}/edit', RoleEdit::class)->name('roles.edit');
 
-        Route::get('main-table/overview', MainTablesOverview::class)->name('main-tables.overview');
+        // Route::get('main-table/overview', MainTablesOverview::class)->name('main-tables.overview');
         Route::get('main-table/authorities', MainTablesAuthorities::class)->name('main-tables.authorities');
         Route::get('main-table/blood-group', MainTablesBloodGroups::class)->name('main-tables.blood-group');
         Route::get('main-table/city-list', MainTablesCityList::class)->name('main-tables.city-list');
@@ -194,6 +195,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('main-table/ds-office', MainTablesDSOffice::class)->name('main-tables.ds-office');
         Route::get('main-table/education-qualifications', MainTablesEducationQualifications::class)->name('main-tables.education-qualifications');
         Route::get('main-table/ethnicities', MainTablesEthnicities::class)->name('main-tables.ethnicities');
+        Route::get('main-table/genders', MainTablesGender::class)->name('main-tables.genders');
 
 
 

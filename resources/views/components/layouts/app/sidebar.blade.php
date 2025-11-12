@@ -46,8 +46,8 @@
                 <flux:navlist.item icon="link-slash" :href="route('roles.index')"
                     :current="request()->routeIs('roles.index')" wire:navigate>{{ __('Roles') }}</flux:navlist.item>
 
-                <flux:navlist.item icon="shield-exclamation" :href="route('main-tables.overview')"
-                    :current="request()->routeIs('main-tables.overview')" wire:navigate>{{ __('Main Tables') }}</flux:navlist.item>
+                <flux:navlist.item icon="shield-exclamation" :href="route('main-tables.authorities')"
+                    :current="request()->routeIs('main-tables.*')" wire:navigate>{{ __('Main Tables') }}</flux:navlist.item>
                 @endrole
                 <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
                 <flux:navlist.item icon="home-modern" :href="route('institutions.index')" :current="request()->routeIs('institutions.index')" wire:navigate>{{ __('Institutions') }}</flux:navlist.item>
