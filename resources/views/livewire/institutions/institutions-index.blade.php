@@ -8,7 +8,7 @@
 
         <div class="my-6 flex items-center justify-end gap-3">
             {{-- Create Institution Button (Permission Based) --}}
-            @can('create teachers')
+            @can('create institution')
                 <a href="{{ route('institutions.create') }}">
                     <flux:button icon="plus" color="primary"
                         class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
@@ -111,9 +111,13 @@
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                            <flux:link
-                                                href="{{ route('institutions.profile.overview', $institution->id) }}"
-                                                variant="ghost">{{ $institution->name }}</flux:link>
+                                            @can('view institutions profile overview')
+                                                <flux:link
+                                                    href="{{ route('institutions.profile.overview', $institution->id) }}"
+                                                    variant="ghost">{{ $institution->name }}</flux:link>
+                                            @else
+                                                {{ $institution->name }}
+                                            @endcan
                                         </div>
                                         <div class="text-sm text-slate-500 dark:text-slate-400">
                                             Census No.: {{ str_pad($institution->census_no, 5, '0', STR_PAD_LEFT) }}
@@ -145,12 +149,17 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                                <a href="{{ route('institutions.profile.overview', $institution->id) }}">
-                                    <flux:button size="sm" icon="eye">View</flux:button>
-                                </a>
-                                <a href="#">
-                                    <flux:button size="sm" icon="pencil-square">Edit</flux:button>
-                                </a>
+                                @can('view institutions profile overview')
+                                    <a href="{{ route('institutions.profile.overview', $institution->id) }}">
+                                        <flux:button size="sm" icon="eye">View</flux:button>
+                                    </a>
+                                @endcan
+
+                                @can('institution edit')
+                                    <a href="#">
+                                        <flux:button size="sm" icon="pencil-square">Edit</flux:button>
+                                    </a>
+                                @endcan
                             </td>
                         </tr>
                     @empty

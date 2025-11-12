@@ -7,9 +7,11 @@
 
         <div class="my-4 gap-2 justify-end flex">
 
-            <a href="{{ route('offices.peo.create') }}">
-                <flux:button>Create Provincial Office</flux:button>
-            </a>
+            @can('create peo office')
+                <a href="{{ route('offices.peo.create') }}">
+                    <flux:button>Create Provincial Office</flux:button>
+                </a>
+            @endcan
 
         </div>
 
@@ -46,7 +48,7 @@
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
                                         <flux:link href="{{route('offices.zeo.by-province', $data->id)}}" variant="ghost" >{{ $data->name }}</flux:link>
-                                        
+
                                     </div>
                                     <div class="text-sm text-slate-500 dark:text-slate-400">
                                         Work Place Id: {{ $data->workplace_id }}
@@ -68,13 +70,21 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                            <a href="{{ route('offices.peo.profile.overview', $data->id) }}">
-                                <flux:button size="sm" icon="eye">View</flux:button>
-                            </a>
-                            <a href="">
-                                <flux:button size="sm" icon="pencil-square">Edit</flux:button>
-                            </a>
-                            <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
+                            @can('view peo profile overview')
+                                <a href="{{ route('offices.peo.profile.overview', $data->id) }}">
+                                    <flux:button size="sm" icon="eye">View</flux:button>
+                                </a>
+                            @endcan
+
+                            @can('peo office edit')
+                                <a href="">
+                                    <flux:button size="sm" icon="pencil-square">Edit</flux:button>
+                                </a>
+                            @endcan
+
+                            @can('peo office delete')
+                                <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
+                            @endcan
                         </td>
                     </tr>
                 @empty

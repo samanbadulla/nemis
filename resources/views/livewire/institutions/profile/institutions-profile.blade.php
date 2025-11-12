@@ -60,7 +60,9 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Basic Information</h2>
-                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @can('institution basic information edit')
+                                        <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -88,7 +90,9 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Contact Details</h2>
-                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @can('institution contact details edit')
+                                        <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -123,7 +127,9 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Location & Administration</h2>
-                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @can('institution location and administration edit')
+                                        <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -151,7 +157,9 @@
                             <div class="mb-3">
                                 <div class="flex items-baseline justify-between py-2">
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">Mission & Vision</h2>
+                                    @can('institution mission and vision edit')
                                     <flux:button icon="pencil-square" size="sm" variant="primary">Edit</flux:button>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>

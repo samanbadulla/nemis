@@ -42,6 +42,29 @@ class RolePermissionSeeder extends Seeder
             // SLTAS Management
             'view sltas list',
 
+            // Users Management
+            'view users list', 'user edit', 'create user', 'user password reset', 'user status change', 'user delete',
+
+            // Institution Management
+            'view institutions list', 'create institution', 'institution edit', 'view institutions profile', 'view institutions profile overview', 'view institutions profile profile', 'view institutions profile staff',
+            'institution basic information edit', 'institution contact details edit', 'institution location and administration edit', 'institution mission and vision edit',
+
+            // Apoinment Subject Management
+            'view apoinment subject list', 'create apoinment subject', 'apoinment subject edit', 'apoinment subject delete', 'view apoinment subject',
+
+            // Teaching Subject Managemnt
+            'view teaching subject list', 'create teaching subject', 'teaching subject edit', 'teaching subject delete', 'view teaching subject',
+
+            // Office Mangement
+            'view moe list', 'view pmoe list', 'view peo list', 'view zeo list', 'view deo list',
+            'create moe office', 'create pmoe office', 'create peo office', 'create zeo office', 'create deo office',
+            'view moe profile overview', 'view pmoe profile overview', 'view peo profile overview', 'view zeo profile overview', 'view deo profile overview',
+            'moe office edit', 'pmoe office edit', 'peo office edit', 'zeo office edit', 'deo office edit',
+            'moe office delete', 'pmoe office delete', 'peo office delete', 'zeo office delete', 'deo office delete',
+
+
+
+
 
 
         ];

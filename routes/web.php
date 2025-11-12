@@ -118,61 +118,65 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
-    Route::get('institutions', InstitutionsIndex::class)->name('institutions.index');
-    Route::get('institutions/create', InstitutionsCreate::class)->name('institutions.create');
-    Route::get('institutions/{id}/profile', InstitutionsProfile::class)->name('institutions.profile');
+    Route::get('users/index', UserIndex::class)->name('users.index')->middleware(['permission:view users list']);
+    Route::get('users/{id}/edit', UserEdit::class)->name('users.edit')->middleware(['permission:user edit']);
+    Route::get('users/create', UserCreate::class)->name('users.create')->middleware(['permission:create user']);
 
-    Route::get('institutions/{id}/profile/overview', InstitutionsOverview::class)->name('institutions.profile.overview');
-    Route::get('institutions/{id}/profile/profile', InstitutionsProfile::class)->name('institutions.profile.profile');
-    Route::get('institutions/{id}/profile/staff', InstitutionStaff::class)->name('institutions.profile.staff');
+    Route::get('institutions', InstitutionsIndex::class)->name('institutions.index')->middleware(['permission:view institutions list']);
+    Route::get('institutions/create', InstitutionsCreate::class)->name('institutions.create')->middleware(['permission:create institution']);
+    Route::get('institutions/{id}/profile', InstitutionsProfile::class)->name('institutions.profile')->middleware(['permission:view institutions profile']);
+
+    Route::get('institutions/{id}/profile/overview', InstitutionsOverview::class)->name('institutions.profile.overview')->middleware(['permission:view institutions profile overview']);
+    Route::get('institutions/{id}/profile/profile', InstitutionsProfile::class)->name('institutions.profile.profile')->middleware(['permission:view institutions profile profile']);
+    Route::get('institutions/{id}/profile/staff', InstitutionStaff::class)->name('institutions.profile.staff')->middleware(['permission:view institutions profile staff']);
 
 
-    Route::get('offices/moe/{id}/profile/overview', MoeOverview::class)->name('offices.moe.profile.overview');
+    Route::get('offices/moe/{id}/profile/overview', MoeOverview::class)->name('offices.moe.profile.overview')->middleware(['permission:view moe profile overview']);
     Route::get('offices/moe/{id}/profile/moefprofile', Moeprofile::class)->name('offices.moe.profile.moeprofile');
     Route::get('offices/moe/{id}/profile/staff', MoeStaff::class)->name('offices.moe.profile.staff');
     // Route::get('offices/moe/{id}/profile/staff', MoeStaff::class)->name('offices.moe.profile.staff');
 
-    Route::get('offices/pmoe/{id}/profile/overview', PmoeOverview::class)->name('offices.pmoe.profile.overview');
+    Route::get('offices/pmoe/{id}/profile/overview', PmoeOverview::class)->name('offices.pmoe.profile.overview')->middleware(['permission:view pmoe profile overview']);
     Route::get('offices/pmoe/{id}/profile/profile', PmoeProfile::class)->name('offices.pmoe.profile.profile');
     Route::get('offices/pmoe/{id}/profile/staff', PmoeStaff::class)->name('offices.pmoe.profile.staff');
 
 
-    Route::get('offices/peo/{id}/profile/overview', PeoOverview::class)->name('offices.peo.profile.overview');
+    Route::get('offices/peo/{id}/profile/overview', PeoOverview::class)->name('offices.peo.profile.overview')->middleware(['permission:view peo profile overview']);
     Route::get('offices/peo/{id}/profile/profile',  PeoProfile::class)->name('offices.peo.profile.profile');
     Route::get('offices/peo/{id}/profile/staff',    PeoStaff::class)->name('offices.peo.profile.staff');
 
-    Route::get('offices/zeo/{id}/profile/overview', ZeoOverview::class)->name('offices.zeo.profile.overview');
+    Route::get('offices/zeo/{id}/profile/overview', ZeoOverview::class)->name('offices.zeo.profile.overview')->middleware(['permission:view zeo profile overview']);
     Route::get('offices/zeo/{id}/profile/profile',  ZeoProfile::class)->name('offices.zeo.profile.profile');
     Route::get('offices/zeo/{id}/profile/staff',    ZeoStaff::class)->name('offices.zeo.profile.staff');
 
-    Route::get('offices/deo/{id}/profile/overview', DeoOverview::class)->name('offices.deo.profile.overview');
+    Route::get('offices/deo/{id}/profile/overview', DeoOverview::class)->name('offices.deo.profile.overview')->middleware(['permission:view deo profile overview']);
     Route::get('offices/deo/{id}/profile/profile',  DeoProfile::class)->name('offices.deo.profile.profile');
     Route::get('offices/deo/{id}/profile/staff',    DeoStaff::class)->name('offices.deo.profile.staff');
 
 
     Route::get('offices', OfficesIndex::class)->name('offices.index');
 
-    Route::get('offices/deo/list', DeoOfficesList::class)->name('offices.deo.list');
-    Route::get('offices/deo/create', DeoOfficesCreate::class)->name('offices.deo.create');
+    Route::get('offices/deo/list', DeoOfficesList::class)->name('offices.deo.list')->middleware(['permission:view deo list']);
+    Route::get('offices/deo/create', DeoOfficesCreate::class)->name('offices.deo.create')->middleware(['permission:create deo office']);
     Route::get('offices/deo/{id}/zone', DivisionalOfficeByZone::class)->name('offices.deo.by-zone');
     Route::get('offices/deo/{id}/profile', DeoOfficesProfile::class)->name('offices.deo.profile');
 
-    Route::get('offices/zeo/list', ZeoOfficesList::class)->name('offices.zeo.list');
-    Route::get('offices/zeo/create', ZeoOfficesCreate::class)->name('offices.zeo.create');
+    Route::get('offices/zeo/list', ZeoOfficesList::class)->name('offices.zeo.list')->middleware(['permission:view zeo list']);
+    Route::get('offices/zeo/create', ZeoOfficesCreate::class)->name('offices.zeo.create')->middleware(['permission:create zeo office']);
     Route::get('offices/zeo/{id}/province', ZonaleOfficeByPeo::class)->name('offices.zeo.by-province');
     Route::get('offices/zeo/{id}/profile', ZeoOfficesProfile::class)->name('offices.zeo.profile');
 
-    Route::get('offices/peo/list/', PeoOfficesList::class)->name('offices.peo.list');
-    Route::get('offices/peo/create', PeoOfficesCreate::class)->name('offices.peo.create');
+    Route::get('offices/peo/list/', PeoOfficesList::class)->name('offices.peo.list')->middleware(['permission:view peo list']);
+    Route::get('offices/peo/create', PeoOfficesCreate::class)->name('offices.peo.create')->middleware(['permission:create peo office']);
     Route::get('offices/peo/{id}/pmoe', ProvincialOfficeByPmoe::class)->name('offices.peo.by-pmoe');
     Route::get('offices/peo/{id}/profile', PeoOfficesProfile::class)->name('offices.peo.profile');
 
-    Route::get('offices/pmoe/list', PmoeOfficesList::class)->name('offices.pmoe.list');
-    Route::get('offices/pmoe/create', PmoeOfficesCreate::class)->name('offices.pmoe.create');
+    Route::get('offices/pmoe/list', PmoeOfficesList::class)->name('offices.pmoe.list')->middleware(['permission:view pmoe list']);
+    Route::get('offices/pmoe/create', PmoeOfficesCreate::class)->name('offices.pmoe.create')->middleware(['permission:create pmoe office']);
     Route::get('offices/pmoe/{id}/profile', PmoeOfficesProfile::class)->name('offices.pmoe.profile');
 
-    Route::get('offices/moe/list', MoeOfficesList::class)->name('offices.moe.list');
-    Route::get('offices/moe/create', MoeOfficesCreate::class)->name('offices.moe.create');
+    Route::get('offices/moe/list', MoeOfficesList::class)->name('offices.moe.list')->middleware(['permission:view moe list']);
+    Route::get('offices/moe/create', MoeOfficesCreate::class)->name('offices.moe.create')->middleware(['permission:create moe office']);
     Route::get('offices/moe/{id}/profile', MoeOfficesProfile::class)->name('offices.moe.profile');
 
         // In web.php or api.php
@@ -192,38 +196,31 @@ Route::middleware(['auth'])->group(function () {
         Route::get('main-table/education-qualifications', MainTablesEducationQualifications::class)->name('main-tables.education-qualifications');
         Route::get('main-table/ethnicities', MainTablesEthnicities::class)->name('main-tables.ethnicities');
         Route::get('main-table/genders', MainTablesGender::class)->name('main-tables.genders');
-
-
-
     });
 
-    Route::get('sleas/list', SleasList::class)->name('sleas.list');
+    Route::get('sleas/list', SleasList::class)->name('sleas.list')->middleware(['view sleas list']);
     Route::get('sleas/create', SleasCreate::class)->name('sleas.create');
     Route::get('sleas/{id}/profile/index', SleasIndex::class)->name('sleas.profile.index');
     Route::get('sleas/{id}/profile/qualification', SleasQualification::class)->name('sleas.profile.qualification');
     Route::get('sleas/{id}/profile/employment', SleasEmployment::class)->name('sleas.profile.employment');
     Route::get('sleas/{id}/profile/family', SleasFamily::class)->name('sleas.profile.family');
 
-    Route::get('sltes/list', SltesList::class)->name('sltes.list')->middleware(['permission:view sltes']);
+    Route::get('sltes/list', SltesList::class)->name('sltes.list')->middleware(['permission:view sltes list']);
     Route::get('sltes/create', SltesCreate::class)->name('sltes.create');
     Route::get('sltes/{id}/profile/index', SltesIndex::class)->name('sltes.profile.index');
     Route::get('sltes/{id}/profile/qualification', SltesQualification::class)->name('sltes.profile.qualification');
     Route::get('sltes/{id}/profile/employment', SltesEmployment::class)->name('sltes.profile.employment');
     Route::get('sltes/{id}/profile/family', SltesFamily::class)->name('sltes.profile.family');
 
-    Route::get('sltas/list', SltasList::class)->name('sltas.list');
+    Route::get('sltas/list', SltasList::class)->name('sltas.list')->middleware(['permission:view sltas list']);
     Route::get('sltas/create', SltasCreate::class)->name('sltas.create');
     Route::get('sltas/{id}/profile/index', SltasIndex::class)->name('sltas.profile.index');
     Route::get('sltas/{id}/profile/qualification', SltasQualification::class)->name('sltas.profile.qualification');
     Route::get('sltas/{id}/profile/employment', SltasEmployment::class)->name('sltas.profile.employment');
     Route::get('sltas/{id}/profile/family', SltasFamily::class)->name('sltas.profile.family');
 
-    Route::get('subjects/apointed-subject', ApointedSubjectIndex::class)->name('subjects.apointed');
-    Route::get('subjects/teaching-subject', TeachingSubjectIndex::class)->name('subjects.teaching');
-
-    Route::get('users/index', UserIndex::class)->name('users.index');
-    Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
-    Route::get('users/create', UserCreate::class)->name('users.create');
+    Route::get('subjects/apointed-subject', ApointedSubjectIndex::class)->name('subjects.apointed')->middleware(['permission:view apoinment subject list']);
+    Route::get('subjects/teaching-subject', TeachingSubjectIndex::class)->name('subjects.teaching')->middleware(['permission:view teaching subject list']);
 
 
 

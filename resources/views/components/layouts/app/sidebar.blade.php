@@ -49,8 +49,14 @@
                 <flux:navlist.item icon="shield-exclamation" :href="route('main-tables.authorities')"
                     :current="request()->routeIs('main-tables.*')" wire:navigate>{{ __('Main Tables') }}</flux:navlist.item>
                 @endrole
-                <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
-                <flux:navlist.item icon="home-modern" :href="route('institutions.index')" :current="request()->routeIs('institutions.index')" wire:navigate>{{ __('Institutions') }}</flux:navlist.item>
+
+                @can('view users list')
+                    <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
+                @endcan
+
+                @can('view institutions list')
+                    <flux:navlist.item icon="home-modern" :href="route('institutions.index')" :current="request()->routeIs('institutions.index')" wire:navigate>{{ __('Institutions') }}</flux:navlist.item>
+                @endcan
             </flux:navlist.group>
 
             <flux:navlist.group
@@ -63,21 +69,36 @@
                 <flux:navlist.item icon="squares-2x2" :href="route('offices.index')" :current="request()->routeIs('offices.index')" wire:navigate>
                     {{ __('Overview') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="building-library" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>
-                    {{ __('Education Ministries') }}
-                </flux:navlist.item>
-                <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')" :current="request()->routeIs('offices.pmoe.list')" wire:navigate>
-                    {{ __('Provincial Ministries') }}
-                </flux:navlist.item>
-                <flux:navlist.item icon="building-office" :href="route('offices.peo.list', 0)" :current="request()->routeIs('offices.peo.list')" wire:navigate>
-                    {{ __('Provincial Offices') }}
-                </flux:navlist.item>
+
+                @can('view moe list')
+                    <flux:navlist.item icon="building-library" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>
+                        {{ __('Education Ministries') }}
+                    </flux:navlist.item>
+                @endcan
+
+                @can('view pmoe list')
+                    <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')" :current="request()->routeIs('offices.pmoe.list')" wire:navigate>
+                        {{ __('Provincial Ministries') }}
+                    </flux:navlist.item>
+                @endcan
+
+                @can('view peo list')
+                    <flux:navlist.item icon="building-office" :href="route('offices.peo.list', 0)" :current="request()->routeIs('offices.peo.list')" wire:navigate>
+                        {{ __('Provincial Offices') }}
+                    </flux:navlist.item>
+                @endcan
+
+                @can('view zeo list')
                 <flux:navlist.item icon="building-office" :href="route('offices.zeo.list')" :current="request()->routeIs('offices.zeo.list')" wire:navigate>
                     {{ __('Zonal Offices') }}
                 </flux:navlist.item>
-                <flux:navlist.item icon="building-office" :href="route('offices.deo.list')" :current="request()->routeIs('offices.deo.list')" wire:navigate>
-                    {{ __('Divisional Offices') }}
-                </flux:navlist.item>
+                @endcan
+
+                @can('view deo list')
+                    <flux:navlist.item icon="building-office" :href="route('offices.deo.list')" :current="request()->routeIs('offices.deo.list')" wire:navigate>
+                        {{ __('Divisional Offices') }}
+                    </flux:navlist.item>
+                @endcan
             </flux:navlist.group>
 
 
@@ -121,9 +142,13 @@
 
             </flux:navlist.group>
 
-            <flux:navlist.item icon="clipboard-document" :href="route('subjects.apointed')" :current="request()->routeIs('subjects.apointed')" wire:navigate>{{ __('Apoinment subjects') }}</flux:navlist.item>
-            <flux:navlist.item icon="clipboard-document-list" :href="route('subjects.teaching')" :current="request()->routeIs('subjects.teaching')" wire:navigate>{{ __('Teaching subjects') }}</flux:navlist.item>
+            @can('view apoinment subject list')
+                <flux:navlist.item icon="clipboard-document" :href="route('subjects.apointed')" :current="request()->routeIs('subjects.apointed')" wire:navigate>{{ __('Apoinment subjects') }}</flux:navlist.item>
+            @endcan
 
+            @can('view teaching subject list')
+                <flux:navlist.item icon="clipboard-document-list" :href="route('subjects.teaching')" :current="request()->routeIs('subjects.teaching')" wire:navigate>{{ __('Teaching subjects') }}</flux:navlist.item>
+            @endcan
 
         </flux:navlist>
 

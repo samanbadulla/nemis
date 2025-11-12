@@ -6,13 +6,15 @@
         <flux:separator variant="subtle" />
 
         <div class="my-6 flex items-center justify-end gap-3">
-            {{-- Create User Button (Permission Based) --}}
-            <a href="{{ route('users.create') }}">
-                <flux:button icon="plus" color="primary"
-                    class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
-                    Create new user
-                </flux:button>
-            </a>
+            @can('create user')
+                {{-- Create User Button (Permission Based) --}}
+                <a href="{{ route('users.create') }}">
+                    <flux:button icon="plus" color="primary"
+                        class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
+                        Create new user
+                    </flux:button>
+                </a>
+            @endcan
         </div>
 
         <table class="min-w-full divide-y divide-gray-200 overflow-x-auto">
@@ -75,30 +77,39 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                 {{ $user->active_status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ $user->active_status ? 'Active' : 'Inactive' }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
-                            <a href="{{ route('users.edit', $user->id) }}">
-                                <flux:button size="sm" icon="pencil-square"></flux:button>
-                            </a>
-                            <flux:button wire:click="resetPassword({{ $user->id }})"
-                                wire:confirm="Are you sure you want to reset this user's password?" size="sm"
-                                icon="key">
-                            </flux:button>
-                            <flux:button wire:click="toggleStatus({{ $user->id }})"
-                                wire:confirm="Are you sure you want to {{ $user->active_status == '1' ? 'deactivate' : 'activate' }} this user?"
-                                size="sm" icon="{{ $user->active_status == '1' ? 'no-symbol' : 'check' }}"
-                                variant="{{ $user->active_status == '1' ? 'danger' : 'primary' }}">
-                            </flux:button>
+                            @can('user edit')
+                                <a href="{{ route('users.edit', $user->id) }}">
+                                    <flux:button size="sm" icon="pencil-square"></flux:button>
+                                </a>
+                            @endcan
 
+                            @can('user password reset')
+                                <flux:button wire:click="resetPassword({{ $user->id }})"
+                                    wire:confirm="Are you sure you want to reset this user's password?" size="sm"
+                                    icon="key">
+                                </flux:button>
+                            @endcan
 
-                            <flux:button wire:click="deleteUser({{ $user->id }})"
-                                wire:confirm="Are you sure you want to delete this user?" size="sm" icon="trash"
-                                variant="danger">
-                            </flux:button>
+                            @can('user status change')
+                                <flux:button wire:click="toggleStatus({{ $user->id }})"
+                                    wire:confirm="Are you sure you want to {{ $user->active_status == '1' ? 'deactivate' : 'activate' }} this user?"
+                                    size="sm" icon="{{ $user->active_status == '1' ? 'no-symbol' : 'check' }}"
+                                    variant="{{ $user->active_status == '1' ? 'danger' : 'primary' }}">
+                                </flux:button>
+                            @endcan
+
+                            @can('user delete')
+                                <flux:button wire:click="deleteUser({{ $user->id }})"
+                                    wire:confirm="Are you sure you want to delete this user?" size="sm" icon="trash"
+                                    variant="danger">
+                                </flux:button>
+                            @endcan
 
                         </td>
                     </tr>

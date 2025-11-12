@@ -133,8 +133,8 @@
                                     <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                                         Institution name</p>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        [{{ $teacherAppointment->currentAppointment->workplace->office()->census_no }}]
-                                        {{ $teacherAppointment->currentAppointment->workplace->office()->name }}</p>
+                                        [{{ $teacherAppointment->currentAppointment->workplace->office()->census_no ?? 'N/A' }}]
+                                        {{ $teacherAppointment->currentAppointment->workplace->office()->name  ?? 'N/A' }}</p>
                                 </div>
                                 {{-- Name with Initials --}}
                                 <div

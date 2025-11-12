@@ -7,9 +7,11 @@
 
         <div class="my-4 gap-2 justify-end flex">
 
-            <a href="{{ route('offices.moe.create') }}">
-                <flux:button>Create Ministry of Education Office</flux:button>
-            </a>
+            @can('create moe office')
+                <a href="{{ route('offices.moe.create') }}">
+                    <flux:button>Create Ministry of Education Office</flux:button>
+                </a>
+            @endcan
 
         </div>
 
@@ -66,13 +68,22 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium justify-end flex gap-1">
-                            <a href="{{route('offices.moe.profile.overview', $data->id)}}">
-                                <flux:button size="sm" icon="eye">View</flux:button>
-                            </a>
+
+                            @can('view moe profile overview')
+                                <a href="{{route('offices.moe.profile.overview', $data->id)}}">
+                                    <flux:button size="sm" icon="eye">View</flux:button>
+                                </a>
+                            @endcan
+
+                            @can('moe office edit')
                             <a href="">
                                 <flux:button size="sm" icon="pencil-square">Edit</flux:button>
                             </a>
-                            <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
+                            @endcan
+
+                            @can('moe office delete')
+                                <flux:button size="sm" icon="trash" variant="danger">Delete</flux:button>
+                            @endcan
 
                         </td>
                     </tr>
