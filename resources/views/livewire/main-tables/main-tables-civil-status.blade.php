@@ -158,7 +158,7 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form wire:submit.prevent="updateCivilStatus">
+                <form wire:submit.prevent="updateCivilStatusList">
                     @csrf
                     <div class="mt-6 max-w-xl space-y-4">
 

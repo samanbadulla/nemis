@@ -130,7 +130,7 @@ class MainTablesCivilStatus extends Component
         $this->showModelEditCivilStatus = true; // ensure modal is open
     }
 
-    public function updateCity()
+    public function updateCivilStatusList()
     {
         try{
 
