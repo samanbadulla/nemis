@@ -49,11 +49,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectSeeder::class);
         $this->call(AppointedSubjectsSeeder::class);
         $this->call(MediumOfInstructionSeeder::class);
-        $this->call(InstitutionSeeder::class);
+        //$this->call(InstitutionSeeder::class);
 
         //$this->call(InstitutionTableSeederPart1::class);
         //$this->call(InstitutionTableSeederPart2::class);
-        $this->call(WorkplacesFromMinistrySeeder::class);
+        //$this->call(WorkplacesFromMinistrySeeder::class);
 
         $this->call(ServiceSeeder::class);
         $this->call(ServiceRankSeeder::class);

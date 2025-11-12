@@ -113,10 +113,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
-    Route::get('users', UserIndex::class)->name('users.index');
-    Route::get('users/create', UserCreate::class)->name('users.create');
-    Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
-
     Route::get('institutions', InstitutionsIndex::class)->name('institutions.index');
     Route::get('institutions/create', InstitutionsCreate::class)->name('institutions.create');
     Route::get('institutions/{id}/profile', InstitutionsProfile::class)->name('institutions.profile');
@@ -180,6 +176,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('roles', RoleIndex::class)->name('roles.index');
         Route::get('roles/create', RoleCreate::class)->name('roles.create');
         Route::get('roles/{id}/edit', RoleEdit::class)->name('roles.edit');
+
+        Route::get('users', UserIndex::class)->name('users.index');
+        Route::get('users/create', UserCreate::class)->name('users.create');
+        Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
 
         Route::get('main-table/overview', MainTablesOverview::class)->name('main-tables.overview');
         Route::get('main-table/authorities', MainTablesAuthorities::class)->name('main-tables.authorities');
