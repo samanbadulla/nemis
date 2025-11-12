@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-slate-900 dark:text-slate-100">
-                                                <flux:link href="{{ route('offices.pmoe.list') }}" variant="ghost">
+                                                <flux:link href="" variant="ghost">
                                                     {{ $data->authority_name }}</flux:link>
                                             </div>
                                             <div class="text-sm text-slate-500 dark:text-slate-400">

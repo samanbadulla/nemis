@@ -53,20 +53,22 @@ use App\Livewire\Offices\Zeo\Profile\ZeoStaff;
 //use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesCreate;
 use App\Livewire\MainTables\MainTablesCityList;
+use App\Livewire\MainTables\MainTablesDistrict;
+use App\Livewire\MainTables\MainTablesDSOffice;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\MainTables\MainTablesOverview;
 use App\Livewire\Offices\Deo\DeoOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Moe\MoeOfficesProfile;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Peo\PeoOfficesProfile;
 use App\Livewire\Offices\Zeo\ZeoOfficesProfile;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Offices\Zeo\ZonaleOfficeByPeo;
 use App\Livewire\Sleas\Profile\SleasEmployment;
 use App\Livewire\Sltas\Profile\SltasEmployment;
 use App\Livewire\Sltes\Profile\SltesEmployment;
+//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Subjects\ApointedSubjectIndex;
 use App\Livewire\Subjects\TeachingSubjectIndex;
-//use App\Livewire\Institutions\InstitutionsProfile;
 use App\Livewire\Institutions\InstitutionsIndex;
 use App\Livewire\Offices\Deo\Profile\DeoProfile;
 use App\Livewire\Offices\Moe\Profile\Moeprofile;
@@ -83,6 +85,7 @@ use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
 use App\Livewire\MainTables\MainTablesAuthorities;
 use App\Livewire\MainTables\MainTablesBloodGroups;
 use App\Livewire\MainTables\MainTablesCivilStatus;
+use App\Livewire\MainTables\MainTablesEthnicities;
 use App\Livewire\Offices\Pmoe\Profile\PmoeProfile;
 use App\Livewire\Principal\Profile\PrincipalIndex;
 use App\Livewire\Sleas\Profile\SleasQualification;
@@ -97,6 +100,7 @@ use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
 use App\Livewire\Institutions\Profile\InstitutionsOverview;
+use App\Livewire\MainTables\MainTablesEducationQualifications;
 
 Route::get('/', function () {
     return view('welcome');
@@ -186,6 +190,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('main-table/blood-group', MainTablesBloodGroups::class)->name('main-tables.blood-group');
         Route::get('main-table/city-list', MainTablesCityList::class)->name('main-tables.city-list');
         Route::get('main-table/civil-status', MainTablesCivilStatus::class)->name('main-tables.civil-status');
+        Route::get('main-table/district', MainTablesDistrict::class)->name('main-tables.district');
+        Route::get('main-table/ds-office', MainTablesDSOffice::class)->name('main-tables.ds-office');
+        Route::get('main-table/education-qualifications', MainTablesEducationQualifications::class)->name('main-tables.education-qualifications');
+        Route::get('main-table/ethnicities', MainTablesEthnicities::class)->name('main-tables.ethnicities');
+
+
 
     });
 

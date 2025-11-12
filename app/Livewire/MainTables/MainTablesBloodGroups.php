@@ -139,7 +139,7 @@ class MainTablesBloodGroups extends Component
         $this->showModelEditBloodGroup = true; // ensure modal is open
     }
 
-    public function updateBloodGroup()
+    public function updateBloodGroupList()
     {
         $this->validate([
             'updateBloodGroupId' => [
@@ -164,7 +164,7 @@ class MainTablesBloodGroups extends Component
             ]);
 
 
-            $this->showModelEditAuthority = false;
+            $this->showModelEditBloodGroup = false;
 
             session()->flash('message', '✅ Blood Group updated successfully!');
 
