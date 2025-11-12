@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 
 class People extends Model
 {
@@ -86,28 +87,36 @@ class People extends Model
     {
         return $query->where('active_status', 1);
     }
+
+    public function getDateOfBirthAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
     /**
      * Generate 12-character incremental People ID
-     * Format: PE + Year (4) + Sequence (6)
+     * Format: PE + Year (2) + Sequence (8)
      */
     public static function generatePeopleId(): string
     {
-        $year = now()->format('Y'); // current year
+        $year = now()->format('y'); // last two digits of current year, e.g., 25
 
-        // Get last inserted ID for this year
+        // Find the latest record for the current year
         $last = self::where('people_id', 'like', "PE{$year}%")
             ->orderBy('people_id', 'desc')
             ->first();
 
         if ($last) {
-            $lastNumber = (int)substr($last->people_id, -6); // last 6 digits
-            $nextNumber = str_pad($lastNumber + 1, 6, '0', STR_PAD_LEFT);
+            // Extract numeric part (last 8 digits)
+            $lastNumber = (int)substr($last->people_id, -8);
+            $nextNumber = str_pad($lastNumber + 1, 8, '0', STR_PAD_LEFT);
         } else {
-            $nextNumber = '000001';
+            $nextNumber = '00000001';
         }
 
-        return "PE{$year}{$nextNumber}"; // 12 characters
+        return "PE{$year}{$nextNumber}"; // Example: PE2500000123
     }
+
 
     /**
      * Generate initials like “A.S. Madusanka”

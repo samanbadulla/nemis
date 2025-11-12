@@ -59,26 +59,29 @@ class EmployerAppointment extends Model
 
     /**
      * Generate unique appointment ID
-     * Format: AP + Year (4) + Sequence (5)
+     * Format: AP + Year (2) + Sequence (8)
      */
-    public static function generateAppointmentId($date): string
+    public static function generateAppointmentId(string $date): string
     {
-        $year = date('Y', strtotime($date)); // get year from appointment date
+        // Extract 2-digit year from given date (e.g., "2025-11-12" → "25")
+        $year = date('y', strtotime($date));
 
-        // Get last inserted appointment ID for this year
+        // Find the last inserted appointment for this year
         $last = self::where('appointment_id', 'like', "AP{$year}%")
             ->orderBy('appointment_id', 'desc')
             ->first();
 
         if ($last) {
-            $lastNumber = (int)substr($last->appointment_id, -5); // last 5 digits
-            $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
+            // Extract numeric sequence (last 8 digits)
+            $lastNumber = (int) substr($last->appointment_id, -8);
+            $nextNumber = str_pad($lastNumber + 1, 8, '0', STR_PAD_LEFT);
         } else {
-            $nextNumber = '00001';
+            $nextNumber = '00000001';
         }
 
-        return "AP{$year}{$nextNumber}";
+        return "AP{$year}{$nextNumber}"; // e.g., AP2500000123
     }
+
 
 
     // Relationships
@@ -112,5 +115,4 @@ class EmployerAppointment extends Model
     {
         return $this->belongsTo(Workplaces::class, 'workplace_id', 'workplace_id');
     }
-
 }
