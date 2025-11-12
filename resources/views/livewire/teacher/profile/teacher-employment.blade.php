@@ -45,8 +45,10 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Current Employment
                                     </h2>
-                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit
-                                    </flux:button>
+                                    @can('teacher current employerment edit')
+                                        <flux:button icon="pencil-square" size="sm" variant="primary">Edit
+                                        </flux:button>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -162,8 +164,10 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         First Employment
                                     </h2>
-                                    <flux:button icon="pencil-square" size="sm" variant="primary">Edit
-                                    </flux:button>
+                                    @can('teacher first employerment edit')
+                                        <flux:button icon="pencil-square" size="sm" variant="primary">Edit
+                                        </flux:button>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -279,10 +283,12 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Previous Service-related information
                                     </h2>
-                                    <flux:modal.trigger name="add-service-record">
-                                        <flux:button icon="plus" size="sm">Previous Record
-                                        </flux:button>
-                                    </flux:modal.trigger>
+                                    @can('teacher previous record add')
+                                        <flux:modal.trigger name="add-service-record">
+                                            <flux:button icon="plus" size="sm">Previous Record
+                                            </flux:button>
+                                        </flux:modal.trigger>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="bg-white">
@@ -349,10 +355,12 @@
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold justify-end flex gap-1">
-                                                        {{-- Delete button triggers Livewire method --}}
-                                                        <flux:button icon="trash" variant="subtle" size="sm"
-                                                            wire:click="deleteServiceRecord({{ $item->id }})"
-                                                            onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
+                                                        @can ('teacher previous record delete')
+                                                            {{-- Delete button triggers Livewire method --}}
+                                                            <flux:button icon="trash" variant="subtle" size="sm"
+                                                                wire:click="deleteServiceRecord({{ $item->id }})"
+                                                                onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty
@@ -434,10 +442,12 @@
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold justify-end flex gap-1">
-                                                        {{-- Delete button triggers Livewire method --}}
-                                                        <flux:button icon="trash" variant="subtle" size="sm"
-                                                            wire:click="deleteServiceRecord({{ $item->id }})"
-                                                            onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
+                                                        @can ('teacher previous record delete')
+                                                            {{-- Delete button triggers Livewire method --}}
+                                                            <flux:button icon="trash" variant="subtle" size="sm"
+                                                                wire:click="deleteServiceRecord({{ $item->id }})"
+                                                                onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty
@@ -469,97 +479,99 @@
         </div>
 
         {{-- Modal Section --}}
-        {{-- Add Service Record --}}
-        <flux:modal name="add-service-record" class="md:w-100" wire:model="showModal" dismissible="false">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Add Previous Record</flux:heading>
-                    <flux:text class="mt-2">Enter the details of the previous service record.
-                    </flux:text>
-                </div>
+        @can('teacher previous record add')
+            {{-- Add Service Record --}}
+            <flux:modal name="add-service-record" class="md:w-100" wire:model="showModal" dismissible="false">
+                <div class="space-y-6">
+                    <div>
+                        <flux:heading size="lg">Add Previous Record</flux:heading>
+                        <flux:text class="mt-2">Enter the details of the previous service record.
+                        </flux:text>
+                    </div>
 
-                <form wire:submit.prevent="saveServiceRecord" class="space-y-4">
+                    <form wire:submit.prevent="saveServiceRecord" class="space-y-4">
 
-                    <flux:select label="What is update type" wire:model.live="recordType" class="w-full">
-                        <flux:select.option value="">Select type</flux:select.option>
-                        <flux:select.option value="0">Position</flux:select.option>
-                        <flux:select.option value="1">Grade update</flux:select.option>
-                        <flux:select.option value="2">Transfer</flux:select.option>
-                    </flux:select>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                        <flux:select label="Service" wire:model.live="service" class="w-full">
-                            <flux:select.option value="">Select Service</flux:select.option>
-                            @foreach ($userServicesOptions as $service)
-                                <flux:select.option value="{{ $service->service_id }}">
-                                    {{ $service->service->service_name }}
-                                </flux:select.option>
-                            @endforeach
+                        <flux:select label="What is update type" wire:model.live="recordType" class="w-full">
+                            <flux:select.option value="">Select type</flux:select.option>
+                            <flux:select.option value="0">Position</flux:select.option>
+                            <flux:select.option value="1">Grade update</flux:select.option>
+                            <flux:select.option value="2">Transfer</flux:select.option>
                         </flux:select>
 
-                        <flux:select label="Grade" wire:model.live="rank" class="w-full">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                            <flux:select label="Service" wire:model.live="service" class="w-full">
+                                <flux:select.option value="">Select Service</flux:select.option>
+                                @foreach ($userServicesOptions as $service)
+                                    <flux:select.option value="{{ $service->service_id }}">
+                                        {{ $service->service->service_name }}
+                                    </flux:select.option>
+                                @endforeach
+                            </flux:select>
+
+                            <flux:select label="Grade" wire:model.live="rank" class="w-full">
+                                <flux:select.option value="">Select Rank</flux:select.option>
+                                @foreach ($ranksOptions as $rank)
+                                    <flux:select.option value="{{ $rank->rank_id }}">
+                                        {{ $rank->rank_name }}
+                                    </flux:select.option>
+                                @endforeach
+                            </flux:select>
+                        </div>
+
+                        <flux:select label="Position" wire:model.live="position" class="w-full">
                             <flux:select.option value="">Select Rank</flux:select.option>
-                            @foreach ($ranksOptions as $rank)
-                                <flux:select.option value="{{ $rank->rank_id }}">
-                                    {{ $rank->rank_name }}
+                            @foreach ($positionOption as $position)
+                                <flux:select.option value="{{ $position->position_id }}">
+                                    {{ $position->position_name }}
                                 </flux:select.option>
                             @endforeach
                         </flux:select>
-                    </div>
 
-                    <flux:select label="Position" wire:model.live="position" class="w-full">
-                        <flux:select.option value="">Select Rank</flux:select.option>
-                        @foreach ($positionOption as $position)
-                            <flux:select.option value="{{ $position->position_id }}">
-                                {{ $position->position_name }}
-                            </flux:select.option>
-                        @endforeach
-                    </flux:select>
-
-                    <flux:select label="Working Place Level" wire:model.live="officeLevel">
-                        <option value="">Select</option>
-                        @foreach ($officeLevelOption as $level)
-                            <option value="{{ $level->office_level_id }}">{{ $level->office_level_name }}</option>
-                        @endforeach
-                    </flux:select>
-
-                    @if ($officeLevel == 'OLID006')
-                        <flux:select label="Zonal Education Office" wire:model.live="zonalEducationOffice">
+                        <flux:select label="Working Place Level" wire:model.live="officeLevel">
                             <option value="">Select</option>
-                            @foreach ($zonalEducationOfficeOption as $zone)
-                                <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}
-                                </option>
+                            @foreach ($officeLevelOption as $level)
+                                <option value="{{ $level->office_level_id }}">{{ $level->office_level_name }}</option>
                             @endforeach
                         </flux:select>
 
-                        <flux:select label="Institution Category" wire:model.live="institutionCategory">
+                        @if ($officeLevel == 'OLID006')
+                            <flux:select label="Zonal Education Office" wire:model.live="zonalEducationOffice">
+                                <option value="">Select</option>
+                                @foreach ($zonalEducationOfficeOption as $zone)
+                                    <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}
+                                    </option>
+                                @endforeach
+                            </flux:select>
+
+                            <flux:select label="Institution Category" wire:model.live="institutionCategory">
+                                <option value="">Select</option>
+                                @foreach ($institutionCategoryOption as $data)
+                                    <option value="{{ $data->institution_category_id }}">
+                                        {{ $data->institution_category_name }}</option>
+                                @endforeach
+                            </flux:select>
+                        @endif
+
+                        <flux:select label="Working Place" wire:model.live="workingPlace">
                             <option value="">Select</option>
-                            @foreach ($institutionCategoryOption as $data)
-                                <option value="{{ $data->institution_category_id }}">
-                                    {{ $data->institution_category_name }}</option>
+                            @foreach ($workingPlaceOption as $office)
+                                <option value="{{ $office->workplace_id }}">{{ $office->office_name }}</option>
                             @endforeach
                         </flux:select>
-                    @endif
 
-                    <flux:select label="Working Place" wire:model.live="workingPlace">
-                        <option value="">Select</option>
-                        @foreach ($workingPlaceOption as $office)
-                            <option value="{{ $office->workplace_id }}">{{ $office->office_name }}</option>
-                        @endforeach
-                    </flux:select>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                            <flux:input label="Appointed Date" type="date" wire:model.live="appointDate" />
+                            <flux:input label="Ended Date" type="date" wire:model.live="endedDate" />
+                        </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                        <flux:input label="Appointed Date" type="date" wire:model.live="appointDate" />
-                        <flux:input label="Ended Date" type="date" wire:model.live="endedDate" />
-                    </div>
-
-                    <div class="flex">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary">Save changes
-                        </flux:button>
-                    </div>
-                </form>
-            </div>
-        </flux:modal>
+                        <div class="flex">
+                            <flux:spacer />
+                            <flux:button type="submit" variant="primary">Save changes
+                            </flux:button>
+                        </div>
+                    </form>
+                </div>
+            </flux:modal>
+        @endcan
     </x-teachers.layout>
 </section>

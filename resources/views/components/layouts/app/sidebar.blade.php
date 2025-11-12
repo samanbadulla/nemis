@@ -88,22 +88,39 @@
                 x-bind:open="openGroup === 'employers'"
                 x-on:click.stop="toggleGroup('employers')"
             >
+
+            @can('view teachers list')
                 <flux:navlist.item icon="academic-cap" :href="route('teacher.list')" :current="request()->routeIs('teacher.list')" wire:navigate>
                     {{ __('Teachers') }}
                 </flux:navlist.item>
+            @endcan
+
+            @can('view principals list')
                 <flux:navlist.item icon="academic-cap" :href="route('principal.list')" :current="request()->routeIs('principal.list')" wire:navigate>
                     {{ __('Principals') }}
                 </flux:navlist.item>
+            @endcan
+
+            @can('view sleas list')
                 <flux:navlist.item icon="users" :href="route('sleas.list')" :current="request()->routeIs('sleas.list')"  wire:navigate>
                     {{ __('Edu. Administrators') }}
                 </flux:navlist.item>
+            @endcan
+
+            @can('view sltes list')
                 <flux:navlist.item icon="users" :href="route('sltes.list')" :current="request()->routeIs('sltes.list')" wire:navigate>
                     {{ __('Teacher Educators') }}
                 </flux:navlist.item>
+            @endcan
+
+            @can('view sltas list')
                 <flux:navlist.item icon="users" :href="route('sltas.list')" :current="request()->routeIs('sltas.list')"  wire:navigate>
                     {{ __('Teacher Advisers') }}
                 </flux:navlist.item>
+            @endcan
+
             </flux:navlist.group>
+
             <flux:navlist.item icon="clipboard-document" :href="route('subjects.apointed')" :current="request()->routeIs('subjects.apointed')" wire:navigate>{{ __('Apoinment subjects') }}</flux:navlist.item>
             <flux:navlist.item icon="clipboard-document-list" :href="route('subjects.teaching')" :current="request()->routeIs('subjects.teaching')" wire:navigate>{{ __('Teaching subjects') }}</flux:navlist.item>
 

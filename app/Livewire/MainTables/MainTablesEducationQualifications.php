@@ -5,6 +5,8 @@ namespace App\Livewire\MainTables;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use App\Models\EducationQualification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MainTablesEducationQualifications extends Component
 {

@@ -38,7 +38,7 @@
             @endcan
 
             {{-- Create Teacher Button (Permission Based) --}}
-            @can('create teachers')
+            @can('teacher bulk upload')
                 <a href="{{ route('teacher.bulk.upload') }}">
                     <flux:button icon="plus" color="primary"
                         class="px-4 py-2 font-medium shadow-sm transition-all hover:shadow-md">
@@ -184,15 +184,24 @@
                             {{ $employee->email }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-end flex gap-1">
+
+                        @can('view teachers profile genaral')
                             <a href="{{ route('teacher.profile.index', $employee->id) }}">
                                 <flux:button size="sm" icon="eye">View</flux:button>
                             </a>
+                        @endcan
+
+                        @can('view teachers profile id')
                             <a href="{{ route('teacher.id.pdf', $employee->id) }}">
                                 <flux:button size="sm" icon="identification">ID</flux:button>
                             </a>
+                        @endcan
+
+                        @can('view teachers profile pdf')
                             <a href="{{ route('teacher.profile.pdf', $employee->id) }}">
                                 <flux:button size="sm" icon="document">pdf</flux:button>
                             </a>
+                        @endcan
                         </td>
                     </tr>
                 @empty

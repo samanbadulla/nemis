@@ -57,9 +57,11 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Personal & Cultural
                                     </h2>
-                                    <flux:modal.trigger name="edit-profile-personal-info">
-                                        <flux:button>Edit</flux:button>
-                                    </flux:modal.trigger>
+                                    @can('teacher personal and cultural edit')
+                                        <flux:modal.trigger name="edit-profile-personal-info">
+                                            <flux:button>Edit</flux:button>
+                                        </flux:modal.trigger>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -142,9 +144,11 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Health Information
                                     </h2>
-                                    <flux:modal.trigger name="edit-profile-health-info">
-                                        <flux:button>Edit</flux:button>
-                                    </flux:modal.trigger>
+                                    @can('teacher health information edit')
+                                        <flux:modal.trigger name="edit-profile-health-info">
+                                            <flux:button>Edit</flux:button>
+                                        </flux:modal.trigger>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -188,9 +192,11 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Contact & Address
                                     </h2>
-                                    <flux:modal.trigger name="edit-contact-info">
-                                        <flux:button>Edit</flux:button>
-                                    </flux:modal.trigger>
+                                    @can('teacher contact and address edit')
+                                        <flux:modal.trigger name="edit-contact-info">
+                                            <flux:button>Edit</flux:button>
+                                        </flux:modal.trigger>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -280,269 +286,278 @@
             </div>
         </div>
         {{-- Edit Profile Modal --}}
-        {{-- Edit general information --}}
-        <flux:modal wire:model="showModalPersonalInfo" name="edit-profile-personal-info" class="md:w-96">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Personal & Cultural</flux:heading>
-                    <flux:text class="mt-2">Make changes to your personal details.
-                    </flux:text>
-                </div>
-                <form wire:submit.prevent="editPersonalInfo">
-                    @csrf
-                    <div class="mt-6 max-w-xl space-y-4">
 
-                        <flux:field>
-                            <flux:input label="National Identity Card (NIC)" wire:model.live="nic"
-                                placeholder="Enter NIC" />
-                        </flux:field>
-
-                        <flux:field>
-                            <flux:select label="Title" wire:model.live="title">
-                                <option value="">Select</option>
-                                @foreach ($titleOptions as $data)
-                                    <option value="{{ $data->title_id }}">{{ $data->title_name }}</option>
-                                @endforeach
-                            </flux:select>
-                        </flux:field>
-
-                        <flux:field>
-                            <flux:input label="Full Name" wire:model.live="fullName" placeholder="Enter full name" />
-                        </flux:field>
-
-                        <div class="flex gap-4">
-                            <!-- Gender -->
-                            <div class="w-1/2">
-                                <flux:field>
-                                    <flux:select label="Gender" wire:model.live="gender">
-                                        <option value="">Select</option>
-                                        @foreach ($genderOptions as $data)
-                                            <option value="{{ $data->gender_id }}">{{ $data->gender_name }}</option>
-                                        @endforeach
-                                    </flux:select>
-                                </flux:field>
-                            </div>
-
-                            <!-- Birthday -->
-                            <div class="w-1/2">
-                                <flux:field>
-                                    <flux:input type="date" label="Birthday" wire:model.live="birthday" />
-                                </flux:field>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <!-- Ethnicity -->
-                            <div class="md:w-1/2 w-full">
-                                <flux:field>
-                                    <flux:select label="Ethnicity" wire:model.live="ethnicity">
-                                        <option value="">Select</option>
-                                        @foreach ($ethnicityOptions as $data)
-                                            <option value="{{ $data->ethnicity_id }}">{{ $data->ethnicity_name }}
-                                            </option>
-                                        @endforeach
-                                    </flux:select>
-                                </flux:field>
-                            </div>
-
-                            <!-- Religion Status -->
-                            <div class="md:w-1/2 w-full">
-                                <flux:field>
-                                    <flux:select label="Religion" wire:model.live="religion">
-                                        <option value="">Select Religion</option>
-                                        @foreach ($religionOptions as $data)
-                                            <option value="{{ $data->religion_id }}">{{ $data->religion_name }}
-                                            </option>
-                                        @endforeach
-                                    </flux:select>
-                                </flux:field>
-                            </div>
-                        </div>
-
-                        <flux:field>
-                            <flux:select label="Civil Status" wire:model.live="civilStatus">
-                                <option value="">Select</option>
-                                @foreach ($civilStatusOptions as $data)
-                                    <option value="{{ $data->civil_status_id }}">{{ $data->civil_status_name }}
-                                    </option>
-                                @endforeach
-                            </flux:select>
-                        </flux:field>
-
+        @can('teacher personal and cultural edit')
+            {{-- Edit general information --}}
+            <flux:modal wire:model="showModalPersonalInfo" name="edit-profile-personal-info" class="md:w-96">
+                <div class="space-y-6">
+                    <div>
+                        <flux:heading size="lg">Personal & Cultural</flux:heading>
+                        <flux:text class="mt-2">Make changes to your personal details.
+                        </flux:text>
                     </div>
+                    <form wire:submit.prevent="editPersonalInfo">
+                        @csrf
+                        <div class="mt-6 max-w-xl space-y-4">
 
-                    <div class="flex mt-4">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary">Save changes</flux:button>
-                    </div>
-                </form>
-            </div>
-        </flux:modal>
-        {{-- Edit health information --}}
-        <flux:modal wire:model="showModalHealthInfo" name="edit-profile-health-info" class="md:w-96">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Health Information</flux:heading>
-                    <flux:text class="mt-2">Make changes to your health details.
-                    </flux:text>
-                </div>
-                <form wire:submit.prevent="editHealthInfo">
-                    @csrf
-                    <div class="mt-6 max-w-xl space-y-4">
-
-                        <flux:field>
-                            <flux:select label="Blood Group" wire:model.live="bloodGroup">
-                                <option value="">Select</option>
-                                @foreach ($bloodGroupOptions as $data)
-                                    <option value="{{ $data->blood_group_id }}">{{ $data->blood_group }}</option>
-                                @endforeach
-                            </flux:select>
-                        </flux:field>
-
-                        <!-- Health Condition -->
-                        <div class="w-full">
                             <flux:field>
-                                <flux:select label="Healthy?" wire:model.live="healthCondition">
-                                    <option value="">Select Health Condition</option>
-                                    @foreach ($healthConditionOptions as $value => $label)
-                                        <option value="{{ $value }}">{{ $label }}</option>
+                                <flux:input label="National Identity Card (NIC)" wire:model.live="nic"
+                                    placeholder="Enter NIC" />
+                            </flux:field>
+
+                            <flux:field>
+                                <flux:select label="Title" wire:model.live="title">
+                                    <option value="">Select</option>
+                                    @foreach ($titleOptions as $data)
+                                        <option value="{{ $data->title_id }}">{{ $data->title_name }}</option>
                                     @endforeach
                                 </flux:select>
                             </flux:field>
+
+                            <flux:field>
+                                <flux:input label="Full Name" wire:model.live="fullName" placeholder="Enter full name" />
+                            </flux:field>
+
+                            <div class="flex gap-4">
+                                <!-- Gender -->
+                                <div class="w-1/2">
+                                    <flux:field>
+                                        <flux:select label="Gender" wire:model.live="gender">
+                                            <option value="">Select</option>
+                                            @foreach ($genderOptions as $data)
+                                                <option value="{{ $data->gender_id }}">{{ $data->gender_name }}</option>
+                                            @endforeach
+                                        </flux:select>
+                                    </flux:field>
+                                </div>
+
+                                <!-- Birthday -->
+                                <div class="w-1/2">
+                                    <flux:field>
+                                        <flux:input type="date" label="Birthday" wire:model.live="birthday" />
+                                    </flux:field>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <!-- Ethnicity -->
+                                <div class="md:w-1/2 w-full">
+                                    <flux:field>
+                                        <flux:select label="Ethnicity" wire:model.live="ethnicity">
+                                            <option value="">Select</option>
+                                            @foreach ($ethnicityOptions as $data)
+                                                <option value="{{ $data->ethnicity_id }}">{{ $data->ethnicity_name }}
+                                                </option>
+                                            @endforeach
+                                        </flux:select>
+                                    </flux:field>
+                                </div>
+
+                                <!-- Religion Status -->
+                                <div class="md:w-1/2 w-full">
+                                    <flux:field>
+                                        <flux:select label="Religion" wire:model.live="religion">
+                                            <option value="">Select Religion</option>
+                                            @foreach ($religionOptions as $data)
+                                                <option value="{{ $data->religion_id }}">{{ $data->religion_name }}
+                                                </option>
+                                            @endforeach
+                                        </flux:select>
+                                    </flux:field>
+                                </div>
+                            </div>
+
+                            <flux:field>
+                                <flux:select label="Civil Status" wire:model.live="civilStatus">
+                                    <option value="">Select</option>
+                                    @foreach ($civilStatusOptions as $data)
+                                        <option value="{{ $data->civil_status_id }}">{{ $data->civil_status_name }}
+                                        </option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:field>
+
                         </div>
 
+                        <div class="flex mt-4">
+                            <flux:spacer />
+                            <flux:button type="submit" variant="primary">Save changes</flux:button>
+                        </div>
+                    </form>
+                </div>
+            </flux:modal>
+        @endcan
 
-                        <!-- Health Problem -->
-                        @if ($healthCondition == false)
+        @can('teacher health information edit')
+            {{-- Edit health information --}}
+            <flux:modal wire:model="showModalHealthInfo" name="edit-profile-health-info" class="md:w-96">
+                <div class="space-y-6">
+                    <div>
+                        <flux:heading size="lg">Health Information</flux:heading>
+                        <flux:text class="mt-2">Make changes to your health details.
+                        </flux:text>
+                    </div>
+                    <form wire:submit.prevent="editHealthInfo">
+                        @csrf
+                        <div class="mt-6 max-w-xl space-y-4">
+
+                            <flux:field>
+                                <flux:select label="Blood Group" wire:model.live="bloodGroup">
+                                    <option value="">Select</option>
+                                    @foreach ($bloodGroupOptions as $data)
+                                        <option value="{{ $data->blood_group_id }}">{{ $data->blood_group }}</option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:field>
+
+                            <!-- Health Condition -->
                             <div class="w-full">
                                 <flux:field>
-                                    <flux:textarea label="Please provide details of the health problem."
-                                        wire:model.live="healthProblem"
-                                        placeholder="Enter health problem details here..." rows="4" />
+                                    <flux:select label="Healthy?" wire:model.live="healthCondition">
+                                        <option value="">Select Health Condition</option>
+                                        @foreach ($healthConditionOptions as $value => $label)
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endforeach
+                                    </flux:select>
                                 </flux:field>
                             </div>
-                        @endif
 
-                    </div>
 
-                    <div class="flex mt-4">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary">Save changes</flux:button>
-                    </div>
-                </form>
-            </div>
-        </flux:modal>
-        {{-- Edit contact information --}}
-        <flux:modal wire:model="showModalContactInfo" name="edit-contact-info" class="md:w-150">
+                            <!-- Health Problem -->
+                            @if ($healthCondition == false)
+                                <div class="w-full">
+                                    <flux:field>
+                                        <flux:textarea label="Please provide details of the health problem."
+                                            wire:model.live="healthProblem"
+                                            placeholder="Enter health problem details here..." rows="4" />
+                                    </flux:field>
+                                </div>
+                            @endif
 
-            <div class="space-y-4">
-                <div>
-                    <flux:heading size="lg">Update profile</flux:heading>
-                    <flux:text class="mt-2">Make changes to your personal details.
-                    </flux:text>
+                        </div>
+
+                        <div class="flex mt-4">
+                            <flux:spacer />
+                            <flux:button type="submit" variant="primary">Save changes</flux:button>
+                        </div>
+                    </form>
                 </div>
+            </flux:modal>
+        @endcan
 
-                <form wire:submit.prevent="editContactInfo" class="space-y-4">
-                    <flux:field>
-                        <flux:input label="Contact" wire:model.live="contact"
-                            placeholder="Enter Contact (10 digits)" />
-                    </flux:field>
+        @can('teacher contact and address edit')
+            {{-- Edit contact information --}}
+            <flux:modal wire:model="showModalContactInfo" name="edit-contact-info" class="md:w-150">
 
-                    <flux:field>
-                        <flux:input label="Email" type="email" wire:model.live="email"
-                            placeholder="Enter email" />
-                    </flux:field>
-
-                    <flux:field>
-                        <flux:input label="Address Line 1" wire:model.live="addressLine1"
-                            placeholder="Enter address line 1" />
-                    </flux:field>
-
-                    <flux:field>
-                        <flux:input label="Address Line 2" wire:model.live="addressLine2"
-                            placeholder="Enter address line 2" />
-                    </flux:field>
-
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <!-- Address Line 3 -->
-                        <div class="md:w-3/4 w-full">
-                            <flux:field>
-                                <flux:input label="Address Line 3" wire:model.live="addressLine3"
-                                    placeholder="Enter address line 3" />
-                            </flux:field>
-                        </div>
-
-                        <!-- Postal Code -->
-                        <div class="md:w-1/4 w-full">
-                            <flux:field>
-                                <flux:input label="Postal Code" wire:model.live="postalCode"
-                                    placeholder="Enter postal code" />
-                            </flux:field>
-                        </div>
+                <div class="space-y-4">
+                    <div>
+                        <flux:heading size="lg">Update profile</flux:heading>
+                        <flux:text class="mt-2">Make changes to your personal details.
+                        </flux:text>
                     </div>
 
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <!-- latitude -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:input label="Latitude" wire:model.live="latitude"
-                                    placeholder="Enter latitude (optional)" />
-                            </flux:field>
-                        </div>
+                    <form wire:submit.prevent="editContactInfo" class="space-y-4">
+                        <flux:field>
+                            <flux:input label="Contact" wire:model.live="contact"
+                                placeholder="Enter Contact (10 digits)" />
+                        </flux:field>
 
-                        <!-- longitude -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:input label="Longitude" wire:model.live="longitude"
-                                    placeholder="Enter longitude (optional)" />
-                            </flux:field>
-                        </div>
-                    </div>
+                        <flux:field>
+                            <flux:input label="Email" type="email" wire:model.live="email"
+                                placeholder="Enter email" />
+                        </flux:field>
 
-                    <div
-                        class="p-4 space-y-6 bg-gray-100 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700">
-                        <p class="text-gray-700 dark:text-gray-200 font-bold">
-                            Temporary Address (If different from permanent address)
-                        </p>
-
-                        <flux:field class="text-gray-700 dark:text-gray-300">
-                            <flux:input label="Address Line 1" wire:model.live="tAddressLine1"
-                                class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                        <flux:field>
+                            <flux:input label="Address Line 1" wire:model.live="addressLine1"
                                 placeholder="Enter address line 1" />
                         </flux:field>
 
-                        <flux:field class="text-gray-700 dark:text-gray-300">
-                            <flux:input label="Address Line 2" wire:model.live="tAddressLine2"
-                                class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                        <flux:field>
+                            <flux:input label="Address Line 2" wire:model.live="addressLine2"
                                 placeholder="Enter address line 2" />
                         </flux:field>
 
                         <div class="flex flex-col md:flex-row gap-4">
+                            <!-- Address Line 3 -->
                             <div class="md:w-3/4 w-full">
-                                <flux:field class="text-gray-700 dark:text-gray-300">
-                                    <flux:input label="Address Line 3" wire:model.live="tAddressLine3"
-                                        class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                <flux:field>
+                                    <flux:input label="Address Line 3" wire:model.live="addressLine3"
                                         placeholder="Enter address line 3" />
                                 </flux:field>
                             </div>
 
+                            <!-- Postal Code -->
                             <div class="md:w-1/4 w-full">
-                                <flux:field class="text-gray-700 dark:text-gray-300">
-                                    <flux:input label="Postal Code" wire:model.live="tPostalCode"
-                                        class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                <flux:field>
+                                    <flux:input label="Postal Code" wire:model.live="postalCode"
                                         placeholder="Enter postal code" />
                                 </flux:field>
                             </div>
                         </div>
 
-                    </div>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <!-- latitude -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:input label="Latitude" wire:model.live="latitude"
+                                        placeholder="Enter latitude (optional)" />
+                                </flux:field>
+                            </div>
 
-                    <div class="flex mt-4">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary">Save changes</flux:button>
-                    </div>
-                </form>
-            </div>
-        </flux:modal>
+                            <!-- longitude -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:input label="Longitude" wire:model.live="longitude"
+                                        placeholder="Enter longitude (optional)" />
+                                </flux:field>
+                            </div>
+                        </div>
+
+                        <div
+                            class="p-4 space-y-6 bg-gray-100 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700">
+                            <p class="text-gray-700 dark:text-gray-200 font-bold">
+                                Temporary Address (If different from permanent address)
+                            </p>
+
+                            <flux:field class="text-gray-700 dark:text-gray-300">
+                                <flux:input label="Address Line 1" wire:model.live="tAddressLine1"
+                                    class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                    placeholder="Enter address line 1" />
+                            </flux:field>
+
+                            <flux:field class="text-gray-700 dark:text-gray-300">
+                                <flux:input label="Address Line 2" wire:model.live="tAddressLine2"
+                                    class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                    placeholder="Enter address line 2" />
+                            </flux:field>
+
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <div class="md:w-3/4 w-full">
+                                    <flux:field class="text-gray-700 dark:text-gray-300">
+                                        <flux:input label="Address Line 3" wire:model.live="tAddressLine3"
+                                            class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                            placeholder="Enter address line 3" />
+                                    </flux:field>
+                                </div>
+
+                                <div class="md:w-1/4 w-full">
+                                    <flux:field class="text-gray-700 dark:text-gray-300">
+                                        <flux:input label="Postal Code" wire:model.live="tPostalCode"
+                                            class="bg-white dark:bg-gray-800 text-black dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-400"
+                                            placeholder="Enter postal code" />
+                                    </flux:field>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="flex mt-4">
+                            <flux:spacer />
+                            <flux:button type="submit" variant="primary">Save changes</flux:button>
+                        </div>
+                    </form>
+                </div>
+            </flux:modal>
+        @endcan
     </x-teachers.layout>
 </section>

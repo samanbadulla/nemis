@@ -16,38 +16,34 @@ class RolePermissionSeeder extends Seeder
 
         // Create permissions
         $permissions = [
-            // School Level Permissions
-            'manage school', 'view school', 'create school', 'edit school', 'delete school',
-            
-            // Zonal Level Permissions
-            'manage zonal', 'view zonal', 'create zonal', 'edit zonal', 'delete zonal',
-            'view zonal schools', 'manage zonal schools', 'generate zonal reports',
-            
-            // Provincial Level Permissions
-            'manage provincial', 'view provincial', 'create provincial', 'edit provincial', 'delete provincial',
-            'view provincial zones', 'manage provincial zones', 'generate provincial reports',
-            
-            // Ministry Level Permissions
-            'manage ministry', 'view ministry', 'create ministry', 'edit ministry', 'delete ministry',
-            'view all schools', 'manage all schools', 'generate national reports', 'manage education policies',
-            
-            // Common Permissions
-            'view dashboard', 'manage users', 'manage roles', 'view reports', 'export data',
-            
-            // Student Management
-            'view students', 'create students', 'edit students', 'delete students', 'manage student transfers',
-            
+
+            //Sync permision
+            'view dashboard', 'view students', 'view attendance', 'manage attendance', 'view exam results', 'manage term tests', 'manage resources', 'allocate resources',
+            'view resource allocation',
+
             // Teacher Management
-            'view teachers', 'create teachers', 'edit teachers', 'delete teachers', 'manage teacher transfers',
-            
-            // Exam Management
-            'manage exams', 'view exam results', 'publish exam results', 'manage term tests',
-            
-            // Attendance Management
-            'view attendance', 'manage attendance', 'generate attendance reports',
-            
-            // Resource Management
-            'manage resources', 'allocate resources', 'view resource allocation'
+            'view teachers', 'create teachers', 'edit teachers', 'delete teachers',
+            'view teachers list', 'view teachers profile genaral', 'view teachers profile qualification', 'view teachers profile employment', 'view teachers profile family',
+            'view teachers profile id', 'view teachers profile pdf', 'teacher bulk upload',
+            'teacher personal and cultural edit', 'teacher health information edit', 'teacher contact and address edit',
+            'teacher qualification add', 'teacher qualification delete',
+            'teacher current employerment edit', 'teacher first employerment edit', 'teacher previous record add', 'teacher previous record delete',
+
+            // Principal Management
+            'view principals list', 'view principal profile genaral', 'view principal profile qualification', 'view principal profile employment', 'view principal profile family',
+            'create principals', 'edit principals',
+
+            // SLEAS Management
+            'view sleas list',
+
+            // SLTES Managemnt
+            'view sltes list',
+
+            // SLTAS Management
+            'view sltas list',
+
+
+
         ];
 
         foreach ($permissions as $permission) {

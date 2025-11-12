@@ -204,7 +204,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sleas/{id}/profile/employment', SleasEmployment::class)->name('sleas.profile.employment');
     Route::get('sleas/{id}/profile/family', SleasFamily::class)->name('sleas.profile.family');
 
-    Route::get('sltes/list', SltesList::class)->name('sltes.list');
+    Route::get('sltes/list', SltesList::class)->name('sltes.list')->middleware(['permission:view sltes']);
     Route::get('sltes/create', SltesCreate::class)->name('sltes.create');
     Route::get('sltes/{id}/profile/index', SltesIndex::class)->name('sltes.profile.index');
     Route::get('sltes/{id}/profile/qualification', SltesQualification::class)->name('sltes.profile.qualification');
@@ -220,6 +220,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('subjects/apointed-subject', ApointedSubjectIndex::class)->name('subjects.apointed');
     Route::get('subjects/teaching-subject', TeachingSubjectIndex::class)->name('subjects.teaching');
+
+    Route::get('users/index', UserIndex::class)->name('users.index');
+    Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
+    Route::get('users/create', UserCreate::class)->name('users.create');
+
 
 
 

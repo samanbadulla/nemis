@@ -57,9 +57,11 @@
                                     <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         Educational qualification
                                     </h2>
-                                    <flux:modal.trigger name="add-qualification">
-                                        <flux:button icon="plus" size="sm" variant="primary">Add</flux:button>
-                                    </flux:modal.trigger>
+                                    @can('teacher qualification add')
+                                        <flux:modal.trigger name="add-qualification">
+                                            <flux:button icon="plus" size="sm" variant="primary">Add</flux:button>
+                                        </flux:modal.trigger>
+                                    @endcan
                                 </div>
                                 <flux:separator variant="subtle" />
                             </div>
@@ -166,12 +168,14 @@
                                                         {{ $data->grade }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                        <div class="flex gap-2">
-                                                            <flux:button icon="trash" variant="subtle" size="sm"
-                                                                wire:click="delete({{ $data->id }})"
-                                                                onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
+                                                        @can('teacher qualification delete')
+                                                            <div class="flex gap-2">
+                                                                <flux:button icon="trash" variant="subtle" size="sm"
+                                                                    wire:click="delete({{ $data->id }})"
+                                                                    onclick="confirm('Are you sure you want to delete this record?') || event.stopImmediatePropagation()" />
 
-                                                        </div>
+                                                            </div>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @empty

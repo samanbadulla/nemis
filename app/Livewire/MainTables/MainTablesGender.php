@@ -4,6 +4,9 @@ namespace App\Livewire\MainTables;
 
 use Livewire\Component;
 use App\Models\GenderList;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MainTablesGender extends Component
 {
@@ -42,18 +45,18 @@ class MainTablesGender extends Component
 
     protected function rules()
     {
-        if($this->editGenderId){
-            return [
-                'updateGenderId' => [
-                    'required',
-                    'string',
-                    'regex:/^G\d{2}$/', // Matches G followed by 2 digits (G99)
-                    'max:3',
-                    Rule::unique('gender_lists', 'gender_id')->ignore($this->editGenderId),
-                ],
-                'updateGender' => 'required|string|max:255',
-            ];
-        }
+        // if($this->editGenderId){
+        //     return [
+        //         'updateGenderId' => [
+        //             'required',
+        //             'string',
+        //             'regex:/^G\d{2}$/', // Matches G followed by 2 digits (G99)
+        //             'max:3',
+        //             Rule::unique('gender_lists', 'gender_id')->ignore($this->editGenderId),
+        //         ],
+        //         'updateGender' => 'required|string|max:255',
+        //     ];
+        // }
 
         return [
             'genderId' => [
@@ -79,7 +82,7 @@ class MainTablesGender extends Component
         $validated = $this->validate();
 
         try{
-            Ethnicity::create([
+            GenderList::create([
                 'gender_id' => $this->genderId,
                 'gender_name' => $this->gender,
             ]);
@@ -87,7 +90,7 @@ class MainTablesGender extends Component
             session()->flash('message', '✅ New Gender added successfully!');
 
             // ✅ Close modal
-            $this->showModelNewEthnicity = false;
+            $this->showModelNewGender = false;
 
             // ✅ Reset form fields (but keep modal control variable)
             $this->reset(['genderId', 'gender']);

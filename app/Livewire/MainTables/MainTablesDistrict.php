@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\DistrictsList;
 use App\Models\ProvincesList;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MainTablesDistrict extends Component
 {

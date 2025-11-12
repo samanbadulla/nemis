@@ -5,6 +5,8 @@ namespace App\Livewire\MainTables;
 use Livewire\Component;
 use App\Models\Ethnicity;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MainTablesEthnicities extends Component
 {
