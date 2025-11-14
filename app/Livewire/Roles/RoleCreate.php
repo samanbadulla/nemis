@@ -15,6 +15,8 @@ class RoleCreate extends Component
 
     public function mount(){
         $this->allPermissions = Permission::all();
+        //$this->allPermissions = Permission::orderBy('name', 'asc')->get();
+
     }
 
     public function render()

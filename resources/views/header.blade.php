@@ -25,7 +25,7 @@
                         Dashboard
                     </a>
                 @else
-                    <a href="{{ route('login') }}"
+                    <a href="{{ route('oidc.login') }}"
                         class="px-5 py-1.5 rounded-md border border-gray-700 text-indigo-200 hover:text-blue-400 hover:border-blue-500 transition-all duration-200">
                         Log in
                     </a>

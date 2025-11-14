@@ -17,7 +17,7 @@ class PeopleSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 20) as $index) {
+        foreach (range(1, 100) as $index) {
             // Generate a unique plain NIC
             $nicPlain = $faker->unique()->randomElement([
                 strtoupper($faker->bothify('#########V')), // Old NIC format

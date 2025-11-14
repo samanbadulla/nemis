@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DistrictSeeder::class);
         $this->call(DivisionalSecretariatOffices::class);
         $this->call(GnDivision::class);
-        //$this->call(CitysSeeder::class);
+        $this->call(CitysSeeder::class);
         $this->call(PoliceStationSeeder::class);
         $this->call(MohAreaSeeder::class);
 

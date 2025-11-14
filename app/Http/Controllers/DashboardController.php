@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\People;
 use App\Models\Teacher;
 use App\Models\Institution;
 use Illuminate\Http\Request;
@@ -14,6 +15,8 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
+        $pepole = People::where('people_id', $user->people_id)->first();
+       //dd($pepole);
         $institutionCount = Institution::active()->count();
         $teachersCount = Teacher::count();
         //$provinceCounts = ProvincesList::withCount(['districts.institutions'])->get();
@@ -29,6 +32,7 @@ class DashboardController extends Controller
 
         return view('dashboard',[
             'user' => $user,
+            'pepole' => $pepole,
             'institutionCount' => $institutionCount,
             'teachersCount' => $teachersCount,
             'provinceCounts' => $provinceCounts,

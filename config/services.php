@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'oidc' => [
+        'client_id' => env('OIDC_CLIENT_ID'),
+        'client_secret' => env('OIDC_CLIENT_SECRET'),
+        'redirect' => env('OIDC_REDIRECT_URI'),
+
+        // These are the key differences from a standard Socialite provider.
+        // We manually specify the OIDC endpoints.
+        'authorize_url' => env('OIDC_AUTHORIZE_URL'),
+        'token_url' => env('OIDC_TOKEN_URL'),
+        'userinfo_url' => env('OIDC_USERINFO_URL'),
+        'end_session_url' => env('OIDC_ENDSESSION_URL'),
+        'post_logout_redirect_uri' => env('OIDC_POST_LOGOUT_REDIRECT_URI'),
+    ],
+
 ];

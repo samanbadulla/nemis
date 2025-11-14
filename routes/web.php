@@ -83,6 +83,7 @@ use App\Livewire\Offices\Moe\Profile\MoeOverview;
 use App\Livewire\Offices\Peo\Profile\PeoOverview;
 use App\Livewire\Offices\Pmoe\PmoeOfficesProfile;
 use App\Livewire\Offices\Zeo\Profile\ZeoOverview;
+use App\Http\Controllers\Auth\OIDCLoginController;
 use App\Livewire\MainTables\MainTablesAuthorities;
 use App\Livewire\MainTables\MainTablesBloodGroups;
 use App\Livewire\MainTables\MainTablesCivilStatus;
@@ -107,6 +108,16 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+/*
+    |--------------------------------------------------------------------------
+    | OIDC Login / Logout
+    |--------------------------------------------------------------------------
+    */
+
+Route::get('/oidc-login', [OIDCLoginController::class, 'redirectToProvider'])->name('oidc.login');
+Route::get('/auth/callback', [OIDCLoginController::class, 'handleProviderCallback']);
+Route::post('/oidc-login', [OIDCLoginController::class, 'logout'])->name('oidc.logout');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
@@ -118,9 +129,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
-    Route::get('users', UserIndex::class)->name('users.index');
-    Route::get('users/create', UserCreate::class)->name('users.create');
-    Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
+    //Route::get('users', UserIndex::class)->name('users.index');
+    //Route::get('users/create', UserCreate::class)->name('users.create');
+    //Route::get('users/{id}/edit', UserEdit::class)->name('users.edit');
 
     Route::get('users/index', UserIndex::class)->name('users.index')->middleware(['permission:view users list']);
     Route::get('users/{id}/edit', UserEdit::class)->name('users.edit')->middleware(['permission:user edit']);
@@ -183,7 +194,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('offices/moe/create', MoeOfficesCreate::class)->name('offices.moe.create')->middleware(['permission:create moe office']);
     Route::get('offices/moe/{id}/profile', MoeOfficesProfile::class)->name('offices.moe.profile');
 
-        // In web.php or api.php
+    // In web.php or api.php
     Route::middleware(['role:super admin'])->group(function () {
         // Routes accessible only by users with the 'admin' role
         Route::get('roles', RoleIndex::class)->name('roles.index');
@@ -202,7 +213,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('main-table/genders', MainTablesGender::class)->name('main-tables.genders');
     });
 
-    Route::get('sleas/list', SleasList::class)->name('sleas.list')->middleware(['view sleas list']);
+    Route::get('sleas/list', SleasList::class)->name('sleas.list')->middleware(['permission:view sleas list']);
     Route::get('sleas/create', SleasCreate::class)->name('sleas.create');
     Route::get('sleas/{id}/profile/index', SleasIndex::class)->name('sleas.profile.index');
     Route::get('sleas/{id}/profile/qualification', SleasQualification::class)->name('sleas.profile.qualification');
@@ -225,12 +236,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('subjects/apointed-subject', ApointedSubjectIndex::class)->name('subjects.apointed')->middleware(['permission:view apoinment subject list']);
     Route::get('subjects/teaching-subject', TeachingSubjectIndex::class)->name('subjects.teaching')->middleware(['permission:view teaching subject list']);
-
-
-
-
 });
 
-require __DIR__.'/auth.php';
-require __DIR__.'/teacher.php';
-require __DIR__.'/principal.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/teacher.php';
+require __DIR__ . '/principal.php';

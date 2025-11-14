@@ -3,6 +3,7 @@
 namespace App\Livewire\Users;
 
 use App\Models\User;
+use App\Models\People;
 use Livewire\Component;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Validate;
@@ -22,7 +23,7 @@ class UserCreate extends Component
     public string $password_confirmation = '';
 
     public $allRole;
-    
+
 
     protected function rules()
     {
@@ -44,7 +45,8 @@ class UserCreate extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function mount(){
+    public function mount()
+    {
         $this->allRole = Role::all();
     }
 
@@ -57,12 +59,36 @@ class UserCreate extends Component
     {
         $validated = $this->validate();
 
+        // Try to find person by NIC hash
+        $nicHash = hash('sha256', $validated['nic']);
+        $person = People::where('nic_hash', $nicHash)->first();
+
+        // If no matching person found, stop execution
+        if (!$person) {
+            session()->flash('error', 'This NIC does not exist in the People database.');
+            return; // Stop the function
+        }
+
+        // Hash password
         $validated['password'] = Hash::make($validated['password']);
 
-        $user = User::create($validated);
+        // Create or update user
+        $user = User::updateOrCreate(
+            ['nic_hash' => $person->nic_hash],
+            [
+                'nic'       => $validated['nic'],
+                'nic_hash'  => $person->nic_hash,
+                'people_id' => $person->people_id,
+                'name'      => $person->name_with_initials,
+                'email'     => $validated['email'],
+                'contact'   => $validated['contact'],
+                'password'  => $validated['password'],
+            ]
+        );
 
         $user->syncRoles($this->roles);
 
-        return redirect()->route('users.index')->with('message', 'User created successfully.');
+        session()->flash('message', 'User created successfully.');
+        return redirect()->route('users.index');
     }
 }

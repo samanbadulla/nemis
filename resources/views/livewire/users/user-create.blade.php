@@ -6,32 +6,39 @@
         <flux:separator variant="subtle" />
 
         <div class="my-4 gap-2 justify-end flex">
-            
+
         </div>
 
-        <form method="POST" wire:submit="createUser" class="mt-6 max-w-xl space-y-6" >
+        @if (session()->has('error'))
+            <div class="text-red-600 text-sm mt-2">
+                {{ session('error') }}
+            </div>
+        @endif
+
+
+        <form method="POST" wire:submit="createUser" class="mt-6 max-w-xl space-y-6">
             <!-- Name -->
-            <flux:input wire:model.live="name" :label="__('Name')" type="text"  autofocus autocomplete="name"
+            <flux:input wire:model.live="name" :label="__('Name')" type="text" autofocus autocomplete="name"
                 :placeholder="__('Full name')" />
 
             <!-- Email Address -->
-            <flux:input wire:model.live="nic" :label="__('National identity card')" type="nic" 
-                autocomplete="nic" placeholder="Your NIC number" />
+            <flux:input wire:model.live="nic" :label="__('National identity card')" type="nic" autocomplete="nic"
+                placeholder="Your NIC number" />
 
             <!-- Email Address -->
-            <flux:input wire:model.live="contact" :label="__('Contacn Number')" type="contact" 
-                autocomplete="contact" placeholder="Your Mobile Number" />
+            <flux:input wire:model.live="contact" :label="__('Contacn Number')" type="contact" autocomplete="contact"
+                placeholder="Your Mobile Number" />
 
             <!-- Email Address -->
-            <flux:input wire:model.live="email" :label="__('Email address')" type="email"  autocomplete="email"
+            <flux:input wire:model.live="email" :label="__('Email address')" type="email" autocomplete="email"
                 placeholder="email@example.com" />
 
             <!-- Password -->
-            <flux:input wire:model.live="password" :label="__('Password')" type="password" 
-                autocomplete="new-password" :placeholder="__('Password')" viewable />
+            <flux:input wire:model.live="password" :label="__('Password')" type="password" autocomplete="new-password"
+                :placeholder="__('Password')" viewable />
 
             <!-- Confirm Password -->
-            <flux:input wire:model.live="password_confirmation" :label="__('Confirm password')" type="password" 
+            <flux:input wire:model.live="password_confirmation" :label="__('Confirm password')" type="password"
                 autocomplete="new-password" :placeholder="__('Confirm password')" viewable />
 
             <flux:checkbox.group wire:model.live="roles" label="Role">
