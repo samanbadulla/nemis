@@ -475,7 +475,7 @@
                 </div>
             @endif
 
-            @if ($step === 4)
+            @if ($step === 1)
                 <div class="mt-6 max-w-xl space-y-6">
                     <flux:heading size="lg" level="2" class="mt-8 mb-4">Current Appointment Details
                     </flux:heading>
