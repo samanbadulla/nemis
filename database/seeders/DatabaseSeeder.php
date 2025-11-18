@@ -45,16 +45,19 @@ class DatabaseSeeder extends Seeder
         $this->call(InstitutionGenderSeeder::class);
         $this->call(InstitutionEthnisitySeeder::class);
         $this->call(GradeSpanSeeder::class);
-        $this->call(AppointedSubjectsSeeder::class);
+        //$this->call(AppointedSubjectsSeeder::class);
         $this->call(SubjectSeeder::class);
         $this->call(AppointedSubjectsSeeder::class);
         $this->call(MediumOfInstructionSeeder::class);
         //$this->call(InstitutionSeeder::class);
 
+<<<<<<< HEAD
         //$this->call(InstitutionTableSeederPart1::class);
         //$this->call(InstitutionTableSeederPart2::class);
         //$this->call(WorkplacesFromMinistrySeeder::class);
 
+=======
+>>>>>>> 17887e1 (new)
         $this->call(ServiceSeeder::class);
         $this->call(ServiceRankSeeder::class);
         $this->call(PositionSeeder::class);
@@ -67,6 +70,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RolePermissionSeeder::class);
 
+        $this->call(InstitutionTableSeederPart1::class);
+        //$this->call(InstitutionTableSeederPart2::class);
+        $this->call(WorkplacesFromMinistrySeeder::class);
 
 
         // User::factory(10)->create();

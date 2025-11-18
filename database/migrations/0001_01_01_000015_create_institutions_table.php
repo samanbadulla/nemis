@@ -30,10 +30,10 @@ return new class extends Migration
             $table->char('police_station_id', 10)->nullable()->comment('Foreign key referencing police_stations table');
             $table->char('moh_area_id', 10)->nullable()->comment('Foreign key referencing moh_areas table');
             $table->string('name');
-            $table->string('other_name',50)->nullable();
-            $table->year('established_year');
-            $table->string('email')->nullable();
-            $table->string('phone', 20)->nullable();
+            $table->string('short_name',50)->nullable();
+            $table->year('established_year')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone', 20)->unique()->nullable();
             $table->string('address')->nullable();
             $table->string('postal_code', 10)->nullable();
             $table->decimal('latitude', 10, 7)->nullable();  // total 10 digits, 7 after decimal
@@ -45,7 +45,7 @@ return new class extends Migration
             $table->timestamps();
 
             //$table->foreign('workplace_id')->references('workplace_id')->on('workplaces')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('zeo_wp_id')->references('workplace_id')->on('zonal_education_offices'); 
+            $table->foreign('zeo_wp_id')->references('workplace_id')->on('zonal_education_offices');
             $table->foreign('deo_wp_id')->references('workplace_id')->on('divisional_education_offices');
             $table->foreign('gn_division_id')->references('gn_division_id')->on('gn_divisions');
             $table->foreign('district_id')->references('district_id')->on('districts_lists');

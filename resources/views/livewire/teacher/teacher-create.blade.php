@@ -206,7 +206,7 @@
                         <flux:select label="GN Division" wire:model.live="gnDivision" placeholder="Select GN Division">
                             <option value="">Select</option>
                             @foreach ($gnDivisionOption as $data)
-                                <option value="{{ $data->gn_division_id }}">({{ $data->gn_division_code }}) - {{ $data->gn_division_name }}</option>
+                                <option value="{{ $data->gn_division_id }}">{{ $data->gn_division_name }}</option>
                             @endforeach
                         </flux:select>
                     </flux:field>
@@ -489,7 +489,7 @@
                             description="Existing teacher users have the ability to read, create, and update." />
                     </flux:radio.group>
 
-                    
+
 
                     @if($teacherRegType != 'new')
                     <div class=" border border-red-500 bg-red-100 rounded-lg p-2">

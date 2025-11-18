@@ -213,7 +213,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('main-table/ds-office', MainTablesDSOffice::class)->name('main-tables.ds-office');
         Route::get('main-table/education-qualifications', MainTablesEducationQualifications::class)->name('main-tables.education-qualifications');
         Route::get('main-table/ethnicities', MainTablesEthnicities::class)->name('main-tables.ethnicities');
+<<<<<<< HEAD
         Route::get('main-table/genders', MainTablesGender::class)->name('main-tables.genders');
+=======
+
+>>>>>>> 17887e1 (new)
     });
 
     Route::get('sleas/list', SleasList::class)->name('sleas.list')->middleware(['permission:view sleas list']);
