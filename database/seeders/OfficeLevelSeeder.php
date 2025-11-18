@@ -28,6 +28,7 @@ class OfficeLevelSeeder extends Seeder
             OfficeLevel::updateOrCreate(
                 ['office_level_id' => $level['office_level_id']], // check by ID
                 [
+                    'office_level_rank' => $level['office_level_rank'],
                     'office_level_name' => $level['office_level_name'],
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),

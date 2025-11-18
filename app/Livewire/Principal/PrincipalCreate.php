@@ -184,7 +184,7 @@ class PrincipalCreate extends Component
         $this->civilStatusOptions = CivilStatus::active()->get();
         $this->bloodGroupOptions = BloodGroup::all();
         $this->healthConditionOptions = [true => 'Yes', false => 'No'];
-        $this->districtOption = DistrictsList::active()->orderBy('district_name')->get();
+        $this->districtOption = DistrictsList::active()->orderBy('district_name', 'asc')->get();
         $this->servicesOption = Service::active()->get();
         $this->ranksOption = collect();
         $this->currentRanksOption = collect();
@@ -207,7 +207,7 @@ class PrincipalCreate extends Component
 
     public function updatedDivisionalDecretaryOffice($value)
     {
-        $this->gnDivisionOption = GnDivision::where('dso_id', $value)->orderBy('gn_division_name')->get();
+        $this->gnDivisionOption = GnDivision::where('dso_id', $value)->orderBy('gn_division_name', 'asc')->get();
         $this->gnDivision = '';
     }
 
@@ -285,9 +285,8 @@ class PrincipalCreate extends Component
     {
         if ($value === 'new') {
             $this->currentRanksOption = $this->ranksOption ;
-            $this->cuttentPositionOption = $this->positionOption;
+            $this->currentPositionOption = $this->positionOption;
             $this->currentInstitutionOption = $this->institutionOption;
-
             $this->currentAppointmentDate = $this->firstAppointmentDate;
             $this->currentAppointmentLetterNo = $this->appointmentLetterNo;
             $this->currentService = $this->service;

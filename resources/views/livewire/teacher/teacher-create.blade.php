@@ -22,12 +22,13 @@
         <div class="max-w-xl my-8">
             <div class="flex justify-between items-center mb-3">
                 <span class="text-sm font-medium text-gray-700">Step {{ $step }} of {{ $maxStep }}</span>
-                <span class="text-sm font-semibold text-blue-600">{{ round((($step-1) / $maxStep) * 100) }}% Complete</span>
+                <span class="text-sm font-semibold text-blue-600">{{ round((($step - 1) / $maxStep) * 100) }}%
+                    Complete</span>
             </div>
             <div class="relative">
                 <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
                     <div class="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-700 ease-out"
-                        style="width: {{ (($step-1) / $maxStep) * 100 }}%">
+                        style="width: {{ (($step - 1) / $maxStep) * 100 }}%">
                         <div class="h-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse"></div>
                     </div>
                 </div>
@@ -205,7 +206,7 @@
                         <flux:select label="GN Division" wire:model.live="gnDivision" placeholder="Select GN Division">
                             <option value="">Select</option>
                             @foreach ($gnDivisionOption as $data)
-                                <option value="{{ $data->gn_division_id }}">{{ $data->gn_division_name }}</option>
+                                <option value="{{ $data->gn_division_id }}">({{ $data->gn_division_code }}) - {{ $data->gn_division_name }}</option>
                             @endforeach
                         </flux:select>
                     </flux:field>
@@ -488,98 +489,109 @@
                             description="Existing teacher users have the ability to read, create, and update." />
                     </flux:radio.group>
 
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <!-- Current Appointment Date -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:input type="date" label="Current Appointment Date"
-                                    wire:model.live="currentAppointmentDate" />
-                            </flux:field>
-                        </div>
+                    
 
-                        <!-- Current Appointment letter number -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:input label="Current Appointment Letter No"
-                                    wire:model.live="currentAppointmentLetterNo" placeholder="Enter letter number" />
-                            </flux:field>
-                        </div>
+                    @if($teacherRegType != 'new')
+                    <div class=" border border-red-500 bg-red-100 rounded-lg p-2">
+                        <p class=" text-red font">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta, beatae? Sunt provident adipisci eos qui cum molestiae ullam enim est eius, consectetur tenetur delectus animi fugit, hic vitae rem corporis.</p>
                     </div>
+                    <div class=" gap-2">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <!-- Current Appointment Date -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:input type="date" label="Current Appointment Date"
+                                        wire:model.live="currentAppointmentDate" />
+                                </flux:field>
+                            </div>
 
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <!-- Current Service -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:select label="Current Service" wire:model.live="currentService">
-                                    <option value="">Select</option>
-                                    @foreach ($servicesOption as $service)
-                                        <option value="{{ $service->service_id }}">{{ $service->service_name }}
-                                        </option>
-                                    @endforeach
-                                </flux:select>
-                            </flux:field>
+                            <!-- Current Appointment letter number -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:input label="Current Appointment Letter No"
+                                        wire:model.live="currentAppointmentLetterNo"
+                                        placeholder="Enter letter number" />
+                                </flux:field>
+                            </div>
                         </div>
 
-                        <!-- Current Rank -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:select label="Current Service Rank" wire:model.live="currentServiceRank">
-                                    <option value="">Select</option>
-                                    @foreach ($currentRanksOption as $rank)
-                                        <option value="{{ $rank->rank_id }}">{{ $rank->rank_name }}</option>
-                                    @endforeach
-                                </flux:select>
-                            </flux:field>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <!-- Current Service -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:select label="Current Service" wire:model.live="currentService">
+                                        <option value="">Select</option>
+                                        @foreach ($servicesOption as $service)
+                                            <option value="{{ $service->service_id }}">{{ $service->service_name }}
+                                            </option>
+                                        @endforeach
+                                    </flux:select>
+                                </flux:field>
+                            </div>
+
+                            <!-- Current Rank -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:select label="Current Service Rank" wire:model.live="currentServiceRank">
+                                        <option value="">Select</option>
+                                        @foreach ($currentRanksOption as $rank)
+                                            <option value="{{ $rank->rank_id }}">{{ $rank->rank_name }}</option>
+                                        @endforeach
+                                    </flux:select>
+                                </flux:field>
+                            </div>
                         </div>
+
+                        <flux:field>
+                            <flux:select label="Current teaching subject" wire:model.live="currentTeachingSubject">
+                                <option value="">Select</option>
+                                @foreach ($subjectOption as $subject)
+                                    <option value="{{ $subject->subject_id }}">{{ $subject->name_en }}</option>
+                                @endforeach
+                            </flux:select>
+                        </flux:field>
+
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <!-- Current Zonal Education Office -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:select label="Zonal Education Office"
+                                        wire:model.live="currentZonalEducationOffice">
+                                        <option value="">Select</option>
+                                        @foreach ($zonalEducationOfficeOption as $zone)
+                                            <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}
+                                            </option>
+                                        @endforeach
+                                    </flux:select>
+                                </flux:field>
+                            </div>
+
+                            <!-- Current Institution Category -->
+                            <div class="md:w-1/2 w-full">
+                                <flux:field>
+                                    <flux:select label="Institution Category"
+                                        wire:model.live="currentInstitutionCategory">
+                                        <option value="">Select</option>
+                                        @foreach ($institutionCategoryOption as $data)
+                                            <option value="{{ $data->institution_category_id }}">
+                                                {{ $data->institution_category_name }}</option>
+                                        @endforeach
+                                    </flux:select>
+                                </flux:field>
+                            </div>
+                        </div>
+
+                        <flux:field>
+                            <flux:select label="Current Appointment Institution" wire:model.live="currentInstitution">
+                                <option value="">Select</option>
+                                @foreach ($currentInstitutionOption as $institution)
+                                    <option value="{{ $institution->workplace_id }}">{{ $institution->name }}
+                                    </option>
+                                @endforeach
+                            </flux:select>
+                        </flux:field>
                     </div>
-
-                    <flux:field>
-                        <flux:select label="Current teaching subject" wire:model.live="currentTeachingSubject">
-                            <option value="">Select</option>
-                            @foreach ($subjectOption as $subject)
-                                <option value="{{ $subject->subject_id }}">{{ $subject->name_en }}</option>
-                            @endforeach
-                        </flux:select>
-                    </flux:field>
-
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <!-- Current Zonal Education Office -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:select label="Zonal Education Office"
-                                    wire:model.live="currentZonalEducationOffice">
-                                    <option value="">Select</option>
-                                    @foreach ($zonalEducationOfficeOption as $zone)
-                                        <option value="{{ $zone->workplace_id }}">{{ $zone->short_name }}</option>
-                                    @endforeach
-                                </flux:select>
-                            </flux:field>
-                        </div>
-
-                        <!-- Current Institution Category -->
-                        <div class="md:w-1/2 w-full">
-                            <flux:field>
-                                <flux:select label="Institution Category"
-                                    wire:model.live="currentInstitutionCategory">
-                                    <option value="">Select</option>
-                                    @foreach ($institutionCategoryOption as $data)
-                                        <option value="{{ $data->institution_category_id }}">
-                                            {{ $data->institution_category_name }}</option>
-                                    @endforeach
-                                </flux:select>
-                            </flux:field>
-                        </div>
-                    </div>
-
-                    <flux:field>
-                        <flux:select label="Current Appointment Institution" wire:model.live="currentInstitution">
-                            <option value="">Select</option>
-                            @foreach ($currentInstitutionOption as $institution)
-                                <option value="{{ $institution->workplace_id }}">{{ $institution->name }}
-                                </option>
-                            @endforeach
-                        </flux:select>
-                    </flux:field>
+                    @endif
                 </div>
             @endif
 

@@ -23,6 +23,12 @@ class OfficeLevel extends Model
         'active_status',
     ];
 
+    protected $casts = [
+        'active_status' => 'boolean',
+        'office_level_rank' => 'integer',
+    ];
+
+
     // If you want to filter active institutions by default
     public function scopeActive($query)
     {
@@ -32,5 +38,20 @@ class OfficeLevel extends Model
     public function workplaces()
     {
         return $this->hasMany(Workplaces::class, 'office_level_id', 'office_level_id');
+    }
+
+    public function lowerLevels()
+    {
+        return OfficeLevel::active()
+            ->where('office_level_rank', '>', $this->office_level_rank)
+            ->orderBy('office_level_rank')
+            ->get();
+    }
+
+    public function nextLevel()
+    {
+        return OfficeLevel::active()
+            ->where('office_level_rank', $this->office_level_rank + 1)
+            ->first();
     }
 }

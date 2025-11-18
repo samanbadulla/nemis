@@ -8,6 +8,7 @@ use App\Models\Institution;
 use App\Models\ProvincialEducationOffice;
 use App\Models\ZonalEducationOffice;
 use App\Models\DivisionalEducationOffice;
+use Illuminate\Support\Facades\Auth;
 
 class InstitutionsIndex extends Component
 {
@@ -24,6 +25,10 @@ class InstitutionsIndex extends Component
 
     public function mount()
     {
+        $loggedUser = Auth::user();
+
+        $loggedAppointment = $loggedUser->currentAppointment;
+
         $this->provinceOption = ProvincialEducationOffice::where('active_status', '1')->get();
     }
 

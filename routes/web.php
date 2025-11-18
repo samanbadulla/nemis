@@ -98,6 +98,7 @@ use App\Livewire\Principal\Profile\PrincipalFamily;
 use App\Livewire\Offices\Deo\DivisionalOfficeByZone;
 use App\Livewire\Offices\Peo\ProvincialOfficeByPmoe;
 use App\Livewire\Institutions\Profile\InstitutionStaff;
+use App\Livewire\Offices\Institutions\InstitutionsList;
 use App\Livewire\Principal\Profile\PrincipalEmployment;
 use App\Livewire\Institutions\Profile\InstitutionsProfile;
 use App\Livewire\Principal\Profile\PrincipalQualification;
@@ -193,6 +194,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('offices/moe/list', MoeOfficesList::class)->name('offices.moe.list')->middleware(['permission:view moe list']);
     Route::get('offices/moe/create', MoeOfficesCreate::class)->name('offices.moe.create')->middleware(['permission:create moe office']);
     Route::get('offices/moe/{id}/profile', MoeOfficesProfile::class)->name('offices.moe.profile');
+
+    Route::get('offices/institutions/list', InstitutionsList::class)->name('offices.institutions.list');
 
     // In web.php or api.php
     Route::middleware(['role:super admin'])->group(function () {

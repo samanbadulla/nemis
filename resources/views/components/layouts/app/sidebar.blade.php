@@ -6,10 +6,8 @@
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
-    <flux:sidebar sticky
-        stashable
-        class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
-            x-data="{
+    <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
+        x-data="{
             openGroup: null,
             toggleGroup(name) {
                 this.openGroup = this.openGroup === name ? null : name;
@@ -17,7 +15,7 @@
             },
             init() {
                 const saved = localStorage.getItem('openGroup');
-
+        
                 // detect if it's the user's first ever visit
                 if (!localStorage.getItem('hasVisitedBefore')) {
                     // first visit → collapse all
@@ -29,9 +27,7 @@
                     this.openGroup = saved;
                 }
             }
-        }"
-        x-init="init()"
-    >
+        }" x-init="init()">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
         <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
@@ -43,111 +39,126 @@
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
                     wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                 @role('super admin')
-                <flux:navlist.item icon="link-slash" :href="route('roles.index')"
-                    :current="request()->routeIs('roles.index')" wire:navigate>{{ __('Roles') }}</flux:navlist.item>
+                    <flux:navlist.item icon="link-slash" :href="route('roles.index')"
+                        :current="request()->routeIs('roles.index')" wire:navigate>{{ __('Roles') }}</flux:navlist.item>
 
-                <flux:navlist.item icon="shield-exclamation" :href="route('main-tables.authorities')"
-                    :current="request()->routeIs('main-tables.*')" wire:navigate>{{ __('Main Tables') }}</flux:navlist.item>
+                    <flux:navlist.item icon="shield-exclamation" :href="route('main-tables.authorities')"
+                        :current="request()->routeIs('main-tables.*')" wire:navigate>{{ __('Main Tables') }}
+                    </flux:navlist.item>
                 @endrole
 
                 @can('view users list')
-                    <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('users.index')"
+                        :current="request()->routeIs('users.index')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
                 @endcan
 
                 @can('view institutions list')
-                    <flux:navlist.item icon="home-modern" :href="route('institutions.index')" :current="request()->routeIs('institutions.index')" wire:navigate>{{ __('Institutions') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home-modern" :href="route('institutions.index')"
+                        :current="request()->routeIs('institutions.index')" wire:navigate>{{ __('Institutions') }}
+                    </flux:navlist.item>
                 @endcan
             </flux:navlist.group>
 
-            <flux:navlist.group
-                expandable
-                heading="Offices"
-                class="grid"
-                x-bind:open="openGroup === 'offices'"
-                x-on:click.stop="toggleGroup('offices')"
-            >
-                <flux:navlist.item icon="squares-2x2" :href="route('offices.index')" :current="request()->routeIs('offices.index')" wire:navigate>
+            <flux:navlist.group expandable heading="Offices" class="grid" x-bind:open="openGroup === 'offices'"
+                x-on:click.stop="toggleGroup('offices')">
+                <flux:navlist.item icon="squares-2x2" :href="route('offices.index')"
+                    :current="request()->routeIs('offices.index')" wire:navigate>
                     {{ __('Overview') }}
                 </flux:navlist.item>
 
                 @can('view moe list')
-                    <flux:navlist.item icon="building-library" :href="route('offices.moe.list')" :current="request()->routeIs('offices.moe.list')" wire:navigate>
+                    <flux:navlist.item icon="building-library" :href="route('offices.moe.list')"
+                        :current="request()->routeIs('offices.moe.list')" wire:navigate>
                         {{ __('Education Ministries') }}
                     </flux:navlist.item>
                 @endcan
 
                 @can('view pmoe list')
-                    <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')" :current="request()->routeIs('offices.pmoe.list')" wire:navigate>
+                    <flux:navlist.item icon="building-library" :href="route('offices.pmoe.list')"
+                        :current="request()->routeIs('offices.pmoe.list')" wire:navigate>
                         {{ __('Provincial Ministries') }}
                     </flux:navlist.item>
                 @endcan
 
                 @can('view peo list')
-                    <flux:navlist.item icon="building-office" :href="route('offices.peo.list', 0)" :current="request()->routeIs('offices.peo.list')" wire:navigate>
+                    <flux:navlist.item icon="building-office" :href="route('offices.peo.list', 0)"
+                        :current="request()->routeIs('offices.peo.list')" wire:navigate>
                         {{ __('Provincial Offices') }}
                     </flux:navlist.item>
                 @endcan
 
                 @can('view zeo list')
-                <flux:navlist.item icon="building-office" :href="route('offices.zeo.list')" :current="request()->routeIs('offices.zeo.list')" wire:navigate>
-                    {{ __('Zonal Offices') }}
-                </flux:navlist.item>
+                    <flux:navlist.item icon="building-office" :href="route('offices.zeo.list')"
+                        :current="request()->routeIs('offices.zeo.list')" wire:navigate>
+                        {{ __('Zonal Offices') }}
+                    </flux:navlist.item>
                 @endcan
 
                 @can('view deo list')
-                    <flux:navlist.item icon="building-office" :href="route('offices.deo.list')" :current="request()->routeIs('offices.deo.list')" wire:navigate>
+                    <flux:navlist.item icon="building-office" :href="route('offices.deo.list')"
+                        :current="request()->routeIs('offices.deo.list')" wire:navigate>
                         {{ __('Divisional Offices') }}
                     </flux:navlist.item>
                 @endcan
+
+                <flux:navlist.item icon="building-office" :href="route('offices.institutions.list')"
+                    :current="request()->routeIs('offices.institutions.list')" wire:navigate>
+                    {{ __('Institutions') }}
+                </flux:navlist.item>
+
             </flux:navlist.group>
 
 
-            <flux:navlist.group
-                expandable
-                heading="Employers"
-                class="grid"
-                x-bind:open="openGroup === 'employers'"
-                x-on:click.stop="toggleGroup('employers')"
-            >
+            <flux:navlist.group expandable heading="Employers" class="grid" x-bind:open="openGroup === 'employers'"
+                x-on:click.stop="toggleGroup('employers')">
 
-            @can('view teachers list')
-                <flux:navlist.item icon="academic-cap" :href="route('teacher.list')" :current="request()->routeIs('teacher.list')" wire:navigate>
-                    {{ __('Teachers') }}
-                </flux:navlist.item>
-            @endcan
+                @can('view teachers list')
+                    <flux:navlist.item icon="academic-cap" :href="route('teacher.list')"
+                        :current="request()->routeIs('teacher.list')" wire:navigate>
+                        {{ __('Teachers') }}
+                    </flux:navlist.item>
+                @endcan
 
-            @can('view principals list')
-                <flux:navlist.item icon="academic-cap" :href="route('principal.list')" :current="request()->routeIs('principal.list')" wire:navigate>
-                    {{ __('Principals') }}
-                </flux:navlist.item>
-            @endcan
+                @can('view principals list')
+                    <flux:navlist.item icon="academic-cap" :href="route('principal.list')"
+                        :current="request()->routeIs('principal.list')" wire:navigate>
+                        {{ __('Principals') }}
+                    </flux:navlist.item>
+                @endcan
 
-            @can('view sleas list')
-                <flux:navlist.item icon="users" :href="route('sleas.list')" :current="request()->routeIs('sleas.list')"  wire:navigate>
-                    {{ __('Edu. Administrators') }}
-                </flux:navlist.item>
-            @endcan
+                @can('view sleas list')
+                    <flux:navlist.item icon="users" :href="route('sleas.list')"
+                        :current="request()->routeIs('sleas.list')" wire:navigate>
+                        {{ __('Edu. Administrators') }}
+                    </flux:navlist.item>
+                @endcan
 
-            @can('view sltes list')
-                <flux:navlist.item icon="users" :href="route('sltes.list')" :current="request()->routeIs('sltes.list')" wire:navigate>
-                    {{ __('Teacher Educators') }}
-                </flux:navlist.item>
-            @endcan
+                @can('view sltes list')
+                    <flux:navlist.item icon="users" :href="route('sltes.list')"
+                        :current="request()->routeIs('sltes.list')" wire:navigate>
+                        {{ __('Teacher Educators') }}
+                    </flux:navlist.item>
+                @endcan
 
-            @can('view sltas list')
-                <flux:navlist.item icon="users" :href="route('sltas.list')" :current="request()->routeIs('sltas.list')"  wire:navigate>
-                    {{ __('Teacher Advisers') }}
-                </flux:navlist.item>
-            @endcan
+                @can('view sltas list')
+                    <flux:navlist.item icon="users" :href="route('sltas.list')"
+                        :current="request()->routeIs('sltas.list')" wire:navigate>
+                        {{ __('Teacher Advisers') }}
+                    </flux:navlist.item>
+                @endcan
 
             </flux:navlist.group>
 
             @can('view apoinment subject list')
-                <flux:navlist.item icon="clipboard-document" :href="route('subjects.apointed')" :current="request()->routeIs('subjects.apointed')" wire:navigate>{{ __('Apoinment subjects') }}</flux:navlist.item>
+                <flux:navlist.item icon="clipboard-document" :href="route('subjects.apointed')"
+                    :current="request()->routeIs('subjects.apointed')" wire:navigate>{{ __('Apoinment subjects') }}
+                </flux:navlist.item>
             @endcan
 
             @can('view teaching subject list')
-                <flux:navlist.item icon="clipboard-document-list" :href="route('subjects.teaching')" :current="request()->routeIs('subjects.teaching')" wire:navigate>{{ __('Teaching subjects') }}</flux:navlist.item>
+                <flux:navlist.item icon="clipboard-document-list" :href="route('subjects.teaching')"
+                    :current="request()->routeIs('subjects.teaching')" wire:navigate>{{ __('Teaching subjects') }}
+                </flux:navlist.item>
             @endcan
 
         </flux:navlist>
@@ -155,13 +166,11 @@
         <flux:spacer />
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="folder-git-2" href="#"
-                target="_blank">
+            <flux:navlist.item icon="folder-git-2" href="#" target="_blank">
                 {{ __('Circular') }}
             </flux:navlist.item>
 
-            <flux:navlist.item icon="book-open-text" href="#"
-                target="_blank">
+            <flux:navlist.item icon="book-open-text" href="#" target="_blank">
                 {{ __('Documentation') }}
             </flux:navlist.item>
         </flux:navlist>

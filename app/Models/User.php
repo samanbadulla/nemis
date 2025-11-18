@@ -73,7 +73,7 @@ class User extends Authenticatable
             ->implode('');
     }
 
-       /**
+    /**
      * Relationship: A user belongs to a person
      */
     public function people()
@@ -101,6 +101,18 @@ class User extends Authenticatable
             'workplace_id',  // FK on Workplaces table
             'people_id',     // local key on Users table
             'workplace_id'   // local key on EmployerCurrentAppointment table
+        );
+    }
+
+    public function officeLevel()
+    {
+        return $this->hasOneThrough(
+            OfficeLevel::class,
+            Workplaces::class,
+            'workplace_id',      // Foreign key on workplaces
+            'office_level_id',   // Foreign key on office_levels
+            'office_id',         // Local key on users
+            'office_level_id'    // Local key on workplaces
         );
     }
 

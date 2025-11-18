@@ -6,6 +6,11 @@
         <flux:separator variant="subtle" />
 
         <div class="my-6 flex items-center justify-end gap-3">
+
+            {{-- Search Button (Modal Trigger) --}}
+            <flux:input wire:model.live.debounce.300ms="search" placeholder="Search Teacher..." icon="magnifying-glass" kbd="⌘K"
+                    class="w-48 md:w-60 cursor-pointer transition-all hover:shadow-sm focus:ring-2 focus:ring-blue-500" />
+            
             @can('create user')
                 {{-- Create User Button (Permission Based) --}}
                 <a href="{{ route('users.create') }}">
